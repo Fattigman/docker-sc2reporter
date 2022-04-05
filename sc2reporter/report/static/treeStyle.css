@@ -16,10 +16,13 @@
   z-index: 1;
   background-color: lightgray;
   font-family: Sans-serif;
+  /* alignt content to the middle of the div */
+  text-align: center;
+
 }
 
 .first-ele{
-  display:block;
+  display:block-inline;
 }
 /* The Modal (background) */
 .modal {
@@ -63,4 +66,11 @@ text.node-group-number{
   stroke: rgb(0, 0, 0);
   stroke-width: 0.8px;
   font-size:20px;
+  background-color:black;
+  height:fit-content;
+  width:fit-content;
+}
+/* make .node.group-number have opaque grey background */
+.node.group-number{
+  background-color: grey;
 }
