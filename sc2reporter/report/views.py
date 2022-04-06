@@ -304,7 +304,7 @@ def create_tree(group, value):
         if nextstrain_clade not in nextstrain_color:
             nextstrain_color[nextstrain_clade] = '#%02X%02X%02X' % (
                 r(), r(), r())
-                
+
         sample_metadata[sample.get('sample_id')] = {
             'year': sample["collection_date"].year,
             'month': '{:02d}'.format(sample["collection_date"].month),
@@ -664,18 +664,17 @@ def load_user(username):
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
-    if request.method == 'POST':  # and form.validate_on_submit():
+    # if request.method == 'POST':  # and form.validate_on_submit():
+    if request.method == 'POST':
         user = app.config['USERS_COLL'].find_one({"_id": form.username.data})
         if user and User.validate_login(user['password'], form.password.data):
+            print(user)
             user_obj = User(user['_id'], user['groups'],
                             user.get('sc2_role', 'normal'))
             login_user(user_obj)
 
             return redirect(request.args.get("next") or url_for("index"))
-    user_obj = User('Test', 'Test', 'Test')
-    login_user(user_obj)
-    return redirect(request.args.get("next") or url_for("index"))
-    # return render_template('login.html', title='login', form=form)
+    return render_template('login.html', title='login', form=form)
 
 
 @app.route('/logout')
