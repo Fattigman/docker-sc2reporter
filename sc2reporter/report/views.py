@@ -668,7 +668,6 @@ def login():
     if request.method == 'POST':
         user = app.config['USERS_COLL'].find_one({"_id": form.username.data})
         if user and User.validate_login(user['password'], form.password.data):
-            print(user)
             user_obj = User(user['_id'], user['groups'],
                             user.get('sc2_role', 'normal'))
             login_user(user_obj)
