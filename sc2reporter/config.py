@@ -7,7 +7,7 @@ QC_MAX_PCT_N = 10
 DB_NAME = 'sarscov2_standalone'
 
 
-CLIENT = MongoClient()
+CLIENT = MongoClient('mongodb', 27017)
 
 DATABASE = CLIENT[DB_NAME]
 SAMPLE_COLL = DATABASE.sample
