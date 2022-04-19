@@ -24,6 +24,13 @@ login_manager.init_app(app)
 login_manager.login_view = "login"
 from pprint import pprint
 
+from werkzeug.middleware.dispatcher import DispatcherMiddleware
+from werkzeug.wrappers import Response
+
+app.wsgi_app = DispatcherMiddleware(
+    Response('Not Found', status=404),
+    {'/sc2rep': app.wsgi_app}
+)
 
 @app.route('/', methods=['GET'])
 @login_required
