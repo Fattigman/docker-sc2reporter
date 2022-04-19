@@ -1,3 +1,5 @@
+# Note
+This is the old instructions to run the project which Björn wrote, please refer to PROD_ENV.md to see the current solution.
 # SC2REPORTER CONFIG
 
 This is more or less just a log of what I did to install sc2reporter on the GMSWEB01 virtual machine. Lines starting with # are run as superuser.
