@@ -19,13 +19,3 @@ services:
       - mongo
     ports:
       - "8000:8000"
-
-  nginx:
-    image: nginx:latest
-    volumes:
-      - ./nginx_conf.d:/etc/nginx/conf.d:ro
-    ports:
-      - 80:80
-      - 443:443
-    depends_on:
-      - app
