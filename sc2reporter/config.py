@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-print('Config is opened.')
+
 WTF_CSRF_ENABLED = True
 SECRET_KEY = 'frusklimuna4satass5h5'
 

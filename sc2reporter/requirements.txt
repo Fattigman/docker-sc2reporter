@@ -1,6 +1,6 @@
 # TODO: Lock down version numbers.
 flask
-flask-pymongo
+pymongo==3.11.2
 flask-login
 pytz
 numpy

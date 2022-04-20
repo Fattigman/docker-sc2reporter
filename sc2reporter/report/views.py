@@ -1,4 +1,3 @@
-from flask_pymongo import PyMongo
 from report import app
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash, jsonify, send_from_directory, make_response, escape
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
