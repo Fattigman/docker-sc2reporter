@@ -11,15 +11,9 @@ Follow the two options described here:
   * [Development](https://github.com/Fattigman/docker-sc2reporter/blob/main/docs/development.md)
   * [Production](https://github.com/Fattigman/docker-sc2reporter/blob/main/docs/production.md)
 
-
-# Future development
-Work in progress from highest to lowest priority:
-  * Visualisation of phylogenetic trees.
-  * Generalized environment variables for easier deployment on different systems.
-  * Better documentation. When the project gets closer to production, the priority of the documentation will increase.
-  * Some packages may not be listed as of now, and all packages versions need to specified.
-
-
-
-
-
+## Good to know
+Thing that are good to know for working on, and setting up this project:
+ * [Apache configuration files](https://httpd.apache.org/docs/2.4/configuring.html)
+ * [Setting up SSL certificate on your apache web server](https://httpd.apache.org/docs/2.4/ssl/ssl_howto.html)
+ * [Docker Compose](https://docs.docker.com/compose/)
+ * [GrapeTree (The phyllogenetic tree visualizer)](https://achtman-lab.github.io/GrapeTree/documentation/developer/index.html)
