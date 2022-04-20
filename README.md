@@ -9,7 +9,7 @@ This pipeline is as of now not ready to be deployed. It is currently in developm
 
 Follow the two options described here:
   * [Development](https://github.com/Fattigman/docker-sc2reporter/blob/main/docs/DEV_ENV.md)
-  * [Production](https://github.com/Fattigman/docker-sc2reporter/blob/main/docs/PROD_ENV.md)
+  * [Production](https://github.com/Fattigman/docker-sc2reporter/blob/main/docs/production.md)
 
 
 # Future development
