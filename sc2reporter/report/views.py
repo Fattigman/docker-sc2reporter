@@ -30,7 +30,7 @@ from werkzeug.wrappers import Response
 app.wsgi_app = DispatcherMiddleware(
     Response('Not Found', status=404),
     {'/sc2rep': app.wsgi_app}
-)
+)  
 
 @app.route('/', methods=['GET'])
 @login_required
