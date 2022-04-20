@@ -1,8 +1,5 @@
-# docker-sc2reporter
-Dockerized version of the sc2reporter program. Originally written by Björn Hallström, but through a long line of coders (2) it has ended up in my hands.
-
-# Note!
-This pipeline is as of now not ready to be deployed. It is currently in development. Without further adooooo.
+# Sc2reporter
+Finalized version of the SarsCov2 Reporter app, dubbed sc2reporter. This application visualizes the spread of the SarsCov2 virus 
 
 
 # Usage
@@ -10,6 +7,7 @@ This pipeline is as of now not ready to be deployed. It is currently in developm
 Follow the two options described here:
   * [Development](https://github.com/Fattigman/docker-sc2reporter/blob/main/docs/development.md)
   * [Production](https://github.com/Fattigman/docker-sc2reporter/blob/main/docs/production.md)
+  * [Configuration](https://github.com/Fattigman/docker-sc2reporter/blob/main/docs/configuration.md)
 
 ## Good to know
 Thing that are good to know for working on, and setting up this project:
