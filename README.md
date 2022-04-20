@@ -7,7 +7,6 @@ Finalized version of the SarsCov2 Reporter app, dubbed sc2reporter.
 Follow the two options described here:
   * [Development](https://github.com/Fattigman/docker-sc2reporter/blob/main/docs/development.md)
   * [Production](https://github.com/Fattigman/docker-sc2reporter/blob/main/docs/production.md)
-  * [Configuration](https://github.com/Fattigman/docker-sc2reporter/blob/main/docs/configuration.md)
 
 ## Good to know
 Thing that are good to know for working on, and setting up this project:
