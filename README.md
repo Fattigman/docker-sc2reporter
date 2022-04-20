@@ -1,5 +1,5 @@
 # Sc2reporter
-Finalized version of the SarsCov2 Reporter app, dubbed sc2reporter. This application visualizes the spread of the SarsCov2 virus 
+Finalized version of the SarsCov2 Reporter app, dubbed sc2reporter.
 
 
 # Usage
