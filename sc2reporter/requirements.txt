@@ -1,9 +1,0 @@
-# TODO: Lock down version numbers.
-flask
-pymongo==3.11.2
-flask-login
-pytz
-numpy
-scikit-bio
-flask-wtf
-gunicorn
