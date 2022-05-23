@@ -7,7 +7,6 @@ Finalized version of the SarsCov2 Reporter app, dubbed sc2reporter.
 Follow the two options described here:
   * [Development](https://github.com/Fattigman/docker-sc2reporter/blob/main/docs/development.md)
   * [Production](https://github.com/Fattigman/docker-sc2reporter/blob/main/docs/production.md)
-  * [Configuration](https://github.com/Fattigman/docker-sc2reporter/blob/main/docs/configuration.md)
 
 ## Good to know
 Thing that are good to know for working on, and setting up this project:
@@ -15,3 +14,4 @@ Thing that are good to know for working on, and setting up this project:
  * [Setting up SSL certificate on your apache web server](https://httpd.apache.org/docs/2.4/ssl/ssl_howto.html)
  * [Docker Compose](https://docs.docker.com/compose/)
  * [GrapeTree (The phyllogenetic tree visualizer)](https://achtman-lab.github.io/GrapeTree/documentation/developer/index.html)
+ * [Connecting docker application to pre-existing mongo daemon](https://stackoverflow.com/questions/24319662/from-inside-of-a-docker-container-how-do-i-connect-to-the-localhost-of-the-mach/24326540#24326540)
