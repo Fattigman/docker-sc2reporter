@@ -111,11 +111,11 @@ def report(sample_id, max_diff, verbosity):
 
     replicates = []
     if verbosity == "advanced":
-        all_samples = app.config['SAMPLE_COLL'].find()
+        all_samples_report = app.config['SAMPLE_COLL'].find()
         replicates = app.config['SAMPLE_COLL'].find(
             {'sample_id': sample_to_report["sample_id"]})
     else:
-        all_samples = app.config['SAMPLE_COLL'].find(
+        all_samples_report = app.config['SAMPLE_COLL'].find(
             {'qc.pct_N_bases': {'$lte': app.config["QC_MAX_PCT_N"]}, 'hidden': {'$ne': 1}})
 
     variants_of_significance = set(
@@ -125,12 +125,10 @@ def report(sample_id, max_diff, verbosity):
     # Is this right?
     # tot_samples = len(list(all_samples)[0])
     # original line:
-    tot_samples = all_samples
-
+    tot_samples = all_samples_report.count()
     # Find similar samples (expensive!)
     samples_to_show, variants, report_variants, sample_counts = get_similar_samples(
-        sample_to_report, all_samples, max_diff)
-
+        sample_to_report, all_samples_report, max_diff)
     sample_ids = []
     variant_data = {}
     positions = []
@@ -178,7 +176,7 @@ def report(sample_id, max_diff, verbosity):
         elif "Protein_position" in csq and "SYMBOL" in csq and csq["SYMBOL"]+":"+str(csq["Protein_position"]) in positions_of_significance:
             var_info["significant_position"] = True
         variant_annotation[var_info["_id"]] = var_info
-
+    
     return render_template('report.html', sample=sample_to_report, samples=samples_to_show, variant_data=variant_data, variants=variants, variant_annotation=variant_annotation, depth=depth_data, verbosity=verbosity, sample_counts=sample_counts, tot_samples=tot_samples, replicates=replicates, max_diff=max_diff)
 
 
@@ -361,24 +359,24 @@ def create_tree(group, value):
     tree['metadata_options'] = {"time":{"label":"time","coltype":"character","grouptype":"alphabetic","colorscheme":"gradient"}}
     return render_template('tree.html', tree=tree, meta_data = sample_metadata)
 
-def get_similar_samples(sample_to_report, all_samples, max_diffs):
+def get_similar_samples(sample_from_report, all_samples, max_diffs):
 
     # Collect variants in the sample to report
     report_variant_set = set()
-    for var in sample_to_report.get("variants", []):
+    for var in sample_from_report.get("variants", []):
         report_variant_set.add(var["id"])
 
     sample_count_per_var = defaultdict(int)
 
     variants_of_similar_samples = report_variant_set.copy()
 
-    sample_to_report["var_set"] = report_variant_set
-    sample_to_report["n_diff"] = -1
-    samples_to_show = [sample_to_report]
-    samples_ids_to_show = [sample_to_report["_id"]]
+    sample_from_report["var_set"] = report_variant_set
+    sample_from_report["n_diff"] = -1
+    samples_to_show = [sample_from_report]
+    samples_ids_to_show = [sample_from_report["_id"]]
 
     for sample_to_compare in all_samples:
-        if sample_to_report["_id"] == sample_to_compare["_id"]:
+        if sample_from_report["_id"] == sample_to_compare["_id"]:
             continue
 
         # Collect variants in the samples we're comparing to

@@ -100,7 +100,7 @@
       <td>{{ anno.csq.HGVSp|no_transid|one_letter_p|unesc }}</td>
       <td class="right">{{ "%.1f"|format(100*var.alt_freq|float) }}%</td>
       <td class="right">{{ "%.0f"|format(var.dp) }}</td>
-      <td class="right">{{1+sample_counts[var.id]}}/{{tot_samples}}</td>
+      <td class="right">{{1+sample_counts[var.id]}}/{{ tot_samples }}</td>
     </tr>
   {% endfor %}
 </table>
