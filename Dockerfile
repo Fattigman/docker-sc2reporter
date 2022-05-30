@@ -5,6 +5,9 @@ RUN apt-get update && \
     apt-get install -y \
         gcc
 
+# Upgrade pip before installing other packages.
+RUN python -m pip install --upgrade pip
+
 # Numpy must apparently be installed before scikit-bio.
 RUN pip install numpy
 

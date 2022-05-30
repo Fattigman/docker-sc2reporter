@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-
+import os
 WTF_CSRF_ENABLED = True
 SECRET_KEY = 'frusklimuna4satass5h5'
 
@@ -7,7 +7,7 @@ QC_MAX_PCT_N = 10
 DB_NAME = 'sarscov2_standalone'
 
 
-CLIENT = MongoClient('mongodb', 27017)
+CLIENT = MongoClient(os.environ.get('MONGODB_HOST'),int(os.environ.get('MONGODB_PORT')))
 
 DATABASE = CLIENT[DB_NAME]
 SAMPLE_COLL = DATABASE.sample
