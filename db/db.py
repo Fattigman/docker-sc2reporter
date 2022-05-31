@@ -2,7 +2,6 @@
 import motor
 from bson.json_util import dumps
 from bson import json_util
-import pprint
 import json
 
 
@@ -24,6 +23,5 @@ async def get_all_samples():
 async def get_single_sample(sample_id):
     curr =  db.sample.find({"sample_id": sample_id})
     docs = [parse_json(x) for x in await curr.to_list(None)]
-    print(sample_id)
     return  docs
 

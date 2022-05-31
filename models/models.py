@@ -2,6 +2,9 @@ from pydantic import BaseModel, EmailStr
 from datetime import date
 from typing import List, Optional
 
+from typing import Union
+
+
 class Sample(BaseModel):
     sample_id : str
     qc : dict
@@ -14,3 +17,14 @@ class Sample(BaseModel):
     fasta: str
     variants: List[str]
     pangolin: dict
+
+
+class User(BaseModel):
+    username: str
+    email: Union[str, None] = None
+    full_name: Union[str, None] = None
+    disabled: Union[bool, None] = None
+
+
+class UserInDB(User):
+    hashed_password: str
