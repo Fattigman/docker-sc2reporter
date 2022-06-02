@@ -25,3 +25,12 @@ async def get_single_sample(sample_id):
     docs = [parse_json(x) for x in await curr.to_list(None)]
     return  docs
 
+async def get_user(username):
+    curr =  db.users.find({"username": username})
+    docs = [parse_json(x) for x in await curr.to_list(None)]
+    return  docs[0]
+
+async def get_users():
+    cursor =  db.users.find()
+    docs = [parse_json(x) for x in await cursor.to_list(None)]
+    return (docs)
