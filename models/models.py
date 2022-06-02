@@ -22,7 +22,7 @@ class Sample(BaseModel):
 class User(BaseModel):
     username: str
     email: Union[str, None] = None
-    full_name: Union[str, None] = None
+    fullname: Union[str, None] = None
     disabled: Union[bool, None] = None
 
 
@@ -38,7 +38,7 @@ class TokenData(BaseModel):
 class User(BaseModel):
     username: str
     email: Union[str, None] = None
-    full_name: Union[str, None] = None
+    fullname: Union[str, None] = None
     disabled: Union[bool, None] = None
 
 
