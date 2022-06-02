@@ -4,7 +4,7 @@ Dockerized version of the sc2reporter program. But version 2.
 ## To run:
 First you will need to set up the database (assuming you the test data folder).
 These instructions were hastily thrown together, make sure that PATH is correctly set up.
-```
+```bash
 docker run --name mongodb -d mongo
 conda create --name sc2rep
 conda activate sc2rep
