@@ -15,7 +15,7 @@ class Sample(BaseModel):
     longest_no_N_run: int
     on_target: float
     fasta: str
-    variants: List[str]
+    variants: List[dict]
     pangolin: dict
 
 
