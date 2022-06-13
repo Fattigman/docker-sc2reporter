@@ -1,5 +1,5 @@
-from models.models import *
-from db.db import *
+from models import *
+from db import *
 
 from fastapi import Depends, FastAPI, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
@@ -16,11 +16,17 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
-def verify_password(plain_password, hashed_password):
+def verify_password(
+    plain_password, 
+    hashed_password
+    ):
     return pwd_context.verify(plain_password, hashed_password)
 
 
-async def authenticate_user(username: str, password: str):
+async def authenticate_user(
+    username: str, 
+    password: str
+    ):
     user =  await get_user(username)
     if not user:
         return False
@@ -29,7 +35,10 @@ async def authenticate_user(username: str, password: str):
     return user
 
 
-def create_access_token(data: dict, expires_delta: Union[timedelta, None] = None):
+def create_access_token(
+    data: dict, 
+    expires_delta: Union[timedelta, None] = None
+    ):
     to_encode = data.copy()
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
