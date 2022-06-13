@@ -15,7 +15,7 @@ from pydantic import BaseModel
 
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
-app = FastAPI(title='SarsCov 2 API', description='API for SarsCov 2', version='development')
+app = FastAPI(title='SarsCov 2 API', description='API for SarsCov 2 visualisation tool', version='development')
 
 @app.post("/token", response_model=Token)
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
