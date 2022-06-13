@@ -10,7 +10,7 @@ conda create --name sc2rep
 conda activate sc2rep
 conda install perl
 cpanm MongoDB
-cp /path/to/testdata/vcf2.pm /path/to/perllibs
+cp /path/to/testdata/vcf2.pm /path/to/perl-libraries
 bash /path/to/testdata/load_data.sh
 ```
 
