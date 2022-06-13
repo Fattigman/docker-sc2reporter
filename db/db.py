@@ -5,7 +5,7 @@ from bson import json_util
 import json
 
 
-MONGO_DETAILS = "mongodb://localhost:27017"
+
 client = motor.motor_tornado.MotorClient('localhost', 27017)
 
 
@@ -32,5 +32,20 @@ async def get_user(username : str):
 
 async def get_users():
     cursor =  db.users.find()
+    docs = [parse_json(x) for x in await cursor.to_list(None)]
+    return (docs)
+
+async def get_depth():
+    cursor =  db.depth.find()
+    docs = [parse_json(x) for x in await cursor.to_list(None)]
+    return (docs)
+
+async def get_variants():
+    cursor =  db.variant.find()
+    docs = [parse_json(x) for x in await cursor.to_list(None)]
+    return (docs)
+
+async def get_consensus():
+    cursor =  db.consensus.find()
     docs = [parse_json(x) for x in await cursor.to_list(None)]
     return (docs)

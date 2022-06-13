@@ -15,13 +15,7 @@ from pydantic import BaseModel
 
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
-
-
-app = FastAPI()
-
-
-
-
+app = FastAPI(title='SarsCov 2 API', description='API for SarsCov 2', version='development')
 
 @app.post("/token", response_model=Token)
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
@@ -59,3 +53,15 @@ async def read_samples(current_user: User = Depends(get_current_active_user)):
 @app.get("/samples/{sample_id}")
 async def sample(sample_id: str,current_user: User = Depends(get_current_active_user)):
     return await get_single_sample(sample_id)
+
+@app.get("/depth")
+async def depth(current_user: User = Depends(get_current_active_user)):
+    return await get_depth()
+
+@app.get("/variants")
+async def variants(current_user: User = Depends(get_current_active_user)):
+    return await get_variants()
+
+@app.get("/consensus")
+async def consensus(current_user: User = Depends(get_current_active_user)):
+    return await get_consensus()
