@@ -17,6 +17,10 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 app = FastAPI(title='SarsCov 2 API', description='API for SarsCov 2 visualisation tool', version='development')
 
+@app.get('/')
+def root():
+    return {'message': 'Hello and welcome to the SarsCov 2 API'}
+
 @app.post("/token", response_model=Token)
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
     user = await authenticate_user(form_data.username, form_data.password)
