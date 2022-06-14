@@ -8,7 +8,7 @@ from authentication import *
 router = APIRouter()
 
 
-@router.get("/samples")
+@router.get("/")
 async def read_samples(
     current_user: User = Depends(get_current_active_user)
     ):
@@ -16,7 +16,7 @@ async def read_samples(
 
     return samples
 
-@router.get("/samples/{sample_id}")
+@router.get("/{sample_id}")
 async def sample(
     sample_id: str,current_user: User = Depends(get_current_active_user)
     ):
