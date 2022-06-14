@@ -12,7 +12,7 @@ router = APIRouter()
 async def read_samples(
     current_user: User = Depends(get_current_active_user)
     ):
-    samples = await get_all_samples()
+    samples = await get_samples()
 
     return samples
 
