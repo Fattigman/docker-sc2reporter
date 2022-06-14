@@ -1,9 +1,8 @@
-#from parso import parse
+from typing import Optional
+
 import motor
-from bson.json_util import dumps
 from bson import json_util
 import json
-
 
 
 client = motor.motor_tornado.MotorClient('localhost', 27017)
@@ -14,8 +13,8 @@ db = client['sarscov2_standalone']
 def parse_json(data):
     return json.loads(json_util.dumps(data)) 
 
-async def get_all_samples():
-    cursor =  db.sample.find()
+async def get_samples(query: Optional[any] = None):
+    cursor =  db.sample.find(query)
     docs = [parse_json(x) for x in await cursor.to_list(None)]
     return (docs)
 
@@ -35,17 +34,17 @@ async def get_users():
     docs = [parse_json(x) for x in await cursor.to_list(None)]
     return (docs)
 
-async def get_depth():
-    cursor =  db.depth.find()
+async def get_depth(query: Optional[any] = None):
+    cursor =  db.depth.find(query)
     docs = [parse_json(x) for x in await cursor.to_list(None)]
     return (docs)
 
-async def get_variants():
-    cursor =  db.variant.find()
+async def get_variants(query: Optional[any] = None):
+    cursor =  db.variant.find(query)
     docs = [parse_json(x) for x in await cursor.to_list(None)]
     return (docs)
 
-async def get_consensus():
-    cursor =  db.consensus.find()
+async def get_consensus(query: Optional[any] = None):
+    cursor =  db.consensus.find(query)
     docs = [parse_json(x) for x in await cursor.to_list(None)]
     return (docs)
