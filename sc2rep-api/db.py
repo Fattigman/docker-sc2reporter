@@ -9,7 +9,9 @@ client = motor.motor_tornado.MotorClient('localhost', 27017)
 
 
 db = client['sarscov2_standalone']
-
+def get_db():
+    return db
+        
 def parse_json(data):
     return json.loads(json_util.dumps(data)) 
 
