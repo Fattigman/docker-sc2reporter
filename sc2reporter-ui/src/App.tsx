@@ -5,7 +5,7 @@ function App() {
     <div className="App">
       <h1>Sc2reporter</h1>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
