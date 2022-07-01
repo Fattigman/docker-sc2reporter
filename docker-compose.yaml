@@ -10,6 +10,8 @@ services:
     restart: "unless-stopped"
     links: 
       - mongodb
+    env_file:
+      - sc2rep-api/docker.env
   
   mongodb:
     image: mongo
