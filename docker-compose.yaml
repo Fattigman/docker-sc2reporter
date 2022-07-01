@@ -1,0 +1,30 @@
+version: "3.1"
+services:
+  fastapi:
+    build: .
+    platform: linux/amd64
+    ports:
+      - "80:80"
+    depends_on:
+      - mongo_seed
+    restart: "unless-stopped"
+    links: 
+      - mongodb
+  
+  mongodb:
+    image: mongo
+    hostname: mongodb
+    restart: unless-stopped
+    ports: 
+     - "27017:27017"
+
+  mongo_seed:
+    image: mongo
+    volumes:
+      - ./mongo-seed:/mongo-seed
+    command:
+      - /mongo-seed/import.sh
+    links: 
+      - mongodb
+    depends_on:
+      - mongodb
