@@ -17,8 +17,9 @@ from jose import JWTError, jwt
 from passlib.context import CryptContext
 from pydantic import BaseModel
 
+import os
 
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+if os.getenv('MONGO_HOST') != "mongodb": os.environ['MONGO_HOST'] = "localhost"
 
 app = FastAPI(
     title='SarsCov 2 API', 

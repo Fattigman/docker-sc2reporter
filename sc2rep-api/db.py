@@ -4,8 +4,9 @@ import motor
 from bson import json_util
 import json
 
+import os
 
-client = motor.motor_tornado.MotorClient('localhost', 27017)
+client = motor.motor_tornado.MotorClient(os.getenv('MONGO_HOST'), 27017)
 
 
 db = client['sarscov2_standalone']
