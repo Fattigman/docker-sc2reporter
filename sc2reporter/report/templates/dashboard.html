@@ -20,7 +20,7 @@
 <script>
   document.addEventListener("DOMContentLoaded", function(){
   {% set lineages_to_include = ["B.1.1.7", "B.1.177", "B.1.177.21", "B.1.221", "B.1.160", "B.1.177.86", "B.1.351"] %}
-
+  {% set lineages_to_include = ["BF.5","BE.1.1","BE.1","BA.5.6","BA.5.2.3","BA.5.2.1","BA.5.2","BA.5.1.3","BA.5.1.2","BA.5.1","BA.5","BA.4.1","BA.4","BA.2.9","BA.2.36","BA.2.3","BA.2.12.1","BA.2"] %}
   let traces = [];
   {% for lin in lineages_to_include %}
     traces.push({
@@ -48,6 +48,10 @@
       title: '# samples',
       overlaying: 'y',
       side: 'right'
+    },
+    xaxis: {
+      autorange: false,
+      range: ["2021-12-01",new Date().getTime()]
     },
     title: 'Most common pango types over time',
     margin: {l:50, r:70, t:80, b:50 },
