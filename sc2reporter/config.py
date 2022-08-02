@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 import os
 WTF_CSRF_ENABLED = True
-SECRET_KEY = 'frusklimuna4satass5h5'
+SECRET_KEY = 'setyourownsecret1n4g0Odp1ac3'
 
 QC_MAX_PCT_N = 10
 DB_NAME = 'sarscov2_standalone'
