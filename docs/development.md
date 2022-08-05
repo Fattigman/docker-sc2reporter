@@ -2,7 +2,7 @@
 
 In order to run the application first clone the project:
 ```bash
-git clone https://github.com/Fattigman/docker-sc2reporter/
+git clone https://github.com/genomic-medicine-sweden/docker-sc2reporter/
 cd docker-sc2reporter
 ```
 Then we need to install all the required packages for the application to run. 
