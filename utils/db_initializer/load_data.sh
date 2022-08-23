@@ -11,3 +11,5 @@ perl ./add_metadata_to_db.pl ../../data/testdata/metadata/test.csv
 perl ./add_ct_to_db.pl $(date +%Y-%m-%d) ../../data/testdata/qpcr/quantstudio_test.txt
 
 python ./add_snp_mtx.py 
+
+echo "Insertion complete"
