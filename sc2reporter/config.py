@@ -6,7 +6,9 @@ SECRET_KEY = 'frusklimuna4satass5h5'
 QC_MAX_PCT_N = 10
 DB_NAME = 'sarscov2_standalone'
 
-
+if os.getenv('MONGO_HOST') != "mongodb": 
+    os.environ['MONGO_HOST'] = "localhost"
+    os.environ['MONGODB_PORT'] = "27017"
 CLIENT = MongoClient(os.environ.get('MONGODB_HOST'),int(os.environ.get('MONGODB_PORT')))
 
 DATABASE = CLIENT[DB_NAME]
