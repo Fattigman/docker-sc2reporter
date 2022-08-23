@@ -45,9 +45,13 @@
   {% endif %}
   </tr>
 </table>
-
+{% if samples|length >2 %}
 <br><a href="/sc2rep/createtree/pango/{{pangotype}}" target="_blank"><button>Show tree in Microreact</button></a>
-
+{% else: %}
+<div>
+<h3>Too display a phylogenetic tree, minimum of three samples are required</h3>
+</div>
+{% endif %}
 <div class="shadow small-plot" id="plot_div"></div>
 <br>
 <h3>Samples with type</h3>
