@@ -1,1 +1,0 @@
-{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"sarscov2_standalone.matrix"}],"uuid":"8989e5b63b234cbb84c05c320d7125cd"}
