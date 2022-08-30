@@ -26,12 +26,26 @@ from pprint import pprint
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
 from werkzeug.wrappers import Response
 
+
 app.wsgi_app = DispatcherMiddleware(
     Response('Not Found', status=404),
     {'/sc2rep': app.wsgi_app}
 )  
+@app.route('/samples', methods=['GET', 'POST'])
+def test():
+    if request.method == 'POST':
+        samples = (request.form.getlist('check'))
+        print(samples)
+        samples = list(app.config['SAMPLE_COLL'].find(
+            {'sample_id': 
+            {'$in': samples }
+            }))
+        samples = add_significant_variants(samples)
+        return render_template('samples.html', samples=samples)
+    else:
+        render_template('main.html')
 
-@app.route('/', methods=['GET'])
+@app.route('/', methods=['GET', 'POST'])
 @login_required
 def index():
     show_validation = request.args.get("validation", "")

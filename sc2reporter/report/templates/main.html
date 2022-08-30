@@ -7,12 +7,17 @@
   <input type="hidden" id="verbosity" name="verbosity" value="{{verbosity}}">
   <div id="search">Search:  <input type="text" id="search_string" name="search_string" value="{{search_string}}"></div>
 </form>
+<form method="post" action="samples">
+<input style="margin-left: 10px;" type="submit" value="Submit selected samples for comparison"> 
 <table>
   <thead>
-    <tr><th>Time added</th><th>Sample</th><th>QC</th><th>Pangolin</th><th>Significant variants</th><th>Coll. date</th>{% if advanced %}<th>Ct</th><th>%N</th><th>mapped reads</th><th>Sequencing run</th><th>Sex</th><th>Age</th><th>MLU</th><th>Orig. lab</th><th>Seq. lab</th>{% endif %}<th>Criterion</th></tr>
+    <tr><th>Select</th><th>Time added</th><th>Sample</th><th>QC</th><th>Pangolin</th><th>Significant variants</th><th>Coll. date</th>{% if advanced %}<th>Ct</th><th>%N</th><th>mapped reads</th><th>Sequencing run</th><th>Sex</th><th>Age</th><th>MLU</th><th>Orig. lab</th><th>Seq. lab</th>{% endif %}<th>Criterion</th></tr>
   </thead>
   {% for sample in samples %}
   <tr>
+    <td>
+      <input type="checkbox" name="check" value="{{sample.sample_id}}">
+    </td>
     <td>
       {{ sample.time_added|human_date }}
     </td>
@@ -66,4 +71,5 @@
   </tr>
 {% endfor %}
 </table>
+</form>
 {% endblock %}
