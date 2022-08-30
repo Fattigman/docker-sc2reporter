@@ -21,3 +21,13 @@ services:
     environment:
       - MONGODB_HOST=mongodb
       - MONGODB_PORT=27017
+  mongo_seed:
+    image: mongo
+    volumes:
+      - ./mongo-seed:/mongo-seed
+    command:
+      - /mongo-seed/import.sh
+    links: 
+      - mongodb
+    depends_on:
+      - mongodb
