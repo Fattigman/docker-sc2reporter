@@ -11,6 +11,7 @@ git clone https://github.com/genomic-medicine-sweden/docker-sc2reporter
 cd docker-sc2reporter
 docker-compose -f docker-compose-demo.yml up
 ```
+Then visit ``` localhost:8000/sc2rep ``` and enter following:
 
 Username: user
 Password: pwd
