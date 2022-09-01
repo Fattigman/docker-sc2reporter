@@ -12,6 +12,9 @@ cd docker-sc2reporter
 docker-compose -f docker-compose-demo.yml up
 ```
 
+Username: user
+Password: pwd
+
 Follow the two options described here:
   * [Development](https://github.com/Fattigman/docker-sc2reporter/blob/main/docs/development.md)
   * [Production](https://github.com/Fattigman/docker-sc2reporter/blob/main/docs/production.md)
