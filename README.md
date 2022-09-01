@@ -9,7 +9,7 @@ have docker-compose installed on your system and run following to get a demo wit
 ```bash
 git clone https://github.com/genomic-medicine-sweden/docker-sc2reporter
 cd docker-sc2reporter
-docker-composer -f docker-compose-demo.yml up
+docker-compose -f docker-compose-demo.yml up
 ```
 
 Follow the two options described here:
