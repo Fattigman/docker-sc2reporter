@@ -1,25 +1,28 @@
-# docker-sc2reporter v2
-Dockerized version of the sc2reporter program. But version 2.
+# Sc2reporter
+Finalized version of the SarsCov2 Reporter app, dubbed sc2reporter.
 
-## To run:
-First you will need to set up the database (assuming you the test data folder).
-These instructions were hastily thrown together, make sure that PATH is correctly set up.
+
+# Usage
+
+TLDR:
+have docker-compose installed on your system and run following to get a demo with test data going
 ```bash
-docker run --name mongodb -d mongo
-conda create --name sc2rep
-conda activate sc2rep
-conda install perl
-cpanm MongoDB
-cp /path/to/testdata/vcf2.pm /path/to/perl-libraries
-bash /path/to/testdata/load_data.sh
-```
-
-Then run the following commands:
-```bash
-
-git clone https://github.com/genomic-medicine-sweden/docker-sc2reporter/
+git clone https://github.com/genomic-medicine-sweden/docker-sc2reporter
 cd docker-sc2reporter
-git checkout fastapi
-conda install --file requirements.txt
-uvicorn main:app --reload
+docker-compose -f docker-compose-demo.yml up
 ```
+
+Username: user
+Password: pwd
+
+Follow the two options described here:
+  * [Development](https://github.com/Fattigman/docker-sc2reporter/blob/main/docs/development.md)
+  * [Production](https://github.com/Fattigman/docker-sc2reporter/blob/main/docs/production.md)
+
+## Good to know
+Thing that are good to know for working on, and setting up this project:
+ * [Apache configuration files](https://httpd.apache.org/docs/2.4/configuring.html)
+ * [Setting up SSL certificate on your apache web server](https://httpd.apache.org/docs/2.4/ssl/ssl_howto.html)
+ * [Docker Compose](https://docs.docker.com/compose/)
+ * [GrapeTree (The phyllogenetic tree visualizer)](https://achtman-lab.github.io/GrapeTree/documentation/developer/index.html)
+ * [Connecting docker application to pre-existing mongo daemon](https://stackoverflow.com/questions/24319662/from-inside-of-a-docker-container-how-do-i-connect-to-the-localhost-of-the-mach/24326540#24326540)
