@@ -1,0 +1,26 @@
+.homePicture {
+  min-height: 60vh;
+}
+
+.homeContainer {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.loginContainer {
+  margin: auto;
+  width: 360px;
+  height: 360px;
+  background-color: #9ce2d7;
+  border-radius: 3%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.form {
+  padding-top: 50px;
+}
