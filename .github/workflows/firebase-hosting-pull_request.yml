@@ -3,7 +3,7 @@ defaults:
   run:
     working-directory: ./frontend
 'on':
-  push:
+  pull_request:
     branches:
       - add-react-app
     paths:
@@ -29,5 +29,4 @@ jobs:
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}'
-          channelId: live
           projectId: sc2reporter
