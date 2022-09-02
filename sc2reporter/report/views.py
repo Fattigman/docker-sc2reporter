@@ -4,7 +4,6 @@ from flask import Flask, request, session, g, redirect, url_for, abort, render_t
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
 import json
 from bson.objectid import ObjectId
-import pprint
 from collections import defaultdict
 import re
 import urllib.parse
@@ -22,7 +21,6 @@ from random import randint
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
-from pprint import pprint
 
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
 from werkzeug.wrappers import Response
@@ -36,7 +34,6 @@ app.wsgi_app = DispatcherMiddleware(
 def test():
     if request.method == 'POST':
         samples = (request.form.getlist('check'))
-        print(samples)
         data = list(app.config['SAMPLE_COLL'].find(
             {'sample_id': 
             {'$in': samples }
