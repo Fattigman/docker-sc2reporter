@@ -1,3 +1,3 @@
 import React from 'react'
 
-export const Samples = () => <div>Samples</div>
+export const Samples = ({ samples }) => <div>{samples}</div>

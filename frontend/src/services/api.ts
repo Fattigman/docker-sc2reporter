@@ -26,3 +26,26 @@ export const getToken = async (formInput: Login): Promise<any> => {
       })
   })
 }
+
+export const getSamples = async (token): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/samples`
+  return new Promise((resolve, reject) => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const params = new URLSearchParams(formInput)
+    axios
+      .get(endPoint, {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      })
+      .then((response) => resolve(response.data))
+      .catch((error) => {
+        console.log(error)
+        notification.error({
+          message: 'Something went wrong',
+          description: 'Try again',
+        })
+      })
+  })
+}

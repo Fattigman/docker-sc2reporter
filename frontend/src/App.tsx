@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState } from 'react'
 import styles from './App.module.css'
 import { Button, Layout, Menu } from 'antd'
 import { Link, Route, Routes, useLocation } from 'react-router-dom'
@@ -8,9 +8,10 @@ import { getToken } from './services/api'
 
 const { Header, Content } = Layout
 export const App = () => {
-  const [isLoading, setIsLoading] = React.useState<boolean>(true)
-  const [user, setUser] = React.useState<any>()
-  const [token, setToken] = React.useState<any>()
+  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [user, setUser] = useState<any>()
+  const [samples, setSamples] = useState<any>()
+  const [token, setToken] = useState<any>()
   const location = useLocation()
 
   const menuItems = [
@@ -64,7 +65,10 @@ export const App = () => {
           }}
         >
           <Routes>
-            <Route path="/" element={token ? <Samples /> : <LoginPage login={login} />} />
+            <Route
+              path="/"
+              element={token ? <Samples samples={samples} /> : <LoginPage login={login} />}
+            />
           </Routes>
         </Content>
         <footer data-testid="footer" className={styles.footer}>
