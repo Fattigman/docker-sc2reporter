@@ -20,7 +20,7 @@ jobs:
       - name: Run Stylelint check
         run: npx stylelint "**/*.css"
       - name: Test
-        run: yarn test
+        run: yarn test --passWithNoTests
       - name: Build
         run: yarn build
         env:
