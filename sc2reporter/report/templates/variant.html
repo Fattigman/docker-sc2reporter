@@ -28,6 +28,7 @@
 </script>
 
 
+
 <h1>Mutation report for {{var_id}}</h1>
 <h3>Mutation details</h3>
 <table>
@@ -56,6 +57,14 @@
     <td><b>Exernal link: CoVariants</b></td><td>{{ (annotations.csq.SYMBOL ~':'~ annotations.csq.HGVSp|no_transid|one_letter_p|unesc)|variant_link|safe}}</td>
   </tr>
 </table>
+{% if [1,2,3]|length >2 %}
+<br><a href="/sc2rep/createtree/samples/{{sample_ids}}" target="_blank"><button>Visualize tree in GrapeTree</button></a>
+{% else: %}
+<div>
+<h3>To display a phylogenetic tree, minimum of three samples are required</h3>
+</div>
+{% endif %}
+
 <div class="shadow small-plot" id="plot_div"></div>
 <h3>Samples with mutation</h3>
 <form action="{{ url_for('variant', var_id=var_id) }}">

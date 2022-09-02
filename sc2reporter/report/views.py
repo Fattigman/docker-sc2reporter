@@ -232,7 +232,7 @@ def variant(var_id):
                                                  'collection_date': 1, 'variants': 1}).sort('collection_date')
     var_per_date = rolling_mean_variant(list(all_samples), var_id)
     samples_with_variant.rewind()
-    return render_template('variant.html', annotations=variant_annotations, samples=samples_with_variant, var_per_date=var_per_date, var_id=var_id)
+    return render_template('variant.html', annotations=variant_annotations, samples=list(samples_with_variant), var_per_date=var_per_date, var_id=var_id, sample_ids= [x['sample_id'] for x in samples_with_variant])
 
 
 @app.route('/pangolin/<string:pango_type>')
