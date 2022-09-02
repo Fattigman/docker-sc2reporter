@@ -10,10 +10,10 @@
 }
 
 .loginContainer {
-  margin: auto;
+  margin: 50px auto;
   width: 360px;
   height: 360px;
-  background-color: #9ce2d7;
+  background-color: #b9ddff;
   border-radius: 3%;
   padding: 20px;
   display: flex;

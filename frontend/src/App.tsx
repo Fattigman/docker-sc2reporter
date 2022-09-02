@@ -16,7 +16,7 @@ export const App = () => {
   const menuItems = [
     {
       key: 'Home',
-      label: <Link to="/">Samples</Link>,
+      label: <Link to="/">Home</Link>,
     },
   ]
 

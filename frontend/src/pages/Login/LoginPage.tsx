@@ -12,17 +12,6 @@ export const LoginPage = ({ login }) => {
   }
   return (
     <div className={styles.homeContainer}>
-      <div>
-        <h1>Welcome to SC2Visualizer</h1>
-        <h3>
-          Developed and maintained by{' '}
-          <a href={'https://www.scilifelab.se/units/clinical-genomics/'}>
-            Clinical Genomics - Scilifelab
-          </a>
-          .
-        </h3>
-        <br />
-      </div>
       <div className={styles.loginContainer}>
         <div className={styles.form}>
           <Form name="basic" onFinish={onSubmit} onFinishFailed={onSubmitFailed} autoComplete="off">
