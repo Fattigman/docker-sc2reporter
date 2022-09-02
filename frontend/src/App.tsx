@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import styles from './App.module.css'
-import { Layout, Menu } from 'antd'
+import { Button, Layout, Menu } from 'antd'
 import { Link, Route, Routes, useLocation } from 'react-router-dom'
 import { Samples } from './pages/Samples'
 import { LoginPage } from './pages/Login/LoginPage'
@@ -13,8 +13,23 @@ export const App = () => {
   const [token, setToken] = React.useState<any>()
   const location = useLocation()
 
+  const menuItems = [
+    {
+      key: 'Home',
+      label: <Link to="/">Samples</Link>,
+    },
+  ]
+
   const login = (formInput) => {
-    getToken(formInput).then((response) => console.log(response))
+    getToken(formInput).then((response) => {
+      setToken(response.access_token)
+      setUser(formInput.username)
+    })
+  }
+
+  const logout = () => {
+    setToken(null)
+    setUser(null)
   }
 
   return (
@@ -25,19 +40,20 @@ export const App = () => {
             theme="dark"
             mode="horizontal"
             defaultSelectedKeys={['home']}
-            selectedKeys={[location.pathname]}
-          >
-            <Menu.Item key="/samples" disabled={!token}>
-              <Link to="/samples">
-                <span>Samples</span>
-              </Link>
-            </Menu.Item>
-            {!!token && !!user?.username && (
-              <Menu.Item key="/user" disabled={!token} style={{ marginLeft: 'auto' }}>
-                {user?.username}
-              </Menu.Item>
-            )}
-          </Menu>
+            selectedKeys={[useLocation().pathname.split('/')[1]]}
+            style={{ width: '72%' }}
+            items={menuItems}
+          />
+          <div className={styles.logout}>
+            <div className={styles.username}>{user}</div>
+            <div>
+              {token && (
+                <Button type="primary" onClick={() => logout()}>
+                  Logout
+                </Button>
+              )}
+            </div>
+          </div>
         </Header>
         <Content
           className={styles.siteLayout}

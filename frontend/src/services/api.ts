@@ -1,10 +1,11 @@
 import { default as axios } from 'axios'
 import { Login } from './interfaces'
+import { notification } from 'antd'
 
 export const { REACT_APP_BACKEND_URL } = process.env
 
 export const getToken = async (formInput: Login): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/get_steps`
+  const endPoint = `${REACT_APP_BACKEND_URL}/login/token`
   return new Promise((resolve, reject) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -16,6 +17,12 @@ export const getToken = async (formInput: Login): Promise<any> => {
         },
       })
       .then((response) => resolve(response.data))
-      .catch((error) => console.log(error))
+      .catch((error) => {
+        console.log(error)
+        notification.error({
+          message: 'Something went wrong',
+          description: 'Try again',
+        })
+      })
   })
 }

@@ -17,3 +17,15 @@
   margin-top: auto;
   text-align: center;
 }
+
+.logout {
+  position: absolute;
+  top: 0;
+  right: 75px;
+  display: flex;
+  color: white;
+}
+
+.username {
+  padding-right: 20px;
+}

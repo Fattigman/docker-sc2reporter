@@ -2,13 +2,9 @@ import * as React from 'react'
 import styles from './LoginPage.module.css'
 import { Form, Input, Button } from 'antd'
 
-export const LoginPage = (login) => {
+export const LoginPage = ({ login }) => {
   const onSubmit = (values) => {
     login(values)
-      .then((response) => {
-        console.log(response)
-      })
-      .catch((error) => console.log(error))
   }
 
   const onSubmitFailed = (errorInfo) => {
