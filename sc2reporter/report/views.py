@@ -1,3 +1,4 @@
+from dis import dis
 from report import app
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash, jsonify, send_from_directory, make_response, escape
 from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
@@ -36,12 +37,12 @@ def test():
     if request.method == 'POST':
         samples = (request.form.getlist('check'))
         print(samples)
-        samples = list(app.config['SAMPLE_COLL'].find(
+        data = list(app.config['SAMPLE_COLL'].find(
             {'sample_id': 
             {'$in': samples }
             }))
-        samples = add_significant_variants(samples)
-        return render_template('samples.html', samples=samples)
+        data = add_significant_variants(data)
+        return render_template('samples.html', samples=data, lista=samples)
     else:
         render_template('main.html')
 
@@ -293,6 +294,15 @@ def create_tree(group, value):
     elif group == "all":
         samples = app.config['SAMPLE_COLL'].find(
             {'hidden': {'$ne': 1}, 'qc.pct_N_bases': {'$lte': app.config["QC_MAX_PCT_N"]}})
+    elif group == 'samples':
+        disallowed_chars = "'[] "
+        for char in disallowed_chars:
+            value = value.replace(char, '')
+        value = value.split(',')
+        samples = app.config['SAMPLE_COLL'].find(
+            {'sample_id': 
+            {'$in': value }
+            ,'qc.pct_N_bases': {'$lte': app.config["QC_MAX_PCT_N"]}})
 
     presence = defaultdict(set)
     all_samples = set()
