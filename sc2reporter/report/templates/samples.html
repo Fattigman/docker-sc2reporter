@@ -28,7 +28,7 @@
     </thead>
   {% for sample in samples %}
 <tr>
-  <td><a href="{{ url_for("report", sample_id=sample, max_diff=5, verbosity="simple") }}">{{sample.sample_id}}</a></td>
+  <td><a href="report/{{sample._id}}/5/simple">{{sample.sample_id}}</a></td>
 
   <td>{{sample.collection_date|date_notime }}</td>
 
