@@ -8,11 +8,9 @@ import { getSamples, getToken } from './services/api'
 
 const { Header, Content } = Layout
 export const App = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(true)
   const [user, setUser] = useState<any>()
   const [samples, setSamples] = useState<any>()
   const [token, setToken] = useState<any>()
-  const location = useLocation()
 
   const menuItems = [
     {
