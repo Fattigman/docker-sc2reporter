@@ -439,9 +439,9 @@
 			value: Math.log(tree.node_collapsed_value)*1000,
 		});
 		tree.centerGraph();
-		$(waiting_spinner.el).hide();
-				 $("#waiting-information").text("Complete. Tree has "+tree.force_nodes.length+" nodes");
-				$("#waiting-image").attr("src","static/js/img/ms_complete_1.png").show();
+		// $(waiting_spinner.el).hide();
+		// 		 $("#waiting-information").text("Complete. Tree has "+tree.force_nodes.length+" nodes");
+		// 		$("#waiting-image").attr("src","static/js/img/ms_complete_1.png").show();
 			   // legend_colour_chooser.hide();
 		$("#information-div").modal("hide");
 	}
@@ -960,7 +960,7 @@ window.onload = function (){
 	waiting_spinner= new Spinner({color:'black', lines: 12,top:"13%"}).spin(target);
 
 
-	$('.panel-default').find('input, textarea, button, select, span, div').css("opacity", 0.3).prop('disabled',true);
+	// $('.panel-default').find('input, textarea, button, select, span, div').css("opacity", 0.3).prop('disabled',true);
 
 	window.addEventListener("beforeunload", function (e) {
 		if (the_tree) {
@@ -998,25 +998,25 @@ window.onload = function (){
 			icon.attr("class","glyphicon glyphicon-menu-down");
 		}
 	});
-	try_backend();
-	loadNetFiles();
+	// try_backend();
+	// loadNetFiles();
 };
 
-function try_backend(){
-  try{
-	$.ajax({
-			method: "POST",
-			url: "/sc2rep/testtree",
-	}).done(function(result){})
-	.fail(function( jqXHR, textStatus){
-		if (jqXHR.status != 406) {
-			cannot_connect=true;
-		}
-    });
-   }catch(e){
-		cannot_connect=true;
-   }
- };
+// function try_backend(){
+//   try{
+// 	$.ajax({
+// 			method: "POST",
+// 			url: "/sc2rep/testtree",
+// 	}).done(function(result){})
+// 	.fail(function( jqXHR, textStatus){
+// 		if (jqXHR.status != 406) {
+// 			cannot_connect=true;
+// 		}
+//     });
+//    }catch(e){
+// 		cannot_connect=true;
+//    }
+//  };
 </script>
 <script>
     var data = {{ data|safe }}
