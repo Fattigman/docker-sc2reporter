@@ -9,6 +9,7 @@ export const SamplesPage = ({ samples }) => {
       title: 'ID',
       dataIndex: 'sample_id',
       key: 'sample_id',
+      sorter: (a, b) => a.sample_id.localeCompare(b.title),
     },
     {
       title: 'Date added',
