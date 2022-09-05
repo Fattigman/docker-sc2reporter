@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styles from './App.module.css'
 import { Button, Layout, Menu } from 'antd'
 import { Link, Route, Routes, useLocation } from 'react-router-dom'
-import { Samples } from './pages/Samples'
+import { SamplesPage } from './pages/SamplesPage'
 import { LoginPage } from './pages/Login/LoginPage'
 import { getToken } from './services/api'
 
@@ -67,7 +67,7 @@ export const App = () => {
           <Routes>
             <Route
               path="/"
-              element={token ? <Samples samples={samples} /> : <LoginPage login={login} />}
+              element={token ? <SamplesPage samples={samples} /> : <LoginPage login={login} />}
             />
           </Routes>
         </Content>

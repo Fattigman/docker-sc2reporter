@@ -40,7 +40,7 @@ def root():
 app.include_router(
     samples.router,
     prefix="/samples",
-    tags=["Samples"],
+    tags=["SamplesPage"],
     responses={status.HTTP_404_NOT_FOUND: {"description": "Not found"}},
 )
 
