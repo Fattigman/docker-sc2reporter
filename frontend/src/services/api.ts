@@ -1,14 +1,11 @@
 import { default as axios } from 'axios'
-import { Login } from './interfaces'
 import { notification } from 'antd'
 
 export const { REACT_APP_BACKEND_URL } = process.env
 
-export const getToken = async (formInput: Login): Promise<any> => {
+export const getToken = async (formInput): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/login/token`
-  return new Promise((resolve, reject) => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
+  return new Promise((resolve) => {
     const params = new URLSearchParams(formInput)
     axios
       .post(endPoint, params, {
@@ -29,7 +26,7 @@ export const getToken = async (formInput: Login): Promise<any> => {
 
 export const getSamples = async (token): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/samples`
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     axios
       .get(endPoint, {
         headers: { Authorization: `Bearer ${token}` },

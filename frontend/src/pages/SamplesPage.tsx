@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table, Tag, Tooltip } from 'antd'
+import { Table, Tag } from 'antd'
 import { formatDate, sortDate } from '../helpers'
 import { CheckCircleTwoTone } from '@ant-design/icons'
 
