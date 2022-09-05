@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table, Tag } from 'antd'
+import { Table, Tag, Tooltip } from 'antd'
 import { formatDate, sortDate } from '../helpers'
 import { CheckCircleTwoTone } from '@ant-design/icons'
 
@@ -16,18 +16,26 @@ export const SamplesPage = ({ samples }) => {
       dataIndex: 'time_added',
       key: 'time_added',
       render: (date) => formatDate(date?.$date),
-      sorter: (a, b) => {
-        console.log(a)
-        return sortDate(a.time_added?.$date, b.time_added?.$date)
-      },
+      sorter: (a, b) => sortDate(a.time_added?.$date, b.time_added?.$date),
     },
     {
       title: 'QC',
       dataIndex: 'qc',
       key: 'qc',
+      onFilter: (value, record) => record.qc?.qc_pass?.indexOf(value) === 0,
+      filters: [
+        {
+          text: <Tag color={'volcano'}>FAIL</Tag>,
+          value: 'FALSE',
+        },
+        {
+          text: <CheckCircleTwoTone style={{ fontSize: 20 }} twoToneColor="#52c41a" />,
+          value: 'TRUE',
+        },
+      ],
       render: (qc) =>
         qc?.qc_pass === 'TRUE' ? (
-          <CheckCircleTwoTone twoToneColor="#52c41a" />
+          <CheckCircleTwoTone style={{ fontSize: 20 }} twoToneColor="#52c41a" />
         ) : (
           <Tag color={'volcano'}>FAIL</Tag>
         ),
@@ -40,9 +48,16 @@ export const SamplesPage = ({ samples }) => {
     },
     {
       title: 'Significant variants',
-      dataIndex: 'pangolin',
-      key: 'pangolin',
-      render: (pangolin) => pangolin?.type,
+      dataIndex: 'variants',
+      key: 'variants',
+      width: '40%',
+      render: (variants) =>
+        variants?.map((variant) => (
+          <Tag color={'geekblue'} key={variant.id}>
+            {variant.id}
+          </Tag>
+        )),
+      ellipsis: true,
     },
     {
       title: 'Collection date',
@@ -64,6 +79,7 @@ export const SamplesPage = ({ samples }) => {
       columns={columns}
       key={'sample_id'}
       loading={!samples}
+      style={{ margin: 20 }}
     />
   )
 }
