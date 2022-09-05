@@ -14,7 +14,7 @@ export const SamplesPage = ({ samples }) => {
       title: 'Date added',
       dataIndex: 'time_added',
       key: 'time_added',
-      render: (date) => date?.$date,
+      render: (date) => formatDate(date?.$date),
     },
     {
       title: 'QC',
