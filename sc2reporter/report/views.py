@@ -1,3 +1,4 @@
+from cmath import log
 from dis import dis
 from report import app
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash, jsonify, send_from_directory, make_response, escape
@@ -275,7 +276,7 @@ def nextstrain(clade):
     return render_template('nextstrain.html', samples=samples_with_clade, clade=clade)
 
 
-@app.route('/createtree/<string:group>/<string:value>')
+@app.route('/createtree/<string:group>/<string:value>', methods=['POST', 'GET'])
 @login_required
 def create_tree(group, value):
 
@@ -376,10 +377,11 @@ def create_tree(group, value):
         for key2 in sample_metadata[key]:
             metaLista.add(key2)
     metaLista = list(metaLista) 
-
+    # print(tree)
     tree['metadata_list'] = metaLista
     tree['metadata_options'] = {"time":{"label":"time","coltype":"character","grouptype":"alphabetic","colorscheme":"gradient"}}
-    return render_template('tree.html', tree=tree, meta_data = sample_metadata)
+    # tree = '{"nwk":"(A:0.1,B:0.2,(C:0.3,D:0.4):0.5);"}'
+    return render_template('ms_tree.html', data=tree)
 
 def get_similar_samples(sample_from_report, all_samples, max_diffs):
 

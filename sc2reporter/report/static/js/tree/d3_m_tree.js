@@ -1055,9 +1055,8 @@ D3MSTree.prototype._setNodeText = function(){
                                 return "ND";
                         }                    
                 }
-                return  self._getIDsForNode(it.id)
+                return  it.id
         });
-        
 };
 
 D3MSTree.prototype.delOtherNodes = function(nodes) {
@@ -1527,7 +1526,7 @@ D3MSTree.prototype._centerGraph = function(){
 
         this.setScale(scale);
         this.setTranslate([0,0]);
-        // this.updateScaleDiv();
+        this.updateScaleDiv();
 }
  
 D3MSTree.prototype.centerGraph = function(){

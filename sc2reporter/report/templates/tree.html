@@ -5,6 +5,17 @@
   <script src="{{url_for('static', filename='js/d3_m_tree.js')}}"></script>
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='treeStyle.css') }}">
 
+  
+<script src="{{url_for('static', filename='js/SlickGrid/slick.dataview.js')}}"></script>
+
+<script src="{{url_for('static', filename='js/tree/context.js?version={{config['JAVASCRIPT_VERSION']}}"></script>
+<script src="{{url_for('static', filename='js/tree/grid.js?version={{config['JAVASCRIPT_VERSION']}}"></script>
+<script src="{{url_for('static', filename='js/tree/help.js?version={{config['JAVASCRIPT_VERSION']}}"></script>
+
+<script charset="utf-8" src="{{url_for('static', filename='js/tree/base_tree.js?version={{config['JAVASCRIPT_VERSION']}}"></script>
+<script charset="utf-8" src="{{url_for('static', filename='js/tree/d3_m_tree.js?version={{config['JAVASCRIPT_VERSION']}}"></script>
+<script charset="utf-8" src="{{url_for('static', filename='js/tree/grapetree_fileHandler.js?version={{config['JAVASCRIPT_VERSION']}}"></script>
+
   <!--  Sidebar with display options for the visualized network -->
   <div id="sidebar">
     <h3>Evaluate your selected nodes here</h3>
