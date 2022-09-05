@@ -1,6 +1,6 @@
 import React from 'react'
 import { Table, Tag } from 'antd'
-import { formatDate } from '../helpers'
+import { formatDate, sortDate } from '../helpers'
 import { CheckCircleTwoTone } from '@ant-design/icons'
 
 export const SamplesPage = ({ samples }) => {
@@ -15,6 +15,10 @@ export const SamplesPage = ({ samples }) => {
       dataIndex: 'time_added',
       key: 'time_added',
       render: (date) => formatDate(date?.$date),
+      sorter: (a, b) => {
+        console.log(a)
+        return sortDate(a.time_added?.$date, b.time_added?.$date)
+      },
     },
     {
       title: 'QC',
@@ -44,6 +48,7 @@ export const SamplesPage = ({ samples }) => {
       dataIndex: 'collection_date',
       key: 'collection_date',
       render: (date) => formatDate(date?.$date),
+      sorter: (a, b) => sortDate(a.collection_date?.$date, b.collection_date?.$date),
     },
     {
       title: 'Criterion',
