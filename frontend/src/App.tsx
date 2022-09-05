@@ -4,7 +4,7 @@ import { Button, Layout, Menu } from 'antd'
 import { Link, Route, Routes, useLocation } from 'react-router-dom'
 import { SamplesPage } from './pages/SamplesPage'
 import { LoginPage } from './pages/Login/LoginPage'
-import { getToken } from './services/api'
+import { getSamples, getToken } from './services/api'
 
 const { Header, Content } = Layout
 export const App = () => {
@@ -25,6 +25,7 @@ export const App = () => {
     getToken(formInput).then((response) => {
       setToken(response.access_token)
       setUser(formInput.username)
+      getSamples(response.access_token).then((samples) => setSamples(samples))
     })
   }
 
