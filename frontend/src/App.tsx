@@ -6,6 +6,7 @@ import { SamplesPage } from './pages/SamplesPage'
 import { LoginPage } from './pages/Login/LoginPage'
 import { getSamples, getToken } from './services/api'
 import { SamplePage } from './pages/SamplePage'
+import { LoadingPage } from './pages/LoadingPage'
 
 const { Header, Content } = Layout
 export const App = () => {
@@ -71,7 +72,17 @@ export const App = () => {
             />
             <Route
               path="/samples/:id"
-              element={token ? <SamplePage samples={samples} /> : <LoginPage login={login} />}
+              element={
+                token ? (
+                  samples ? (
+                    <SamplePage samples={samples} />
+                  ) : (
+                    <LoadingPage />
+                  )
+                ) : (
+                  <LoginPage login={login} />
+                )
+              }
             />
           </Routes>
         </Content>
