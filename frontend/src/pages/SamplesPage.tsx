@@ -2,6 +2,7 @@ import React from 'react'
 import { Table, Tag } from 'antd'
 import { formatDate, sortDate } from '../helpers'
 import { CheckCircleTwoTone } from '@ant-design/icons'
+import { Link } from 'react-router-dom'
 
 export const SamplesPage = ({ samples }) => {
   const columns = [
@@ -10,6 +11,7 @@ export const SamplesPage = ({ samples }) => {
       dataIndex: 'sample_id',
       key: 'sample_id',
       sorter: (a, b) => a.sample_id.localeCompare(b.title),
+      render: (id) => <Link to={`samples/${id}`}>{id}</Link>,
     },
     {
       title: 'Date added',
