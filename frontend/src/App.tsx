@@ -5,6 +5,7 @@ import { Link, Route, Routes, useLocation } from 'react-router-dom'
 import { SamplesPage } from './pages/SamplesPage'
 import { LoginPage } from './pages/Login/LoginPage'
 import { getSamples, getToken } from './services/api'
+import { SamplePage } from './pages/SamplePage'
 
 const { Header, Content } = Layout
 export const App = () => {
@@ -67,6 +68,10 @@ export const App = () => {
             <Route
               path="/"
               element={token ? <SamplesPage samples={samples} /> : <LoginPage login={login} />}
+            />
+            <Route
+              path="/samples/:id"
+              element={token ? <SamplePage samples={samples} /> : <LoginPage login={login} />}
             />
           </Routes>
         </Content>
