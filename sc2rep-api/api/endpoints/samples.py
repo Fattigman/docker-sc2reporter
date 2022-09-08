@@ -17,7 +17,7 @@ async def read_samples(
 
     return samples
 
-@router.get("/single/{sample_id}")
+@router.get("/{sample_id}")
 async def single_sample(
     sample_id: str,
     current_user: User = Depends(get_current_active_user)
