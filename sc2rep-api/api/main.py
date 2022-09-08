@@ -3,7 +3,7 @@ from db import *
 from authentication import *
 from models import *
 
-from api.endpoints import samples, users, login
+from api.endpoints import samples, users, login, variants
 
 from datetime import datetime, timedelta
 from typing import Union
@@ -59,13 +59,20 @@ app.include_router(
     responses={status.HTTP_404_NOT_FOUND: {"description": "Not found"}},
 )
 
+app.include_router(
+    variants.router,
+    prefix="/variants",
+    tags=["Variants"],
+    responses={status.HTTP_404_NOT_FOUND: {"description": "Not found"}},
+)
+
 @app.get("/depth")
 async def depth(current_user: User = Depends(get_current_active_user)):
     return await get_depth()
 
-@app.get("/variants")
-async def variants(current_user: User = Depends(get_current_active_user)):
-    return await get_variants()
+# @app.get("/variants")
+# async def variants(current_user: User = Depends(get_current_active_user)):
+#     return await get_variants()
 
 @app.get("/consensus")
 async def consensus(current_user: User = Depends(get_current_active_user)):

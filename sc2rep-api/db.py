@@ -16,6 +16,8 @@ def get_db():
 def parse_json(data):
     return json.loads(json_util.dumps(data)) 
 
+#  Handling of the samples collection
+
 async def get_samples(query: Optional[any] = None):
     cursor =  db.sample.find(query)
     docs = [parse_json(x) for x in await cursor.to_list(None)]
@@ -32,6 +34,8 @@ async def get_multiple_samples(sample_ids):
     docs = [parse_json(x) for x in await curr.to_list(None)]
     return  docs
 
+# Handling of the user collection
+
 async def get_user(username : str):
     curr =  db.users.find({"username": username})
     docs = [parse_json(x) for x in await curr.to_list(None)]
@@ -42,15 +46,30 @@ async def get_users():
     docs = [parse_json(x) for x in await cursor.to_list(None)]
     return (docs)
 
+# Handling of the depth collection
 async def get_depth(query: Optional[any] = None):
     cursor =  db.depth.find(query)
     docs = [parse_json(x) for x in await cursor.to_list(None)]
     return (docs)
 
+# Handling of the variants collection
+
 async def get_variants(query: Optional[any] = None):
     cursor =  db.variant.find(query)
     docs = [parse_json(x) for x in await cursor.to_list(None)]
     return (docs)
+
+async def get_single_variant(variant_id : str):
+    curr =  db.sample.find({"sample_id": variant_id})
+    docs = [parse_json(x) for x in await curr.to_list(None)]
+    return  docs
+
+async def get_multiple_variants(variant_ids):
+    curr =  db.sample.find({"sample_id": {'$in': variant_ids}})
+    docs = [parse_json(x) for x in await curr.to_list(None)]
+    return  docs
+
+# Handling of the consensus collection
 
 async def get_consensus(query: Optional[any] = None):
     cursor =  db.consensus.find(query)
