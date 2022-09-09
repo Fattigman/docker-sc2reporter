@@ -1,6 +1,6 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import { Card, Descriptions, Result, Table, Tag } from 'antd'
+import { Card, Descriptions, Result, Tag } from 'antd'
 import { CheckCircleTwoTone } from '@ant-design/icons'
 import { formatDate } from '../helpers'
 
