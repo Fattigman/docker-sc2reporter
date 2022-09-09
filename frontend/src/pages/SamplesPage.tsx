@@ -79,7 +79,7 @@ export const SamplesPage = ({ samples }) => {
       pagination={false}
       dataSource={samples}
       columns={columns}
-      key={'sample_id'}
+      rowKey={'sample_id'}
       loading={!samples}
       style={{ margin: 20 }}
     />
