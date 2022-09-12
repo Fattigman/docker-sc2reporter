@@ -1,6 +1,7 @@
 
-from typing import List, Optional
-from fastapi import APIRouter, Depends, Query
+from typing import  Optional
+from fastapi import APIRouter, Depends, Query, Header, Body
+from fastapi.security import OAuth2PasswordRequestForm
 
 from db import *
 from authentication import *
@@ -23,9 +24,12 @@ async def read_own_items(
     ):
     return [{"item_id": "Foo", "owner": current_user['username']}]
 
-@router.post("/add/")
+@router.post("/add/", response_model=User)
 async def post_user(
-        user: User
+        user: User,
+        current_user: User = Depends(get_current_active_user)
     ):
+    print(dict(user))
     create_user(user)
     return user
+
