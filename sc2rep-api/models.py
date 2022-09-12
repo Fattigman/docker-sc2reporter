@@ -1,15 +1,12 @@
-from pydantic import BaseModel, EmailStr
-from datetime import date
-from typing import List, Optional
-
+from pydantic import BaseModel
 from typing import Union
 
 class User(BaseModel):
-    username: str
-    email: Union[str, None] = None
-    fullname: Union[str, None] = None
-    disabled: Union[bool, None] = None
-    password: Union[str, None] = None
+    username: str 
+    email: str
+    fullname: str
+    disabled: bool = False
+    password: str
 
 
 class Token(BaseModel):
