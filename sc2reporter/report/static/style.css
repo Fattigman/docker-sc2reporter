@@ -72,7 +72,7 @@ h1 {
 
 th,td {
     font-family: sans-serif;
-    font-size: 11px;
+    /* font-size: 11px; */
     text-align:left;
     padding-left:12px;
     padding: 5px 10px 5px 10px;
@@ -91,10 +91,11 @@ div.replicates {
 }
 
 table {
+    padding: 10px;
     border-collapse:collapse;
     -moz-border-radius:6px;
     border-radius:6px;
-    box-shadow: 2px 2px 11px #aaa;
+    box-shadow: 2px 2px 2px #aaa;
     margin: 10px;
 }
 
@@ -350,7 +351,10 @@ div.search {
 .grid-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-gap: 20px;
     width: fit-content;
     height: fit-content
+}
+
+#myTable_length {
+    padding:5px;
 }
