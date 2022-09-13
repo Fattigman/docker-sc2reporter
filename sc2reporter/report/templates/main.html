@@ -14,7 +14,7 @@
 </div>
 <div class="grid-child second">
 <form id="pango-submit">
-  <div  class="search">Select Pangotype:  <input id="pango-select" type="text"></div>
+  <div  class="search">Select Sample:  <input id="pango-select" type="text" placeholder="sample, pango"></div>
 </form>
 <script>
   var form = document.getElementById("pango-submit");
@@ -39,7 +39,7 @@
   {% for sample in samples %}
   <tr>
     <td>
-      <input class="{{ sample.pangolin.type }}" type="checkbox" name="check" value="{{sample.sample_id}}">
+      <input class="{{ sample.pangolin.type }} {{ sample.sample_id }} " type="checkbox" name="check" value="{{sample.sample_id}}">
     </td>
     <td>
       {{ sample.time_added|human_date }}
