@@ -3,15 +3,21 @@
 {% block body %}
 {% set advanced = true if verbosity=="advanced" else false %}
 {%if advanced %}Showing {{samples|count}} unique samples<br><br>{% endif %}
-<div class="grid-container">
-<div class="grid-child first">
 
+<!-- Dependencies -->
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+
+
+
+<div class="grid-container">
+<div class="grid-child first center">
 <a href="http://localhost:8000/sc2rep/createtree/all/treeeeee"><button style="margin-bottom: 10px;">Visualize all samples in GrapeTree</button></a>
 </div>
 <div class="grid-child second">
 <form id="pango-submit">
   <div  class="search">Select Samples:  <input id="pango-select" type="text" placeholder="sample, pango, time"></div>
-  <!-- <input type="checkbox"> Check to unselect samples -->
 </form>
 <script>
   var form = document.getElementById("pango-submit");
@@ -25,15 +31,13 @@
   } 
   form.addEventListener('submit', handleForm);
 </script>
+</div>
+</div>
 <form method="post" action="samples">
-<input style="margin-left: 10px;" type="submit" value="Submit selected samples for comparison"> 
-</div>
-</div>
-<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+  <input  type="submit" class="sample-submit" value="Submit selected samples for comparison"> 
 
 <table id="myTable" class="display">
+  
   <thead>
     <tr><th>Select</th><th>Time added</th><th>Sample</th><th>QC</th><th>Pangolin</th><th>Significant variants</th><th>Coll. date</th>{% if advanced %}<th>Ct</th><th>%N</th><th>mapped reads</th><th>Sequencing run</th><th>Sex</th><th>Age</th><th>MLU</th><th>Orig. lab</th><th>Seq. lab</th>{% endif %}<th>Criterion</th></tr>
   </thead>
@@ -96,11 +100,11 @@
   </tr>
 {% endfor %}
 </table>
+</form>
+
 <script>
   $(document).ready( function () {
     $('#myTable').DataTable();
-    console.log('test')
 } );
 </script>
-</form>
 {% endblock %}
