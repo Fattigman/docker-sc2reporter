@@ -3,14 +3,35 @@
 {% block body %}
 {% set advanced = true if verbosity=="advanced" else false %}
 {%if advanced %}Showing {{samples|count}} unique samples<br><br>{% endif %}
+<div class="grid-container">
+<div class="grid-child first">
 <form action="{{ url_for('index', verbosity=verbosity) }}">
   <input type="hidden" id="verbosity" name="verbosity" value="{{verbosity}}">
-  <div id="search">Search:  <input type="text" id="search_string" name="search_string" value="{{search_string}}"></div>
+  <div class="search">Search:  <input type="text" id="search_string" name="search_string" value="{{search_string}}"></div>
 </form>
-<a href="http://localhost:8000/sc2rep/createtree/all/treeeeee"><button style="margin-bottom: 10px;">Visualize all samples in GrapeTree</button></a>
 
+<a href="http://localhost:8000/sc2rep/createtree/all/treeeeee"><button style="margin-bottom: 10px;">Visualize all samples in GrapeTree</button></a>
+</div>
+<div class="grid-child second">
+<form id="pango-submit">
+  <div  class="search">Select Pangotype:  <input id="pango-select" type="text"></div>
+</form>
+<script>
+  var form = document.getElementById("pango-submit");
+  function handleForm(event) { 
+    event.preventDefault(); 
+    const pango_type = document.getElementById('pango-select').value
+    const checkboxes = document.getElementsByClassName(pango_type)
+    Array.from(checkboxes).forEach(e => 
+      e.checked = true
+    )
+  } 
+  form.addEventListener('submit', handleForm);
+</script>
 <form method="post" action="samples">
 <input style="margin-left: 10px;" type="submit" value="Submit selected samples for comparison"> 
+</div>
+</div>
 <table>
   <thead>
     <tr><th>Select</th><th>Time added</th><th>Sample</th><th>QC</th><th>Pangolin</th><th>Significant variants</th><th>Coll. date</th>{% if advanced %}<th>Ct</th><th>%N</th><th>mapped reads</th><th>Sequencing run</th><th>Sex</th><th>Age</th><th>MLU</th><th>Orig. lab</th><th>Seq. lab</th>{% endif %}<th>Criterion</th></tr>
@@ -18,7 +39,7 @@
   {% for sample in samples %}
   <tr>
     <td>
-      <input type="checkbox" name="check" value="{{sample.sample_id}}">
+      <input class="{{ sample.pangolin.type }}" type="checkbox" name="check" value="{{sample.sample_id}}">
     </td>
     <td>
       {{ sample.time_added|human_date }}

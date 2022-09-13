@@ -336,7 +336,7 @@ div#criterion_form {
     border-right:1px solid #aab;
 }
 
-div#search {
+div.search {
     padding:13px;
     margin:10px;
     background:#fbfbfb;
@@ -345,4 +345,12 @@ div#search {
     display: inline-block;
     border-radius:3px;
     box-shadow: 2px 2px 11px #aaa;   
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+    width: fit-content;
+    height: fit-content
 }
