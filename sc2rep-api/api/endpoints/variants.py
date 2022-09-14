@@ -24,8 +24,15 @@ async def single_sample(
     ):
     return await get_single_variant(variant_id)
 
-@router.get("/multiple/")
+@router.post("/multiple/")
 async def multiple_samples(
+    variant_ids:list[str] | None = Query(default=None),
+    current_user: User = Depends(get_current_active_user)
+    ):
+    return await get_multiple_variants(variant_ids)
+
+@router.get("/multiple/similar/")
+async def similar_samples(
     variant_ids:list[str] | None = Query(default=None),
     current_user: User = Depends(get_current_active_user)
     ):
