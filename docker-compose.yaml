@@ -4,7 +4,7 @@ services:
     build: .
     platform: linux/amd64
     ports:
-      - "80:80"
+      - "8000:8000"
     depends_on:
       - mongo_seed
     restart: "unless-stopped"
