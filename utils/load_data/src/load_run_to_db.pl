@@ -5,14 +5,15 @@ use vcf2;
 use File::Basename qw(basename);
 use Cwd qw(abs_path);
 use MongoDB;
-use MongoDB::BSON;
+# use MongoDB::BSON;
 use MongoDB::OID;
 use DateTime;
+use Env;
 
 my $db = ($ARGV[1] or "sarscov2_standalone");
 print STDERR "Loading data to $db!\n";
 # Connect to database, and create handles for collections
-my $client = MongoDB->connect();
+my $client = MongoDB->connect('mongodb://mongodb');
 my $SAMPLE = $client->ns("$db.sample");
 my $VARIANT = $client->ns("$db.variant");
 my $DEPTH = $client->ns("$db.depth");
@@ -21,10 +22,10 @@ $SAMPLE = $SAMPLE->with_codec( prefer_numeric => 1 );
 $DEPTH = $DEPTH->with_codec( prefer_numeric => 1 );
 $VARIANT = $VARIANT->with_codec( prefer_numeric => 1 );
 # REMOVE THESE WHEN NOT TESTING!
-$SAMPLE->drop();
-$VARIANT->drop();
-$DEPTH->drop();
-$CONSENSUS->drop();
+# $SAMPLE->drop();
+# $VARIANT->drop();
+# $DEPTH->drop();
+# $CONSENSUS->drop();
 
 # Get all variants that are already defined in the database
 my %vars_in_db = fetch_variants();

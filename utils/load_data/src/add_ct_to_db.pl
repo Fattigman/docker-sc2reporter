@@ -2,12 +2,12 @@
 use strict;
 use Data::Dumper;
 use MongoDB;
-use MongoDB::BSON;
+# use MongoDB::BSON;
 use MongoDB::OID;
-
+use DateTime;
 
 # Connect to database, and create handles for collections
-my $client = MongoDB->connect();
+my $client = MongoDB->connect("mongodb://mongodb");
 my $SAMPLE = $client->ns("sarscov2_standalone.sample");
 
 

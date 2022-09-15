@@ -1,16 +1,16 @@
 #!/usr/bin/perl -w
 use strict;
 use MongoDB;
-use MongoDB::BSON;
+# use MongoDB::BSON;
 use MongoDB::OID;
-
+use DateTime;
 my $sequencing_facility = "CMD";
 
 my $db = ($ARGV[1] or "sarscov2_standalone");
 print STDERR "Loading data to $db!\n";
 
 # Connect to database, and create handles for collections
-my $client = MongoDB->connect();
+my $client = MongoDB->connect("mongodb://mongodb");
 my $SAMPLE = $client->ns("$db.sample");
 
 my %metadata = read_pat_metadata($ARGV[0]);
