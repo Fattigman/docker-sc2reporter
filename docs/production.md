@@ -25,8 +25,23 @@ Now we need to configure the apache web server to listen at port 8000 from the l
 
 ```
 cd ..
-mv conf.d/sc2.conf /etc/httpd/conf.d/
+mv conf.d/sc2.conf /etc/apachefolder/modulefolder/conf.d/
 sudo apachectl restart
 ```
 
 This will move apache config file to the module directory and restart the server. Now you should be able to open the application at \<your-domain-name\>/sc2rep
+
+## Populating the database
+To populate the database you will need to install on your system from:
+https://www.perl.org/get.html
+And then install mongodb
+```
+cpanm MongoDB
+```
+You will also need to move vcf2.pm to the module library of your perl.
+
+Then configure load_data.sh from utils/ such that it point towards the output data from the Arctic pipeline.
+Run it the using:
+```
+bash load_data.sh
+```
