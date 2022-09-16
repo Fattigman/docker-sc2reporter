@@ -101,12 +101,12 @@ table {
 
 th {
     background-color: #358;
-    height:20px;
-    #border-bottom: 2px solid #ddd;
+    /* height:20px; */
+    /* #border-bottom: 2px solid #ddd; */
     color:#fafafa;
     #padding: 6px 13px;
-    text-align:left;
-    border-top: none;
+    /* text-align:left; */
+    /* border-top: none; */
 }
 
 td.right {
