@@ -31,18 +31,7 @@ app.wsgi_app = DispatcherMiddleware(
     Response('Not Found', status=404),
     {'/sc2rep': app.wsgi_app}
 )  
-@app.route('/samples', methods=['GET', 'POST'])
-def test():
-    if request.method == 'POST':
-        samples = (request.form.getlist('check'))
-        data = list(app.config['SAMPLE_COLL'].find(
-            {'sample_id': 
-            {'$in': samples }
-            }))
-        data = add_significant_variants(data)
-        return render_template('samples.html', samples=data, lista=samples)
-    else:
-        render_template('main.html')
+
 
 @app.route('/', methods=['GET', 'POST'])
 @login_required
@@ -60,7 +49,7 @@ def index():
         app.config["VARIANTS_OF_BIOLOGICAL_SIGNIFICANCE"])
     positions_of_significance = set(
         app.config["POSITIONS_OF_BIOLOGICAL_SIGNIFICANCE"])
-    verbosity = request.args.get("verbosity", "simple")
+    verbosity = request.args.get("verbosity", "advanced")
     return render_template('main.html',
                            samples=samples,
                            lineages_of_concern=lineages_of_concern,
@@ -68,6 +57,18 @@ def index():
                            positions_of_significance=positions_of_significance,
                            verbosity=verbosity, search_string=search_string)
 
+@app.route('/samples', methods=['GET', 'POST'])
+def test():
+    if request.method == 'POST':
+        samples = (request.form.getlist('check'))
+        data = list(app.config['SAMPLE_COLL'].find(
+            {'sample_id': 
+            {'$in': samples }
+            }))
+        data = add_significant_variants(data)
+        return render_template('samples.html', samples=data, lista=samples)
+    else:
+        render_template('main.html')
 
 @app.route('/reruns')
 @login_required
