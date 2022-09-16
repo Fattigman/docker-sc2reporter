@@ -3,6 +3,8 @@ from db import *
 from authentication import *
 from models import *
 
+from api.config import * 
+
 from api.endpoints import samples, users, login, variants
 
 from datetime import datetime, timedelta
@@ -17,9 +19,6 @@ from jose import JWTError, jwt
 from passlib.context import CryptContext
 from pydantic import BaseModel
 
-import os
-
-if os.getenv('MONGO_HOST') != "mongodb": os.environ['MONGO_HOST'] = "localhost"
 
 app = FastAPI(
     title='SarsCov 2 API', 
