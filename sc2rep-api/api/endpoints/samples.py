@@ -31,3 +31,10 @@ async def multiple_samples(
     current_user: User = Depends(get_current_active_user)
     ):
     return await get_multiple_samples(sample_ids)
+
+@router.get("/pango/", response_model=list[Sample])
+async def pango_samples(
+    pangolin:str ,
+    # current_user: User = Depends(get_current_active_user)
+    ):
+    return await get_pangotype_samples(pangolin=pangolin)
