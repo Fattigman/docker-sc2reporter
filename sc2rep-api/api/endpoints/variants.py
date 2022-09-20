@@ -13,7 +13,7 @@ router = APIRouter()
 async def get_variants(
     current_user: User = Depends(get_current_active_user)
     ):
-    samples = await get_samples()
+    samples = await get_variants()
 
     return samples
 
@@ -31,9 +31,3 @@ async def multiple_samples(
     ):
     return await get_multiple_variants(variant_ids)
 
-@router.get("/multiple/similar/")
-async def similar_samples(
-    variant_ids:list[str] | None = Query(default=None),
-    current_user: User = Depends(get_current_active_user)
-    ):
-    return await get_multiple_variants(variant_ids)

@@ -38,6 +38,11 @@ async def get_pangotype_samples(pangolin:str):
     docs = [parse_json(x) for x in await curr.to_list(None)]
     return  docs
 
+async def get_variant_samples(variant:str):
+    curr =  db.sample.find({"variants.id" : variant})
+    docs = [parse_json(x) for x in await curr.to_list(None)]
+    return  docs
+
 # Handling of the user collection
 
 async def get_user(username : str):
@@ -67,12 +72,12 @@ async def get_variants(query: Optional[any] = None):
     return (docs)
 
 async def get_single_variant(variant_id : str):
-    curr =  db.sample.find({"sample_id": variant_id})
+    curr =  db.variant.find({"sample_id": variant_id})
     docs = [parse_json(x) for x in await curr.to_list(None)]
     return  docs
 
 async def get_multiple_variants(variant_ids):
-    curr =  db.sample.find({"sample_id": {'$in': variant_ids}})
+    curr =  db.variant.find({"sample_id": {'$in': variant_ids}})
     docs = [parse_json(x) for x in await curr.to_list(None)]
     return  docs
 
