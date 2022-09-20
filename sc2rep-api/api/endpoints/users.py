@@ -29,7 +29,12 @@ async def post_user(
         user: User,
         current_user: User = Depends(get_current_active_user)
     ):
-    print(dict(user))
+    if get_user(user):
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="User already exists in the database",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
     create_user(user)
     return user
 
