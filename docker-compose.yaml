@@ -1,7 +1,7 @@
 version: "3.1"
 services:
   fastapi:
-    build: .
+    build: sc2rep-api/.
     platform: linux/amd64
     ports:
       - "8000:8000"
