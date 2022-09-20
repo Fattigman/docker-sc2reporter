@@ -44,3 +44,10 @@ async def get_samples_with_variant(
     current_user: User = Depends(get_current_active_user)
     ):
     return await get_variant_samples(variant=variant)
+
+@router.get("/nextclade/", response_model=list[Sample])
+async def get_samples_with_nextclade(
+    nextclade:str ,
+    current_user: User = Depends(get_current_active_user)
+    ):
+    return await get_nextclade_samples(nextclade=nextclade)

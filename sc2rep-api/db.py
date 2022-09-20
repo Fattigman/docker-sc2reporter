@@ -43,6 +43,11 @@ async def get_variant_samples(variant:str):
     docs = [parse_json(x) for x in await curr.to_list(None)]
     return  docs
 
+async def get_nextclade_samples(nextclade:str):
+    curr =  db.sample.find({"nextclade": nextclade})
+    docs = [parse_json(x) for x in await curr.to_list(None)]
+    return  docs
+
 # Handling of the user collection
 
 async def get_user(username : str):
