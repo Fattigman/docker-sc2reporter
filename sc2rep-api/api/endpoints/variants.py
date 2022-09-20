@@ -10,7 +10,7 @@ router = APIRouter()
 
 
 @router.get("/")
-async def get_variants(
+async def get_variant_info(
     current_user: User = Depends(get_current_active_user)
     ):
     samples = await get_variants()
