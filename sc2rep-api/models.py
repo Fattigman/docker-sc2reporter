@@ -2,12 +2,24 @@ from pydantic import BaseModel
 from typing import Union
 
 
+class Pangolin(BaseModel):
+    conflict: Union[int, str]
+    type: str
+    pangolearn_version: str
+
+class Variant(BaseModel):
+    dp: int
+    aa: str
+    id: str
+    alt_freq: float
+
+
 class Sample(BaseModel):
     _id: dict
-    variants : Union[list[dict],None] = None
+    variants : Union[list[Variant],None] = None
     qc: dict
     time_added: dict
-    pangolin: dict
+    pangolin: Pangolin
     nextclade: str
     vcf_filename: str
     depth_filename: str
@@ -26,6 +38,7 @@ class User(BaseModel):
     fullname: str
     disabled: bool = False
     password: str
+
 
 
 class Token(BaseModel):
