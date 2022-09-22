@@ -8,12 +8,12 @@ RUN apt-get update && \
 RUN python -m pip install --upgrade pip
 
 # Copy only the requirements file and install them all.
-COPY requirements.txt /requirements.txt
+COPY ../requirements.txt /requirements.txt
 RUN pip install -r requirements.txt
 
 # Copy the entire application into an "app" folder, and use that as workdir
 # going forward.
-COPY /sc2rep-api /app
+COPY ./ /app
 WORKDIR /app
 
 CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]
