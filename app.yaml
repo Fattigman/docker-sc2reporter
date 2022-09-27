@@ -1,2 +1,0 @@
-runtime=python38
-entrypoint=docker run --rm -v /var/run/dokcer.sock:/var/run/docker.sock -v "$PWD:$PWD" -w "$PWD" docker/compose:1.27.3

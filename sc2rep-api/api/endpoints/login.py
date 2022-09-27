@@ -3,8 +3,8 @@ from db import *
 from authentication import *
 from models import *
 
-from fastapi import Depends, FastAPI, HTTPException, status, Request, APIRouter
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi import Depends, HTTPException, status, APIRouter
+from fastapi.security import OAuth2PasswordRequestForm
 
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 

@@ -7,17 +7,9 @@ from api.config import *
 
 from api.endpoints import samples, users, login, variants
 
-from datetime import datetime, timedelta
-from typing import Union
-
-from fastapi import Depends, FastAPI, HTTPException, status, Request
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi import Depends, FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
 
-from jose import JWTError, jwt
-from passlib.context import CryptContext
-from pydantic import BaseModel
 
 
 app = FastAPI(

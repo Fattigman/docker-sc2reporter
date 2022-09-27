@@ -8,7 +8,7 @@ RUN apt-get update && \
 RUN python -m pip install --upgrade pip
 
 # Copy only the requirements file and install them all.
-COPY ../requirements.txt /requirements.txt
+COPY ./requirements.txt /requirements.txt
 RUN pip install -r requirements.txt
 
 # Copy the entire application into an "app" folder, and use that as workdir
