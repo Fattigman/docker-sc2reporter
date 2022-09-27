@@ -5,7 +5,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 
 from db import *
 from authentication import *
-from crud.users import create_user
+from crud.users import *
 
 from models import User
 

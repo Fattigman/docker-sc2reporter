@@ -6,7 +6,7 @@ from pymongo import MongoClient
 from passlib.context import CryptContext
 from pymongo.errors import DuplicateKeyError
 
-from db import get_db
+from db import *
 
 from fastapi import HTTPException, status
 
@@ -23,3 +23,16 @@ def create_user(user):
     except DuplicateKeyError:
         print ('User already exists in the database')
     return db_user
+
+async def get_user(username : str):
+    curr =  db.users.find({"username": username})
+    docs = [parse_json(x) for x in await curr.to_list(None)]
+    if len(docs) > 0:
+        return  docs[0]
+    else:
+        return None
+
+async def get_users():
+    cursor =  db.users.find()
+    docs = [parse_json(x) for x in await cursor.to_list(None)]
+    return (docs)

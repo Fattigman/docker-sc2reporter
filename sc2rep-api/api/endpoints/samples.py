@@ -2,7 +2,7 @@ from typing import Optional, Union
 from fastapi import APIRouter, Depends, HTTPException, Query
 from starlette.responses import JSONResponse
 
-from db import *
+from crud.samples import *
 from models import *
 from authentication import *
 
