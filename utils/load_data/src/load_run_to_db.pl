@@ -11,9 +11,11 @@ use DateTime;
 use Env;
 
 my $db = ($ARGV[1] or "sarscov2_standalone");
+
 print STDERR "Loading data to $db!\n";
 # Connect to database, and create handles for collections
-my $client = MongoDB->connect('mongodb://mongodb');
+my $mongo_url = $ENV{'MONGO_HOST'};
+my $client = MongoDB->connect("mongodb://$mongo_url");
 my $SAMPLE = $client->ns("$db.sample");
 my $VARIANT = $client->ns("$db.variant");
 my $DEPTH = $client->ns("$db.depth");

@@ -7,7 +7,8 @@ use MongoDB::OID;
 use DateTime;
 
 # Connect to database, and create handles for collections
-my $client = MongoDB->connect("mongodb://mongodb");
+my $mongo_url = $ENV{'MONGO_HOST'};
+my $client = MongoDB->connect("mongodb://$mongo_url");
 my $SAMPLE = $client->ns("sarscov2_standalone.sample");
 
 
