@@ -22,6 +22,13 @@ span.logo a {
     color:#fff;
     text-shadow: 2px 2px 9px #bdf;
 }
+span.logo.small a {
+    /* text-decoration:none; */
+    font-size:18px;
+    color:#fff;
+    text-shadow: 0px 0px 0px #bdf;
+}
+
 
 div#login {
     float:right;
@@ -101,12 +108,12 @@ table {
 
 th {
     background-color: #358;
-    /* height:20px; */
-    /* #border-bottom: 2px solid #ddd; */
+    height:20px;
+    border-bottom: 2px solid #ddd;
     color:#fafafa;
-    #padding: 6px 13px;
-    /* text-align:left; */
-    /* border-top: none; */
+    padding: 6px 13px;
+    text-align:left;
+    border-top: none;
 }
 
 td.right {
@@ -215,6 +222,7 @@ button {
     border: 1px solid #267;
     font-size: 16px;
     box-shadow: 3px 3px 10px #bbb;
+
 }
 
 .ok {
@@ -246,7 +254,7 @@ button {
 
 .flex-container > div {
     margin: 10px;
-    #padding: 20px;
+    padding: 20px;
     font-size: 30px;
 }
 
@@ -346,8 +354,8 @@ div.search {
     display: inline-block;
     border-radius:3px;
     box-shadow: 2px 2px 11px #aaa;   
+    margin-left: 20px;
 }
-
 .grid-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -383,3 +391,30 @@ div.search {
     margin-left: 15px;
     padding: 15px;
 }
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* Tooltip text */
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: gray;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    top: -2px;
+    left: 105%;
+   
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+  }
+  
+  /* Show the tooltip text when you mouse over the tooltip container */
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+  }
