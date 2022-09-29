@@ -1,10 +1,12 @@
 import React from 'react'
-import { Table, Tag } from 'antd'
+import { Table, Tag, Typography } from 'antd'
 import { formatDate, sortDate } from '../helpers'
 import { CheckCircleTwoTone } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 
 export const SamplesTable = ({ samples }) => {
+  const { Title } = Typography
+
   const columns = [
     {
       title: 'ID',
@@ -82,6 +84,7 @@ export const SamplesTable = ({ samples }) => {
   ]
   return (
     <Table
+      title={() => <Title level={5}>Samples</Title>}
       pagination={false}
       dataSource={samples}
       columns={columns}
