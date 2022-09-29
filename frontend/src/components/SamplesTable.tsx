@@ -4,14 +4,14 @@ import { formatDate, sortDate } from '../helpers'
 import { CheckCircleTwoTone } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 
-export const SamplesPage = ({ samples }) => {
+export const SamplesTable = ({ samples }) => {
   const columns = [
     {
       title: 'ID',
       dataIndex: 'sample_id',
       key: 'sample_id',
       sorter: (a, b) => a.sample_id.localeCompare(b.title),
-      render: (id) => <Link to={`samples/${id}`}>{id}</Link>,
+      render: (id) => <Link to={`/samples/${id}`}>{id}</Link>,
     },
     {
       title: 'Date added',
@@ -52,7 +52,7 @@ export const SamplesPage = ({ samples }) => {
       title: 'Nextclade',
       dataIndex: 'nextclade',
       key: 'nextclade',
-      render: (nextclade) => <Link to={`nexctlade/${nextclade}`}>{nextclade}</Link>,
+      render: (nextclade) => <Link to={`/nextclade/${nextclade}`}>{nextclade}</Link>,
     },
     {
       title: 'Significant variants',
