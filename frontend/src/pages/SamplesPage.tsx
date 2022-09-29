@@ -49,6 +49,12 @@ export const SamplesPage = ({ samples }) => {
       render: (pangolin) => pangolin?.type,
     },
     {
+      title: 'Nextclade',
+      dataIndex: 'nextclade',
+      key: 'nextclade',
+      render: (nextclade) => <Link to={`nexctlade/${nextclade}`}>{nextclade}</Link>,
+    },
+    {
       title: 'Significant variants',
       dataIndex: 'variants',
       key: 'variants',
