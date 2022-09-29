@@ -35,8 +35,8 @@ export const getSamples = async (token): Promise<any> => {
       .catch((error) => {
         console.log(error)
         notification.error({
-          message: 'Something went wrong',
-          description: 'Try again',
+          message: 'Could not load samples',
+          description: 'Something went wrong',
         })
       })
   })
@@ -53,8 +53,8 @@ export const getNextclade = async (token, nextclade): Promise<any> => {
       .catch((error) => {
         console.log(error)
         notification.error({
-          message: 'Something went wrong',
-          description: 'Try again',
+          message: 'Could not load Nextclade info',
+          description: 'Something went wrong',
         })
       })
   })
