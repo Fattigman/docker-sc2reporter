@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Card, Descriptions, Result, Tag } from 'antd'
-import { CheckCircleTwoTone } from '@ant-design/icons'
-import { formatDate } from '../helpers'
+import { Card } from 'antd'
 import { getNextclade } from '../services/api'
 import { SamplesTable } from '../components/SamplesTable'
 
