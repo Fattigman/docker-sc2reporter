@@ -1,5 +1,5 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { Card, Descriptions, Result, Tag } from 'antd'
 import { CheckCircleTwoTone } from '@ant-design/icons'
 import { formatDate } from '../helpers'
@@ -19,7 +19,9 @@ export const SamplePage = ({ samples }) => {
           {formatDate(sample.collection_date?.$date)}
         </Descriptions.Item>
         <Descriptions.Item label="Pangolin">{sample.pangolin?.type}</Descriptions.Item>
-        <Descriptions.Item label="Nextrain clade">{sample.nextclade}</Descriptions.Item>
+        <Descriptions.Item label="Nextclade">
+          <Link to={`/nextclade/${sample.nextclade}`}>{sample.nextclade}</Link>
+        </Descriptions.Item>
         <Descriptions.Item label="Nr variants">{sample.variants?.length}</Descriptions.Item>
       </Descriptions>
       <br />
