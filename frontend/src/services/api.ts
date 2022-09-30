@@ -35,8 +35,26 @@ export const getSamples = async (token): Promise<any> => {
       .catch((error) => {
         console.log(error)
         notification.error({
-          message: 'Something went wrong',
-          description: 'Try again',
+          message: 'Could not load samples',
+          description: 'Something went wrong',
+        })
+      })
+  })
+}
+
+export const getNextclade = async (token, nextclade): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/samples/nextclade/?nextclade=${nextclade}`
+  return new Promise((resolve) => {
+    axios
+      .get(endPoint, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => resolve(response.data))
+      .catch((error) => {
+        console.log(error)
+        notification.error({
+          message: 'Could not load Nextclade info',
+          description: 'Something went wrong',
         })
       })
   })

@@ -1,17 +1,19 @@
 import React from 'react'
-import { Table, Tag } from 'antd'
+import { Table, Tag, Typography } from 'antd'
 import { formatDate, sortDate } from '../helpers'
 import { CheckCircleTwoTone } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 
-export const SamplesPage = ({ samples }) => {
+export const SamplesTable = ({ samples }) => {
+  const { Title } = Typography
+
   const columns = [
     {
       title: 'ID',
       dataIndex: 'sample_id',
       key: 'sample_id',
       sorter: (a, b) => a.sample_id.localeCompare(b.title),
-      render: (id) => <Link to={`samples/${id}`}>{id}</Link>,
+      render: (id) => <Link to={`/samples/${id}`}>{id}</Link>,
     },
     {
       title: 'Date added',
@@ -76,6 +78,7 @@ export const SamplesPage = ({ samples }) => {
   ]
   return (
     <Table
+      title={() => <Title level={5}>Samples</Title>}
       pagination={false}
       dataSource={samples}
       columns={columns}
