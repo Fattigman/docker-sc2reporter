@@ -6,4 +6,6 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['tag', 'workspace_app:latest',
     'gcr.io/able-rain-354612/sc2rep_fastapi:latest']
+options:
+  logging: CLOUD_LOGGING_ONLY
 images: ['global-docker.pkg.dev/able-rain-354612/sc2rep_fastapi:latest']
