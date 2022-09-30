@@ -21,9 +21,7 @@ services:
      - "27017:27017"
 
   mongo_seed:
-    image: mongo
-    volumes:
-      - ./mongo-seed:/mongo-seed
+    build: ./mongo-seed/.
     command:
       - /mongo-seed/import.sh
     links: 
