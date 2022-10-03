@@ -18,7 +18,9 @@ export const SamplePage = ({ samples }) => {
         <Descriptions.Item label="Collection date">
           {formatDate(sample.collection_date?.$date)}
         </Descriptions.Item>
-        <Descriptions.Item label="Pangolin">{sample.pangolin?.type}</Descriptions.Item>
+        <Descriptions.Item label="Pangolin">
+          <Link to={`/pangolin/${sample.pangolin?.type}`}>{sample.pangolin?.type}</Link>
+        </Descriptions.Item>
         <Descriptions.Item label="Nextclade">
           <Link to={`/nextclade/${sample.nextclade}`}>{sample.nextclade}</Link>
         </Descriptions.Item>

@@ -8,6 +8,7 @@ import { getSamples, getToken } from './services/api'
 import { SamplePage } from './pages/SamplePage'
 import { LoadingPage } from './pages/LoadingPage'
 import { NextcladePage } from './pages/NextcladePage'
+import { PangolinPage } from 'pages/PangolinPage'
 
 const { Header, Content } = Layout
 export const App = () => {
@@ -88,6 +89,10 @@ export const App = () => {
             <Route
               path="/nextclade/:id"
               element={token ? <NextcladePage token={token} /> : <LoginPage login={login} />}
+            />
+            <Route
+              path="/pangolin/:id"
+              element={token ? <PangolinPage token={token} /> : <LoginPage login={login} />}
             />
           </Routes>
         </Content>
