@@ -18,18 +18,9 @@ export const PangolinPage = ({ token }) => {
   return (
     <Card>
       {pangolin && (
-        <Descriptions
-          title={`Pangolin ${id}`}
-          bordered
-          size="small"
-          style={{ margin: 20 }}
-          column={2}
-        >
+        <Descriptions title={`Pangolin ${id}`} bordered size="small" style={{ margin: 20 }}>
           <Descriptions.Item label="Pangolearn version">
             {pangolin[0]?.pangolin?.pangolearn_version}
-          </Descriptions.Item>
-          <Descriptions.Item label="Nextclade">
-            <Link to={`/nextclade/${pangolin[0]?.nextclade}`}>{pangolin[0]?.nextclade}</Link>
           </Descriptions.Item>
           <Descriptions.Item label="Lineage information">
             <a href={`https://cov-lineages.org/lineage.html?lineage=${id}`}>{id}</a>
