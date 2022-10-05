@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Card, Descriptions } from 'antd'
 import { SamplesTable } from 'components/SamplesTable'
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { getPangolin } from 'services/api'
 
 export const PangolinPage = ({ token }) => {
