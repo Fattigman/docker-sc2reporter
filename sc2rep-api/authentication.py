@@ -12,7 +12,6 @@ from typing import Union
 
 from api.config import SECRET_KEY, ALGORITHM
 
-
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login/token")

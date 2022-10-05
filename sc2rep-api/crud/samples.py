@@ -1,4 +1,6 @@
 from db import *
+import asyncio
+from api.config import SIGNIFICANT_VARIANTS
 
 async def get_samples(query: Optional[any] = None):
     cursor =  db.sample.find(query)
@@ -29,3 +31,21 @@ async def get_nextclade_samples(nextclade:str):
     curr =  db.sample.find({"nextclade": nextclade})
     docs = [parse_json(x) for x in await curr.to_list(None)]
     return  docs
+
+async def test():
+    cursor =  db.sample.aggregate([
+        {"$project": {
+            'variants': {
+                "$filter": {
+                    'input': "$variants",
+                    'as': 'item',
+                    'cond': {"$in": ["$$item.dp", SIGNIFICANT_VARIANTS]},
+                    }
+                }
+            }
+        },
+    ])
+    docs = [parse_json(x) for x in await cursor.to_list(None)]
+    import pprint
+    pprint.pprint(docs)
+    return docs
