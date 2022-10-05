@@ -15,9 +15,5 @@ export const NextcladePage = ({ token }) => {
       })
   }, [id])
 
-  return (
-    <Card title={`Nextclade ${id}`}>
-      <SamplesTable samples={samples} />
-    </Card>
-  )
+  return <SamplesTable samples={samples} title={'Nextclade'} subTitle={''} />
 }

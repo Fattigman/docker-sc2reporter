@@ -70,7 +70,13 @@ export const App = () => {
           <Routes>
             <Route
               path="/"
-              element={token ? <SamplesTable samples={samples} /> : <LoginPage login={login} />}
+              element={
+                token ? (
+                  <SamplesTable samples={samples} title={'Samples'} subTitle={''} />
+                ) : (
+                  <LoginPage login={login} />
+                )
+              }
             />
             <Route
               path="/samples/:id"
