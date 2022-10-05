@@ -2,10 +2,13 @@ import React from 'react'
 import { Card, PageHeader, Table, Tag } from 'antd'
 import { formatDate, sortDate } from '../helpers'
 import { CheckCircleTwoTone } from '@ant-design/icons'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useParams } from 'react-router-dom'
 
 export const SamplesTable = ({ samples, title, subTitle }) => {
   const location = useLocation()
+  const { id } = useParams()
+
+  console.log(location?.pathname)
 
   const columns = [
     {
@@ -91,7 +94,7 @@ export const SamplesTable = ({ samples, title, subTitle }) => {
   ].filter((column) => !column.hidden)
   return (
     <Card>
-      <PageHeader className="site-page-header" backIcon={false} title={title} subTitle={subTitle} />
+      <PageHeader backIcon={false} title={title} subTitle={subTitle} />
       <Table
         pagination={false}
         dataSource={samples}
