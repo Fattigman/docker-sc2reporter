@@ -48,7 +48,12 @@ export const SamplesTable = ({ samples }) => {
       title: 'Pangolin',
       dataIndex: 'pangolin',
       key: 'pangolin',
-      render: (pangolin) => pangolin?.type,
+      render: (pangolin) =>
+        pangolin?.type != 'None' ? (
+          <Link to={`/pangolin/${pangolin?.type}`}>{pangolin?.type}</Link>
+        ) : (
+          pangolin?.type
+        ),
     },
     {
       title: 'Significant variants',

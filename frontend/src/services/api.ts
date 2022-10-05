@@ -59,3 +59,21 @@ export const getNextclade = async (token, nextclade): Promise<any> => {
       })
   })
 }
+
+export const getPangolin = async (token, pangolin): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/samples/pango/?pangolin=${pangolin}`
+  return new Promise((resolve) => {
+    axios
+      .get(endPoint, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => resolve(response.data))
+      .catch((error) => {
+        console.log(error)
+        notification.error({
+          message: 'Could not load pangolin info',
+          description: 'Something went wrong',
+        })
+      })
+  })
+}
