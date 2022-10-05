@@ -2,10 +2,11 @@ import React from 'react'
 import { Table, Tag, Typography } from 'antd'
 import { formatDate, sortDate } from '../helpers'
 import { CheckCircleTwoTone } from '@ant-design/icons'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 export const SamplesTable = ({ samples }) => {
   const { Title } = Typography
+  const { id } = useParams()
 
   const columns = [
     {
@@ -54,6 +55,14 @@ export const SamplesTable = ({ samples }) => {
         ) : (
           pangolin?.type
         ),
+      hidden: id != undefined,
+    },
+    {
+      title: 'Nextstrain clade',
+      dataIndex: 'nextclade',
+      key: 'nextclade',
+      render: (nextclade) => <Link to={`/nextclade/${nextclade}`}>{nextclade}</Link>,
+      hidden: id != undefined,
     },
     {
       title: 'Significant variants',
@@ -80,7 +89,7 @@ export const SamplesTable = ({ samples }) => {
       dataIndex: 'selection_criterion',
       key: 'selection_criterion',
     },
-  ]
+  ].filter((column) => !column.hidden)
   return (
     <Table
       title={() => <Title level={5}>Samples</Title>}
