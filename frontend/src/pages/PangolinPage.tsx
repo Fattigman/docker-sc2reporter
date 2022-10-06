@@ -23,8 +23,9 @@ export const PangolinPage = ({ token }) => {
         subTitle={
           <a href={`https://cov-lineages.org/lineage.html?lineage=${id}`}>Lineage information</a>
         }
-      />
-      <SamplesTable samples={pangolin} />
+      >
+        <SamplesTable samples={pangolin} />
+      </PageHeader>
     </Card>
   )
 }

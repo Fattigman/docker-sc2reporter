@@ -97,7 +97,6 @@ export const SamplesTable = ({ samples }) => {
         columns={columns}
         rowKey={'sample_id'}
         loading={!samples}
-        style={{ margin: 20 }}
       />
     </>
   )

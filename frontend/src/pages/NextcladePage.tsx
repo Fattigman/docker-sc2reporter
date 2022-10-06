@@ -17,8 +17,9 @@ export const NextcladePage = ({ token }) => {
 
   return (
     <Card>
-      <PageHeader onBack={() => history.back()} title={'Nextclade'} />
-      <SamplesTable samples={samples} />
+      <PageHeader onBack={() => history.back()} title={'Nextclade'}>
+        <SamplesTable samples={samples} />
+      </PageHeader>
     </Card>
   )
 }
