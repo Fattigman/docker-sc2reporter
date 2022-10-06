@@ -2,11 +2,10 @@ import React from 'react'
 import { Card, PageHeader, Table, Tag } from 'antd'
 import { formatDate, sortDate } from '../helpers'
 import { CheckCircleTwoTone } from '@ant-design/icons'
-import { Link, useLocation, useParams } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 export const SamplesTable = ({ samples, title, subTitle }) => {
   const location = useLocation()
-  const { id } = useParams()
 
   console.log(location?.pathname)
 
