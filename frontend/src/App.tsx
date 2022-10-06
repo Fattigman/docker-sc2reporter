@@ -2,12 +2,13 @@ import React, { useState } from 'react'
 import styles from './App.module.css'
 import { Button, Layout, Menu } from 'antd'
 import { Link, Route, Routes, useLocation } from 'react-router-dom'
-import { SamplesTable } from './components/SamplesTable'
 import { LoginPage } from './pages/Login/LoginPage'
 import { getSamples, getToken } from './services/api'
 import { SamplePage } from './pages/SamplePage'
 import { LoadingPage } from './pages/LoadingPage'
+import { VariantPage } from './pages/VaiantPage'
 import { NextcladePage } from './pages/NextcladePage'
+import { SamplesTable } from './components/SamplesTable'
 
 const { Header, Content } = Layout
 export const App = () => {
@@ -88,6 +89,10 @@ export const App = () => {
             <Route
               path="/nextclade/:id"
               element={token ? <NextcladePage token={token} /> : <LoginPage login={login} />}
+            />
+            <Route
+              path="/variants/:id"
+              element={token ? <VariantPage token={token} /> : <LoginPage login={login} />}
             />
           </Routes>
         </Content>
