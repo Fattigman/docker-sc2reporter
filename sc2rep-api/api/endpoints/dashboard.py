@@ -31,4 +31,4 @@ async def get_dashboard(
                     elif counter+1 == len(graph_list):
                         graph_list.append({'date':sample_time, 'value': 1, 'pangolin': sample_pango})
         else: print(f'{sample["sample_id"]} doesnt have collection_date ')
-    return {'plot_data':graph_list}
+    return {'graph':graph_list}
