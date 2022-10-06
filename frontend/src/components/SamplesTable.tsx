@@ -90,14 +90,12 @@ export const SamplesTable = ({ samples }) => {
     },
   ].filter((column) => !column.hidden)
   return (
-    <>
-      <Table
-        pagination={false}
-        dataSource={samples}
-        columns={columns}
-        rowKey={'sample_id'}
-        loading={!samples}
-      />
-    </>
+    <Table
+      pagination={false}
+      dataSource={samples}
+      columns={columns}
+      rowKey={'sample_id'}
+      loading={!samples}
+    />
   )
 }
