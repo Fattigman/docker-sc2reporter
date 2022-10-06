@@ -5,7 +5,7 @@ from models import *
 
 from api.config import * 
 
-from api.endpoints import samples, users, login, variants
+from api.endpoints import samples, users, login, variants, dashboard
 
 from fastapi import Depends, FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
@@ -54,6 +54,13 @@ app.include_router(
     variants.router,
     prefix="/variants",
     tags=["Variants"],
+    responses={status.HTTP_404_NOT_FOUND: {"description": "Not found"}},
+)
+
+app.include_router(
+    dashboard.router,
+    prefix="/dashboard",
+    tags=["Dashboard"],
     responses={status.HTTP_404_NOT_FOUND: {"description": "Not found"}},
 )
 
