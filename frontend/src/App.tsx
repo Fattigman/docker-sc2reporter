@@ -72,7 +72,7 @@ export const App = () => {
               path="/"
               element={
                 token ? (
-                  <SamplesTable samples={samples} title={'Samples'} subTitle={''} />
+                  <SamplesTable samples={samples} title={'Samples'} subTitle={null} />
                 ) : (
                   <LoginPage login={login} />
                 )
