@@ -9,7 +9,7 @@ from authentication import *
 from pprint import pprint
 router = APIRouter()
 
-
+# Gets all samples 
 @router.get("/", response_model=list[Sample])
 async def read_samples(
     current_user: User = Depends(get_current_active_user)
@@ -17,6 +17,7 @@ async def read_samples(
     samples = await get_samples()
     return samples
 
+# Gets single specific sample
 @router.get("/{sample_id}", response_model=list[Sample])
 async def single_sample(
     sample_id: str,
@@ -24,6 +25,7 @@ async def single_sample(
     ):
     return await get_single_sample(sample_id)
 
+# Gets multiple specified samples
 @router.get("/multiple/", response_model=list[Sample])
 async def multiple_samples(
     sample_ids:list[str] | None = Query(default=None),
@@ -31,6 +33,7 @@ async def multiple_samples(
     ):
     return await get_multiple_samples(sample_ids)
 
+# Gets all samples with matching specified pango type
 @router.get("/pango/", response_model=list[Sample])
 async def get_samples_with_pangotype(
     pangolin:str ,
@@ -38,6 +41,7 @@ async def get_samples_with_pangotype(
     ):
     return await get_pangotype_samples(pangolin=pangolin)
 
+# Gets all samples with matching specified variant
 @router.get("/variant/", response_model=list[Sample])
 async def get_samples_with_variant(
     variant:str ,
@@ -45,6 +49,7 @@ async def get_samples_with_variant(
     ):
     return await get_variant_samples(variant=variant)
 
+# Gets all samples with matching specified nextclade
 @router.get("/nextclade/", response_model=list[Sample])
 async def get_samples_with_nextclade(
     nextclade:str ,
