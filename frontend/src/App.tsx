@@ -6,7 +6,7 @@ import { LoginPage } from './pages/Login/LoginPage'
 import { getSamples, getToken } from './services/api'
 import { SamplePage } from './pages/SamplePage'
 import { LoadingPage } from './pages/LoadingPage'
-import { VariantPage } from './pages/VaiantPage'
+import { VariantPage } from './pages/VariantPage'
 import { NextcladePage } from './pages/NextcladePage'
 import { SamplesTable } from './components/SamplesTable'
 
