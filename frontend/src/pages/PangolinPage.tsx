@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Card, PageHeader } from 'antd'
 import { SamplesTable } from 'components/SamplesTable'
 import { useParams } from 'react-router-dom'
 import { getPangolin } from 'services/api'
@@ -15,12 +16,15 @@ export const PangolinPage = ({ token }) => {
   }, [id])
 
   return (
-    <SamplesTable
-      samples={pangolin}
-      title={'Pangolin'}
-      subTitle={
-        <a href={`https://cov-lineages.org/lineage.html?lineage=${id}`}>Lineage information</a>
-      }
-    />
+    <Card>
+      <PageHeader
+        onBack={() => history.back()}
+        title="Pangolin"
+        subTitle={
+          <a href={`https://cov-lineages.org/lineage.html?lineage=${id}`}>Lineage information</a>
+        }
+      />
+      <SamplesTable samples={pangolin} />
+    </Card>
   )
 }

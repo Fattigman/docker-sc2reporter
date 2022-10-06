@@ -1,10 +1,10 @@
 import React from 'react'
-import { Card, PageHeader, Table, Tag } from 'antd'
+import { Table, Tag } from 'antd'
 import { formatDate, sortDate } from '../helpers'
 import { CheckCircleTwoTone } from '@ant-design/icons'
 import { Link, useLocation } from 'react-router-dom'
 
-export const SamplesTable = ({ samples, title, subTitle }) => {
+export const SamplesTable = ({ samples }) => {
   const location = useLocation()
 
   const columns = [
@@ -90,8 +90,7 @@ export const SamplesTable = ({ samples, title, subTitle }) => {
     },
   ].filter((column) => !column.hidden)
   return (
-    <Card>
-      <PageHeader backIcon={false} title={title} subTitle={subTitle} />
+    <>
       <Table
         pagination={false}
         dataSource={samples}
@@ -100,6 +99,6 @@ export const SamplesTable = ({ samples, title, subTitle }) => {
         loading={!samples}
         style={{ margin: 20 }}
       />
-    </Card>
+    </>
   )
 }

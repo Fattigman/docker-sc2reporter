@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getNextclade } from '../services/api'
 import { SamplesTable } from '../components/SamplesTable'
+import { Card, PageHeader } from 'antd'
 
 export const NextcladePage = ({ token }) => {
   const [samples, setSamples] = useState<any>()
@@ -14,5 +15,10 @@ export const NextcladePage = ({ token }) => {
       })
   }, [id])
 
-  return <SamplesTable samples={samples} title={'Nextclade'} subTitle={null} />
+  return (
+    <Card>
+      <PageHeader onBack={() => history.back()} title={'Nextclade'} />
+      <SamplesTable samples={samples} />
+    </Card>
+  )
 }
