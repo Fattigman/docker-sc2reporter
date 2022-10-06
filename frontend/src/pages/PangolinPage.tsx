@@ -19,7 +19,7 @@ export const PangolinPage = ({ token }) => {
     <Card>
       <PageHeader
         onBack={() => history.back()}
-        title="Pangolin"
+        title={`Pangolin ${id}`}
         subTitle={
           <a href={`https://cov-lineages.org/lineage.html?lineage=${id}`}>Lineage information</a>
         }
