@@ -7,8 +7,6 @@ import { Link, useLocation } from 'react-router-dom'
 export const SamplesTable = ({ samples, title, subTitle }) => {
   const location = useLocation()
 
-  console.log(location?.pathname)
-
   const columns = [
     {
       title: 'ID',
