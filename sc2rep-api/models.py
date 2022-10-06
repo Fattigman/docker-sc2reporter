@@ -13,6 +13,12 @@ class Variant(BaseModel):
     id: str
     alt_freq: float
 
+class DashBoardGraphElement(BaseModel):
+    date: str
+    value: int
+    pangolin: str
+class DashboardGraph(BaseModel):
+    graph: list[DashBoardGraphElement]
 
 class Sample(BaseModel):
     _id: dict
