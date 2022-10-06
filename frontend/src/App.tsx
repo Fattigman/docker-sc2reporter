@@ -22,6 +22,8 @@ export const App = () => {
     },
   ]
 
+  console.log('Testing firebase deploy')
+
   const login = (formInput) => {
     getToken(formInput).then((response) => {
       setToken(response.access_token)
