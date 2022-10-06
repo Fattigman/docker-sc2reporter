@@ -5,13 +5,13 @@ import { useParams } from 'react-router-dom'
 import { getPangolin } from 'services/api'
 
 export const PangolinPage = ({ token }) => {
-  const [pangolin, setPangolin] = useState<any>()
+  const [samples, setSamples] = useState<any>()
   const { id } = useParams()
 
   useEffect(() => {
     if (id)
       getPangolin(token, id).then((response) => {
-        setPangolin(response)
+        setSamples(response)
       })
   }, [id])
 
@@ -24,7 +24,7 @@ export const PangolinPage = ({ token }) => {
           <a href={`https://cov-lineages.org/lineage.html?lineage=${id}`}>Lineage information</a>
         }
       >
-        <SamplesTable samples={pangolin} />
+        <SamplesTable samples={samples} />
       </PageHeader>
     </Card>
   )
