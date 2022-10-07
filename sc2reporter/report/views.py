@@ -378,10 +378,17 @@ def create_tree(group, value):
         for key2 in sample_metadata[key]:
             metaLista.add(key2)
     metaLista = list(metaLista) 
-    # print(tree)
     tree['metadata_list'] = metaLista
     tree['metadata_options'] = {"time":{"label":"time","coltype":"character","grouptype":"alphabetic","colorscheme":"gradient"}}
-    # tree = '{"nwk":"(A:0.1,B:0.2,(C:0.3,D:0.4):0.5);"}'
+    options = dict()
+    for ele in tree['metadata_list']:
+        try: 
+            data_type = float(tree['metadata']['sc2-1013'][ele])
+            data_type = 'gradient'
+        except:
+            data_type = 'category'
+        options[ele] = {"label": ele, "coltype":"character", "grouptype":"alphabetic", "colorscheme":data_type}
+    tree['metadata_options'] = options
     return render_template('ms_tree.html', data=tree)
 
 def get_similar_samples(sample_from_report, all_samples, max_diffs):
