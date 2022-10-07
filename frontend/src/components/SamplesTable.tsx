@@ -6,6 +6,8 @@ import { Link, useLocation } from 'react-router-dom'
 
 export const SamplesTable = ({ samples }) => {
   const location = useLocation()
+  const nextclade = 'nextclade'
+  const pangolin = 'pangolin'
 
   const columns = [
     {
@@ -54,14 +56,14 @@ export const SamplesTable = ({ samples }) => {
         ) : (
           pangolin?.type
         ),
-      hidden: location?.pathname?.includes('pangolin'),
+      hidden: location?.pathname?.includes(pangolin),
     },
     {
       title: 'Nextstrain clade',
       dataIndex: 'nextclade',
       key: 'nextclade',
       render: (nextclade) => <Link to={`/nextclade/${nextclade}`}>{nextclade}</Link>,
-      hidden: location?.pathname?.includes('nextclade'),
+      hidden: location?.pathname?.includes(nextclade),
     },
     {
       title: 'Significant variants',

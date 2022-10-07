@@ -7,6 +7,8 @@ import { getPangolin } from 'services/api'
 export const PangolinPage = ({ token }) => {
   const [samples, setSamples] = useState<any>()
   const { id } = useParams()
+  const title = `Pangolin ${id}`
+  const covLineagesLink = `https://cov-lineages.org/lineage.html?lineage=${id}`
 
   useEffect(() => {
     if (id)
@@ -19,10 +21,8 @@ export const PangolinPage = ({ token }) => {
     <Card>
       <PageHeader
         onBack={() => history.back()}
-        title={`Pangolin ${id}`}
-        subTitle={
-          <a href={`https://cov-lineages.org/lineage.html?lineage=${id}`}>Lineage information</a>
-        }
+        title={title}
+        subTitle={<a href={covLineagesLink}>Lineage information</a>}
       >
         <SamplesTable samples={samples} />
       </PageHeader>

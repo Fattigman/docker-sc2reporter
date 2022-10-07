@@ -7,6 +7,7 @@ import { Card, PageHeader } from 'antd'
 export const NextcladePage = ({ token }) => {
   const [samples, setSamples] = useState<any>()
   const { id } = useParams()
+  const title = `Nextclade ${id}`
 
   useEffect(() => {
     if (id)
@@ -17,7 +18,7 @@ export const NextcladePage = ({ token }) => {
 
   return (
     <Card>
-      <PageHeader onBack={() => history.back()} title={`Nextclade ${id}`}>
+      <PageHeader onBack={() => history.back()} title={title}>
         <SamplesTable samples={samples} />
       </PageHeader>
     </Card>
