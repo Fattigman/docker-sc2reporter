@@ -1,11 +1,13 @@
 import React from 'react'
-import { Table, Tag, Typography } from 'antd'
+import { Table, Tag } from 'antd'
 import { formatDate, sortDate } from '../helpers'
 import { CheckCircleTwoTone } from '@ant-design/icons'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 export const SamplesTable = ({ samples }) => {
-  const { Title } = Typography
+  const location = useLocation()
+  const nextclade = 'nextclade'
+  const pangolin = 'pangolin'
 
   const columns = [
     {
@@ -48,7 +50,20 @@ export const SamplesTable = ({ samples }) => {
       title: 'Pangolin',
       dataIndex: 'pangolin',
       key: 'pangolin',
-      render: (pangolin) => pangolin?.type,
+      render: (pangolin) =>
+        pangolin?.type != 'None' ? (
+          <Link to={`/pangolin/${pangolin?.type}`}>{pangolin?.type}</Link>
+        ) : (
+          pangolin?.type
+        ),
+      hidden: location?.pathname?.includes(pangolin),
+    },
+    {
+      title: 'Nextstrain clade',
+      dataIndex: 'nextclade',
+      key: 'nextclade',
+      render: (nextclade) => <Link to={`/nextclade/${nextclade}`}>{nextclade}</Link>,
+      hidden: location?.pathname?.includes(nextclade),
     },
     {
       title: 'Significant variants',
@@ -77,16 +92,14 @@ export const SamplesTable = ({ samples }) => {
       dataIndex: 'selection_criterion',
       key: 'selection_criterion',
     },
-  ]
+  ].filter((column) => !column.hidden)
   return (
     <Table
-      title={() => <Title level={5}>Samples</Title>}
       pagination={false}
       dataSource={samples}
       columns={columns}
       rowKey={'sample_id'}
       loading={!samples}
-      style={{ margin: 20 }}
     />
   )
 }

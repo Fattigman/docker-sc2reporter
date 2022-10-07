@@ -8,7 +8,8 @@ import { SamplePage } from './pages/SamplePage'
 import { LoadingPage } from './pages/LoadingPage'
 import { VariantPage } from './pages/VariantPage'
 import { NextcladePage } from './pages/NextcladePage'
-import { SamplesTable } from './components/SamplesTable'
+import { PangolinPage } from 'pages/PangolinPage'
+import { SamplesPage } from 'pages/SamplesPage'
 
 const { Header, Content } = Layout
 export const App = () => {
@@ -70,7 +71,7 @@ export const App = () => {
           <Routes>
             <Route
               path="/"
-              element={token ? <SamplesTable samples={samples} /> : <LoginPage login={login} />}
+              element={token ? <SamplesPage samples={samples} /> : <LoginPage login={login} />}
             />
             <Route
               path="/samples/:id"
@@ -89,6 +90,10 @@ export const App = () => {
             <Route
               path="/nextclade/:id"
               element={token ? <NextcladePage token={token} /> : <LoginPage login={login} />}
+            />
+            <Route
+              path="/pangolin/:id"
+              element={token ? <PangolinPage token={token} /> : <LoginPage login={login} />}
             />
             <Route
               path="/variants/:id"

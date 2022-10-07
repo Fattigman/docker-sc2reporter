@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Card } from 'antd'
 import { getNextclade } from '../services/api'
 import { SamplesTable } from '../components/SamplesTable'
+import { Card, PageHeader } from 'antd'
 
 export const NextcladePage = ({ token }) => {
   const [samples, setSamples] = useState<any>()
   const { id } = useParams()
+  const title = `Nextclade ${id}`
 
   useEffect(() => {
     if (id)
@@ -16,8 +17,10 @@ export const NextcladePage = ({ token }) => {
   }, [id])
 
   return (
-    <Card title={`Nextclade ${id}`}>
-      <SamplesTable samples={samples} />
+    <Card>
+      <PageHeader onBack={() => history.back()} title={title}>
+        <SamplesTable samples={samples} />
+      </PageHeader>
     </Card>
   )
 }
