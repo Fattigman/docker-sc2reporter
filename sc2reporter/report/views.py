@@ -380,12 +380,18 @@ def create_tree(group, value):
     metaLista = list(metaLista) 
     tree['metadata_list'] = metaLista
     tree['metadata_options'] = {"time":{"label":"time","coltype":"character","grouptype":"alphabetic","colorscheme":"gradient"}}
+    
     options = dict()
+    length = 0
+
+    for key in tree['metadata']:
+        if len(tree['metadata'][key]) > length: longest_obj = key
+        
     for ele in tree['metadata_list']:
         try: 
-            data_type = float(tree['metadata']['sc2-1013'][ele])
+            data_type = int(tree['metadata'][longest_obj][ele])
             data_type = 'gradient'
-        except:
+        except Exception as e:
             data_type = 'category'
         options[ele] = {"label": ele, "coltype":"character", "grouptype":"alphabetic", "colorscheme":data_type}
     tree['metadata_options'] = options
