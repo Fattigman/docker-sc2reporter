@@ -6,6 +6,7 @@ import { LoginPage } from './pages/Login/LoginPage'
 import { getSamples, getToken } from './services/api'
 import { SamplePage } from './pages/SamplePage'
 import { LoadingPage } from './pages/LoadingPage'
+import { VariantPage } from './pages/VariantPage'
 import { NextcladePage } from './pages/NextcladePage'
 import { PangolinPage } from 'pages/PangolinPage'
 import { SamplesPage } from 'pages/SamplesPage'
@@ -93,6 +94,11 @@ export const App = () => {
             <Route
               path="/pangolin/:id"
               element={token ? <PangolinPage token={token} /> : <LoginPage login={login} />}
+               />
+          </Routes>
+           <Route
+              path="/variants/:id"
+              element={token ? <VariantPage token={token} /> : <LoginPage login={login} />}
             />
           </Routes>
         </Content>

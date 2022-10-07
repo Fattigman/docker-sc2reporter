@@ -71,10 +71,12 @@ export const SamplesTable = ({ samples }) => {
       key: 'variants',
       width: '40%',
       render: (variants) =>
-        variants?.map((variant) => (
-          <Tag color={'geekblue'} key={variant.id}>
-            {variant.id}
-          </Tag>
+        variants?.map(({ id }) => (
+          <Link key={id} to={`/variants/${id}`}>
+            <Tag color={'geekblue'} key={id}>
+              {id}
+            </Tag>
+          </Link>
         )),
       ellipsis: true,
     },
