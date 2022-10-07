@@ -60,7 +60,6 @@ export const getNextclade = async (token, nextclade): Promise<any> => {
   })
 }
 
-
 export const getPangolin = async (token, pangolin): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/samples/pango/?pangolin=${pangolin}`
   return new Promise((resolve) => {
@@ -78,7 +77,6 @@ export const getPangolin = async (token, pangolin): Promise<any> => {
       })
   })
 }
-
 
 export const getVariant = async (token, variant): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/variants/${variant}`

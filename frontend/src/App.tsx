@@ -94,9 +94,8 @@ export const App = () => {
             <Route
               path="/pangolin/:id"
               element={token ? <PangolinPage token={token} /> : <LoginPage login={login} />}
-               />
-          </Routes>
-           <Route
+            />
+            <Route
               path="/variants/:id"
               element={token ? <VariantPage token={token} /> : <LoginPage login={login} />}
             />
