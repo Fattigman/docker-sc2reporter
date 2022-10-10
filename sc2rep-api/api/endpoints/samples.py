@@ -1,8 +1,12 @@
+from re import M
 from typing import Optional, Union
 from fastapi import APIRouter, Depends, HTTPException, Query
 from starlette.responses import JSONResponse
 
+import pandas as pd 
+
 from crud.samples import *
+from crud.matrix import * 
 from models import *
 from authentication import *
 
@@ -21,9 +25,18 @@ async def read_samples(
 @router.get("/{sample_id}", response_model=list[Sample])
 async def single_sample(
     sample_id: str,
-    current_user: User = Depends(get_current_active_user)
+    # current_user: User = Depends(get_current_active_user)
     ):
-    return await get_single_sample(sample_id)
+    sample_info = await get_single_sample(sample_id)
+    matrix = await get_matrix()
+
+    del matrix[0]['_id']
+    df = pd.DataFrame(matrix[0])
+    distances = df.subtract(df[sample_id], axis = 0).sum()
+    similar_samples = distances[abs(distances) < 0.1].index.tolist()
+    sample_info[0]['similar_samples'] = similar_samples
+
+    return sample_info
 
 # Gets multiple specified samples
 @router.get("/multiple/", response_model=list[Sample])
