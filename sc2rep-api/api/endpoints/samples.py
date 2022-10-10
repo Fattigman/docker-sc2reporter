@@ -25,7 +25,7 @@ async def read_samples(
 @router.get("/{sample_id}", response_model=list[Sample])
 async def single_sample(
     sample_id: str,
-    # current_user: User = Depends(get_current_active_user)
+    current_user: User = Depends(get_current_active_user)
     ):
     sample_info = await get_single_sample(sample_id)
     matrix = await get_matrix()
