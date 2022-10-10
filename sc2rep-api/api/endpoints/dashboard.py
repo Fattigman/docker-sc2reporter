@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
-from db import *
+from crud.samples import *
 from models import *
 from authentication import *
 
@@ -8,12 +8,7 @@ import datetime
 
 router = APIRouter()
 
-
-@router.get("/", response_model=DashboardGraph)
-async def get_dashboard(
-    current_user: User = Depends(get_current_active_user)
-    ):
-    samples = await get_samples()
+def create_graph_obj(samples: list):
     graph_list = list()
 
     for sample in samples:
@@ -31,4 +26,15 @@ async def get_dashboard(
                     elif counter+1 == len(graph_list):
                         graph_list.append({'date':sample_time, 'value': 1, 'pangolin': sample_pango})
         else: print(f'{sample["sample_id"]} doesnt have collection_date ')
+    return graph_list
+
+
+@router.get("/", response_model=DashboardGraph)
+async def get_dashboard(
+    current_user: User = Depends(get_current_active_user)
+    ):
+    samples = await get_samples()
+    
+    graph_list = create_graph_obj(samples)
+
     return {'graph':graph_list}
