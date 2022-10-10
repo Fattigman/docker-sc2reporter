@@ -37,6 +37,7 @@ class Sample(BaseModel):
     selection_criterion: Union[str, None]
     sex: Union[str, None]
     Ct: Union[str, None]
+    similar_samples: Union[list, None]
     
 class User(BaseModel):
     username: str 
