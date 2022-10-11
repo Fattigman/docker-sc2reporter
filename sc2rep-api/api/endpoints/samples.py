@@ -28,15 +28,20 @@ async def single_sample(
     current_user: User = Depends(get_current_active_user)
     ):
     sample_info = await get_single_sample(sample_id)
+    if len(sample_info) == 0:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Sample can't be found in database",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    
     matrix = await get_matrix()
-
     del matrix[0]['_id']
     df = pd.DataFrame(matrix[0])
     distances = abs(df.subtract(df[sample_id], axis = 0)).sum()
-
     similar_samples = distances[abs(distances) < 10].index.tolist()
     sample_info[0]['similar_samples'] = similar_samples
-    print(similar_samples)
+
     return sample_info
 
 # Gets multiple specified samples
