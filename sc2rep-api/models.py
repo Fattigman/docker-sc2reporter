@@ -15,10 +15,18 @@ class Variant(BaseModel):
 
 class DashBoardGraphElement(BaseModel):
     date: str
-    value: int
+    pango_count: int
     pangolin: str
+
+class GeneralStats(BaseModel):
+    passed_qc_samples: int
+    unique_pangos: int
+    unique_mutations: int
+
 class DashboardGraph(BaseModel):
-    graph: list[DashBoardGraphElement]
+    dashboard_data: list[DashBoardGraphElement]
+    general_stats: GeneralStats
+
 
 class Sample(BaseModel):
     _id: dict
