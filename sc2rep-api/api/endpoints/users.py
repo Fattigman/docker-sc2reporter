@@ -3,9 +3,8 @@ from typing import  Optional
 from fastapi import APIRouter, Depends, Query, Header, Body
 from fastapi.security import OAuth2PasswordRequestForm
 
-from db import *
 from authentication import *
-from crud.users import create_user
+from crud.users import get_user, create_user, get_users
 
 from models import User
 
@@ -29,7 +28,7 @@ async def post_user(
         user: User,
         current_user: User = Depends(get_current_active_user)
     ):
-    if get_user(user):
+    if await get_user(user.username):
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
             detail="User already exists in the database",

@@ -1,5 +1,5 @@
 from models import *
-from db import *
+from crud.users import get_user
 
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
