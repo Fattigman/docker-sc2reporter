@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './App.module.css'
 import { Button, Layout, Menu } from 'antd'
 import { Link, Route, Routes, useLocation } from 'react-router-dom'
@@ -16,6 +16,8 @@ export const App = () => {
   const [user, setUser] = useState<any>()
   const [samples, setSamples] = useState<any>()
   const [token, setToken] = useState<any>()
+  const tokenCookieName = 'sc2reporterToken'
+  const findCookiePattern = new RegExp(`(?<=${tokenCookieName}=)(.*)(?=;)`, 'g')
 
   const menuItems = [
     {
@@ -24,17 +26,28 @@ export const App = () => {
     },
   ]
 
+  useEffect(() => {
+    console.log(`${document.cookie};`.match(findCookiePattern))
+    const cookieToken = `${document.cookie};`.match(findCookiePattern)
+    if (cookieToken?.length === 1) {
+      setToken(cookieToken[0])
+      getSamples(cookieToken[0]).then((samples) => setSamples(samples))
+    }
+  }, [])
+
   const login = (formInput) => {
     getToken(formInput).then((response) => {
       setToken(response.access_token)
       setUser(formInput.username)
       getSamples(response.access_token).then((samples) => setSamples(samples))
+      document.cookie = `${tokenCookieName}=${response.access_token}`
     })
   }
 
   const logout = () => {
     setToken(null)
     setUser(null)
+    document.cookie = `${tokenCookieName}=; Max-Age=0;`
   }
 
   return (
