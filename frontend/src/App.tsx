@@ -27,7 +27,6 @@ export const App = () => {
   ]
 
   useEffect(() => {
-    console.log(`${document.cookie};`.match(findCookiePattern))
     const cookieToken = `${document.cookie};`.match(findCookiePattern)
     if (cookieToken?.length === 1) {
       setToken(cookieToken[0])
