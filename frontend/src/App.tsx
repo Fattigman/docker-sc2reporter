@@ -18,6 +18,7 @@ export const App = () => {
   const [token, setToken] = useState<any>()
   const tokenCookieName = 'sc2reporterToken'
   const findCookiePattern = new RegExp(`(?<=${tokenCookieName}=)(.*)(?=;)`, 'g')
+  const cookieAge = 10 // hours
 
   const menuItems = [
     {
@@ -39,7 +40,9 @@ export const App = () => {
       setToken(response.access_token)
       setUser(formInput.username)
       getSamples(response.access_token).then((samples) => setSamples(samples))
-      document.cookie = `${tokenCookieName}=${response.access_token}`
+      document.cookie = `${tokenCookieName}=${response.access_token}; Max-Age=${
+        cookieAge * 60 * 60
+      };`
     })
   }
 
