@@ -8,8 +8,9 @@ services:
     ports:
       - "27017:27017"
 
-  app:
+  backend:
     build: ./
+    container_name: sc2reporter-backend
     restart: unless-stopped
     platform: linux/amd64
     depends_on:
