@@ -21,17 +21,6 @@ services:
     environment:
       - MONGODB_HOST=mongodb
       - MONGODB_PORT=27017
-
-  frontend:
-    build: ./frontend
-    container_name: sc2reporter-frontend
-    ports:
-      - '3000:3000'
-    environment:
-      - 'REACT_APP_BACKEND_URL=https://34.125.210.143'
-    volumes:
-      - ./frontend:/app
-      - ./app/node_modules
       
   mongo_seed:
     image: mongo
