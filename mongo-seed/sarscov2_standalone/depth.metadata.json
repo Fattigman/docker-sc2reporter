@@ -1,1 +1,0 @@
-{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"sarscov2_standalone.depth"}],"uuid":"7b2826f78dde4f0f82fa281db1a8d96d"}
