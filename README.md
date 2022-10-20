@@ -1,5 +1,5 @@
 # docker-sc2reporter v2
-Dockerized version of the sc2reporter program. But version 2.
+Dockerized version of the sc2reporter program.
 
 ## To run with dummy data:
 Make sure you have docker-compose installed on your system, and then
