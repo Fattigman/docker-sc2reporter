@@ -1,27 +1,34 @@
-version: '3.1'
-
+version: "3.1"
 services:
-  mongo:
-    image: mongo:4.2
-    hostname: mongodb
-    restart: unless-stopped
-    ports:
-      - "27017:27017"
-
-  backend:
-    build: ./
-    container_name: sc2reporter-backend
-    restart: unless-stopped
+  fastapi:
+    build: ./sc2rep-api/.
+    container_name: sc2reporter-api
     platform: linux/amd64
-    depends_on:
-      - mongo
-    links:
-      - mongo
     ports:
       - "8000:8000"
-    environment:
-      - MONGODB_HOST=mongodb
-      - MONGODB_PORT=27017
+    depends_on:
+      - mongo_seed
+    restart: "unless-stopped"
+    links: 
+      - mongodb
+    env_file:
+      - sc2rep-api/docker.env
+  
+  mongodb:
+    image: mongo
+    hostname: mongodb
+    restart: unless-stopped
+    ports: 
+     - "27017:27017"
+
+  mongo_seed:
+    build: ./mongo-seed/.
+    command:
+      - /mongo-seed/import.sh
+    links: 
+      - mongodb
+    depends_on:
+      - mongodb
 
   frontend:
     build: ./frontend
