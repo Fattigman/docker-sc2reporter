@@ -6,6 +6,5 @@ Make sure you have docker-compose installed on your system, and then
 ```bash
 git clone https://github.com/genomic-medicine-sweden/docker-sc2reporter
 cd docker-sc2reporter
-git checkout add-react-app
 docker-compose up
 ```
