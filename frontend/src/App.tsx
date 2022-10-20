@@ -93,7 +93,7 @@ export const App = () => {
               element={
                 token ? (
                   samples ? (
-                    <SamplePage samples={samples} />
+                    <SamplePage token={token} />
                   ) : (
                     <LoadingPage />
                   )
