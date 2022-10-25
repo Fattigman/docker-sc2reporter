@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, Query, Header, Body
 from fastapi.security import OAuth2PasswordRequestForm
 
 from authentication import *
-from crud.users import get_user, create_user, get_users
+from crud.users import get_user, create_user, get_users, del_user
 
 from models import User
 
@@ -37,3 +37,10 @@ async def post_user(
     create_user(user)
     return user
 
+@router.delete("/delete/", response_model=str)
+async def delete_user(
+    user: str,
+    current_user: User = Depends(get_current_active_user)
+    ):
+    deleted_user = await del_user(user)
+    return f'user {deleted_user} deleted'

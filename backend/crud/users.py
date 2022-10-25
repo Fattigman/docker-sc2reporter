@@ -37,3 +37,7 @@ async def get_users():
     cursor =  db.users.find()
     docs = [parse_json(x) for x in await cursor.to_list(None)]
     return (docs)
+
+async def del_user(username):
+    user = await db.users.delete_one({'username': username})
+    return user
