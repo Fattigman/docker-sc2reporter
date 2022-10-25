@@ -33,6 +33,7 @@ services:
   frontend:
     build: ./frontend
     container_name: sc2reporter-frontend
+    restart: unless-stopped
     ports:
       - '3000:3000'
     environment:
