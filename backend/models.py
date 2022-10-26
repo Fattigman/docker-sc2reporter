@@ -47,14 +47,16 @@ class Sample(BaseModel):
     Ct: Union[str, None]
     similar_samples: Union[list, None]
     
-class User(BaseModel):
+
+class Basic_User(BaseModel):
     username: str 
     email: str
     fullname: str
     disabled: bool = False
-    password: str
     scope: str
 
+class User(Basic_User):
+    password: str
 
 
 class Token(BaseModel):
