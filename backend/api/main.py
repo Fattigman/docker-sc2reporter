@@ -68,9 +68,6 @@ app.include_router(
 async def depth(current_user: User = Depends(get_current_active_user)):
     return await get_depth()
 
-# @app.get("/variants")
-# async def variants(current_user: User = Depends(get_current_active_user)):
-#     return await get_variants()
 
 @app.get("/consensus")
 async def consensus(current_user: User = Depends(get_current_active_user)):
