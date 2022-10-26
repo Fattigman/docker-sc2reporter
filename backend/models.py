@@ -53,6 +53,7 @@ class User(BaseModel):
     fullname: str
     disabled: bool = False
     password: str
+    scope: str
 
 
 

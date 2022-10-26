@@ -17,7 +17,7 @@ def create_user(user):
 
     try:
         print('test')
-        collection.insert_one({"_id":db_user.username,"username": db_user.username, "password": hashed_password, "email": db_user.email, "fullname": db_user.fullname, "disabled":False})
+        collection.insert_one({"_id":db_user.username,"username": db_user.username, "password": hashed_password, "email": db_user.email, "fullname": db_user.fullname, "disabled":False, "scope":db_user.scope})
         print("User created.")
     except DuplicateKeyError:
         print ('User already exists in the database')
