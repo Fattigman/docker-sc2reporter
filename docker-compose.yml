@@ -15,7 +15,8 @@ services:
       - backend/docker.env
   
   mongodb:
-    image: mongo
+    image: mongo:4.4.6
+    platform: linux/amd64
     hostname: mongodb
     restart: unless-stopped
     ports: 
