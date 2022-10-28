@@ -38,10 +38,10 @@ async def single_sample(
     matrix = await get_matrix()
     del matrix[0]['_id']
     df = pd.DataFrame(matrix[0])
-    distances = abs(df.subtract(df[sample_id], axis = 0)).sum()
-    similar_samples = distances[abs(distances) < 10].index.tolist()
-    sample_info[0]['similar_samples'] = similar_samples
-
+    if sample_id in df.columns:
+        distances = abs(df.subtract(df[sample_id], axis = 0)).sum()
+        similar_samples = distances[abs(distances) < 10].index.tolist()
+        sample_info[0]['similar_samples'] = similar_samples
     return sample_info
 
 # Gets multiple specified samples
