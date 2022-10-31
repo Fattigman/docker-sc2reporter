@@ -37,6 +37,7 @@ def create_graph_obj(samples: list):
                     elif counter+1 == len(graph_list):
                         graph_list.append({'date':sample_time, 'pango_count': 1, 'pangolin': sample_pango})
         else: print(f'{sample["sample_id"]} doesnt have collection_date or variant data')
+    graph_list = sorted(graph_list,key=lambda d: d['date'])
     return graph_list, mutations
 
 
@@ -49,4 +50,5 @@ async def get_dashboard(current_user: User = Depends(get_current_active_user)):
     graph_list, mutations = create_graph_obj(samples)
 
     general_stats = create_general_stats(samples, graph_list, mutations)
+
     return {'dashboard_data':graph_list, 'general_stats': general_stats}
