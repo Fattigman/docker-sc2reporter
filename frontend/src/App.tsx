@@ -10,6 +10,8 @@ import { VariantPage } from './pages/VariantPage'
 import { NextcladePage } from './pages/NextcladePage'
 import { PangolinPage } from 'pages/PangolinPage'
 import { SamplesPage } from 'pages/SamplesPage'
+import jwt_decode from 'jwt-decode'
+import moment from 'moment'
 
 const { Header, Content } = Layout
 export const App = () => {
@@ -19,6 +21,7 @@ export const App = () => {
   const tokenCookieName = 'sc2reporterToken'
   const findCookiePattern = new RegExp(`(?<=${tokenCookieName}=)(.*)(?=;)`, 'g')
   const cookieAge = 10 // hours
+  const currentTime = moment().unix()
 
   const menuItems = [
     {
@@ -50,6 +53,13 @@ export const App = () => {
     setToken(null)
     setUser(null)
     document.cookie = `${tokenCookieName}=; Max-Age=0;`
+  }
+
+  if (token) {
+    const decoded = jwt_decode(token) as any
+    if (decoded?.exp < currentTime) {
+      logout()
+    }
   }
 
   return (
