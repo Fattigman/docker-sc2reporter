@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { getDashboard } from 'services/api'
 import { Area } from '@ant-design/plots'
-import { Card, Descriptions, PageHeader, Checkbox } from 'antd'
+import { Card, Descriptions, Checkbox } from 'antd'
 import { Loading } from 'components/Loading'
 
 const CheckboxGroup = Checkbox.Group
@@ -41,33 +41,27 @@ export const DashboardPage = ({ token }) => {
     <Loading />
   ) : (
     <Card>
-      <PageHeader
-        onBack={() => history.back()}
-        title={'Dashboard'}
-        subTitle={'Most common pango types over time'}
-      >
-        <Descriptions bordered size="small">
-          <Descriptions.Item label="Passed qc samples">
-            {generalStats.passed_qc_samples}
-          </Descriptions.Item>
-          <Descriptions.Item label="Unique mutations">
-            {generalStats.unique_mutations}
-          </Descriptions.Item>
-          <Descriptions.Item label="Unique pangos">{generalStats.unique_pangos}</Descriptions.Item>
-        </Descriptions>
-        <br />
-        <Card>
-          <CheckboxGroup
-            options={plainOptions}
-            value={checkedList}
-            onChange={onChange}
-            disabled={true}
-          />
-        </Card>
-        <Card>
-          <Area {...config} />
-        </Card>
-      </PageHeader>
+      <Descriptions bordered size="small" title={'General stats'}>
+        <Descriptions.Item label="Passed qc samples">
+          {generalStats.passed_qc_samples}
+        </Descriptions.Item>
+        <Descriptions.Item label="Unique mutations">
+          {generalStats.unique_mutations}
+        </Descriptions.Item>
+        <Descriptions.Item label="Unique pangos">{generalStats.unique_pangos}</Descriptions.Item>
+      </Descriptions>
+      <br />
+      <Card title={'Most common pango types over time'}>
+        <CheckboxGroup
+          options={plainOptions}
+          value={checkedList}
+          onChange={onChange}
+          disabled={true}
+        />
+      </Card>
+      <Card>
+        <Area {...config} />
+      </Card>
     </Card>
   )
 }
