@@ -13,6 +13,8 @@ from authentication import *
 from pprint import pprint
 router = APIRouter()
 
+import time
+
 # Gets all samples 
 @router.get("/", response_model=list[Sample])
 async def read_samples(
@@ -71,25 +73,45 @@ async def multiple_samples(
     return await get_multiple_samples(sample_ids)
 
 # Gets all samples with matching specified pango type
-@router.get("/pango/", response_model=list[Sample])
+@router.get("/pango/")
 async def get_samples_with_pangotype(
     pangolin:str ,
     current_user: User = Depends(get_current_active_user)
     ):
-    return await get_pangotype_samples(pangolin=pangolin)
+    samples = await get_pangotype_samples(pangolin)
+    graph_list = group_by_dict(samples)
+    return {'samples': samples, 'graph_list': graph_list}
 
 # Gets all samples with matching specified variant
-@router.get("/variant/", response_model=list[Sample])
+@router.get("/variant/")
 async def get_samples_with_variant(
     variant:str ,
     current_user: User = Depends(get_current_active_user)
     ):
-    return await get_variant_samples(variant=variant)
+    samples = await get_variant_samples(variant=variant)
+    graph_list = group_by_dict(samples)
+    return {'samples': samples, 'graph': graph_list}
 
 # Gets all samples with matching specified nextclade
-@router.get("/nextclade/", response_model=list[Sample])
+@router.get("/nextclade/")
 async def get_samples_with_nextclade(
     nextclade:str ,
     current_user: User = Depends(get_current_active_user)
     ):
-    return await get_nextclade_samples(nextclade=nextclade)
+    samples = await get_nextclade_samples(nextclade=nextclade)
+    graph_list = group_by_dict(samples)
+    return {'samples': samples, 'graph': graph_list}
+
+def group_by_dict(samples:dict):
+    # group by key
+    graph_list = {}
+    for sample in samples:
+        sample_time = (time.strftime('%Y-%m-%w', time.localtime(sample['collection_date']['$date']/1000))) # convert epoch to datetime
+        if sample_time in graph_list:
+            graph_list[sample_time] += 1
+        else:
+            graph_list[sample_time] = 1
+    # sort by key
+    graph_list = {k: v for k, v in sorted(graph_list.items(), key=lambda item: item[0])}
+    graph_list = [{'date': k, 'count': v} for k, v in graph_list.items()]
+    return graph_list
