@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Union
+from typing import Union, Literal
 
 
 class Pangolin(BaseModel):
@@ -53,7 +53,7 @@ class Basic_User(BaseModel):
     email: str
     fullname: str
     disabled: bool = False
-    scope: str
+    scope: Literal['user','admin']
 
 class User(Basic_User):
     password: str
