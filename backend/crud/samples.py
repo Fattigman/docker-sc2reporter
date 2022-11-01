@@ -1,6 +1,7 @@
 from db import *
 #  Handling of the samples collection
 
+
 async def get_samples(query: Optional[any] = None):
     cursor =  db.sample.find(query)
     docs = [parse_json(x) for x in await cursor.to_list(None)]

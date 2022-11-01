@@ -4,6 +4,8 @@ from db import *
 from models import *
 from authentication import *
 
+from typing import Literal
+
 import time
 import datetime
 
@@ -27,7 +29,7 @@ def create_graph_obj(samples: list):
             sample_pango = sample['pangolin']['type']
             [mutations.add(x['id']) for x in sample['variants']]
             if sample_pango == 'None': sample_pango = 'Undetermined'
-            if len(graph_list) == 0: graph_list.append({'date':sample_time, 'pango_count': 0, 'pangolin': sample_pango})
+            if len(graph_list) == 0: graph_list.append({'date':sample_time, 'pango_count': 1, 'pangolin': sample_pango})
             else:
                 for counter, graph_obj in enumerate(graph_list):
                     if graph_obj['date'] == sample_time and graph_obj['pangolin'] == sample_pango: 
@@ -41,11 +43,16 @@ def create_graph_obj(samples: list):
     return graph_list, mutations
 
 
-@router.get("/",
+@router.post("/",
  response_model=DashboardGraph
  )
-async def get_dashboard(current_user: User = Depends(get_current_active_user)):
-    samples = await get_samples()
+async def get_dashboard(
+    current_user: User = Depends(get_current_active_user),
+    selection_criterions:list[Literal['Reinfektion', 'Vaccingenombrott']] | None = Query(default=None),
+    ):
+    if not selection_criterions: query = None
+    else: query = {'selection_criterion': {'$in': selection_criterions}}
+    samples = await get_samples(query=query)
     
     graph_list, mutations = create_graph_obj(samples)
 

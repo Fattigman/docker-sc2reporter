@@ -20,8 +20,6 @@ import time
 async def read_samples(
     current_user: User = Depends(get_current_active_user)
     ):
-    if current_user.scope == 'user':
-        raise HTTPException(status_code=403, detail="Not allowed")
     samples = await get_samples()
     return samples
 
