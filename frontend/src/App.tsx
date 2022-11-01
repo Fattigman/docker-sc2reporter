@@ -16,7 +16,7 @@ const { Header, Content } = Layout
 export const App = () => {
   const [user, setUser] = useState<any>()
   const [samples, setSamples] = useState<any>()
-  const [token, setToken] = useState<any>()
+  const [token, setToken] = useState<any>(null)
 
   const menuItems = [
     {
