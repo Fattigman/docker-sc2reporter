@@ -18,6 +18,12 @@ class DashBoardGraphElement(BaseModel):
     pango_count: int
     pangolin: str
 
+class SimpleGraphElement(BaseModel):
+    date: str
+    count: int
+
+
+
 class GeneralStats(BaseModel):
     passed_qc_samples: int
     unique_pangos: int
@@ -48,6 +54,9 @@ class Sample(BaseModel):
     similar_samples: Union[list, None]
     
 
+class GroupedSamples(BaseModel):
+    samples: list[Sample]
+    graph: list[SimpleGraphElement]
 class Basic_User(BaseModel):
     username: str 
     email: str

@@ -73,17 +73,17 @@ async def multiple_samples(
     return await get_multiple_samples(sample_ids)
 
 # Gets all samples with matching specified pango type
-@router.get("/pango/")
+@router.get("/pango/", response_model=GroupedSamples)
 async def get_samples_with_pangotype(
     pangolin:str ,
     current_user: User = Depends(get_current_active_user)
     ):
     samples = await get_pangotype_samples(pangolin)
     graph_list = group_by_dict(samples)
-    return {'samples': samples, 'graph_list': graph_list}
+    return {'samples': samples, 'graph': graph_list}
 
 # Gets all samples with matching specified variant
-@router.get("/variant/")
+@router.get("/variant/",response_model=GroupedSamples)
 async def get_samples_with_variant(
     variant:str ,
     current_user: User = Depends(get_current_active_user)
@@ -93,7 +93,7 @@ async def get_samples_with_variant(
     return {'samples': samples, 'graph': graph_list}
 
 # Gets all samples with matching specified nextclade
-@router.get("/nextclade/")
+@router.get("/nextclade/", response_model=GroupedSamples)
 async def get_samples_with_nextclade(
     nextclade:str ,
     current_user: User = Depends(get_current_active_user)
