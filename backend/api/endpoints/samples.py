@@ -18,6 +18,8 @@ router = APIRouter()
 async def read_samples(
     current_user: User = Depends(get_current_active_user)
     ):
+    if current_user.scope == 'user':
+        raise HTTPException(status_code=403, detail="Not allowed")
     samples = await get_samples()
     return samples
 
@@ -42,6 +44,22 @@ async def single_sample(
         distances = abs(df.subtract(df[sample_id], axis = 0)).sum()
         similar_samples = distances[abs(distances) < 10].index.tolist()
         sample_info[0]['similar_samples'] = similar_samples
+    return sample_info
+
+# Deletes single specific sample
+@router.delete("/{sample_id}", response_model=Sample)
+async def delete_sample(
+    sample_id: str,
+    current_user: User = Depends(get_current_active_user)
+    ):
+    sample_info = await get_single_sample(sample_id)
+    if len(sample_info) == 0:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Sample can't be found in database",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    await delete_single_sample(sample_id)
     return sample_info
 
 # Gets multiple specified samples

@@ -30,3 +30,6 @@ async def get_nextclade_samples(nextclade:str):
     curr =  db.sample.find({"nextclade": nextclade})
     docs = [parse_json(x) for x in await curr.to_list(None)]
     return  docs
+
+async def delete_single_sample(sample_id : str):
+    await db.sample.delete_one({"sample_id": sample_id})
