@@ -21,21 +21,13 @@ export const DashboardPage = ({ token }) => {
 
   useEffect(() => {
     getDashboard(token).then((response) => {
-      setData(response.dashboard_data.sort(customSort))
+      setData(response.dashboard_data)
       setGeneralStats(response.general_stats)
     })
   }, [])
 
   const onChange = (list) => {
     setCheckedList(list)
-  }
-
-  const customSort = (a, b) => {
-    const dateA = new Date(a.date)
-    const dateB = new Date(b.date)
-    if (dateA > dateB) return 1
-    else if (dateA < dateB) return -1
-    return 0
   }
 
   const config = {
