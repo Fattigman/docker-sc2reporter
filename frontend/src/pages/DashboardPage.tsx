@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { getDashboard } from 'services/api'
 import { Area } from '@ant-design/plots'
 import { Card, Descriptions, PageHeader, Checkbox } from 'antd'
+import { Loading } from 'components/Loading'
 
 const CheckboxGroup = Checkbox.Group
 const plainOptions = [
@@ -44,36 +45,37 @@ export const DashboardPage = ({ token }) => {
     seriesField: 'pangolin',
   }
 
-  return data ? (
+  return !data ? (
+    <Loading />
+  ) : (
     <Card>
       <PageHeader
         onBack={() => history.back()}
         title={'Dashboard'}
         subTitle={'Most common pango types over time'}
       >
-        <>
-          <Descriptions bordered size="small">
-            <Descriptions.Item label="Passed qc samples">
-              {generalStats.passed_qc_samples}
-            </Descriptions.Item>
-            <Descriptions.Item label="Unique mutations">
-              {generalStats.unique_mutations}
-            </Descriptions.Item>
-            <Descriptions.Item label="Unique pangos">
-              {generalStats.unique_pangos}
-            </Descriptions.Item>
-          </Descriptions>
-          <br />
-          <Card>
-            <CheckboxGroup options={plainOptions} value={checkedList} onChange={onChange} />
-          </Card>
-          <Card>
-            <Area {...config} />
-          </Card>
-        </>
+        <Descriptions bordered size="small">
+          <Descriptions.Item label="Passed qc samples">
+            {generalStats.passed_qc_samples}
+          </Descriptions.Item>
+          <Descriptions.Item label="Unique mutations">
+            {generalStats.unique_mutations}
+          </Descriptions.Item>
+          <Descriptions.Item label="Unique pangos">{generalStats.unique_pangos}</Descriptions.Item>
+        </Descriptions>
+        <br />
+        <Card>
+          <CheckboxGroup
+            options={plainOptions}
+            value={checkedList}
+            onChange={onChange}
+            disabled={true}
+          />
+        </Card>
+        <Card>
+          <Area {...config} />
+        </Card>
       </PageHeader>
     </Card>
-  ) : (
-    <h2>DashboardPage</h2>
   )
 }
