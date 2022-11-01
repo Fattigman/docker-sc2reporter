@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { getDashboard } from 'services/api'
 import { Area } from '@ant-design/plots'
-import { Card, Descriptions, Checkbox } from 'antd'
+import { Card, Descriptions, Checkbox, Space } from 'antd'
 import { Loading } from 'components/Loading'
 
 const CheckboxGroup = Checkbox.Group
@@ -52,15 +52,15 @@ export const DashboardPage = ({ token }) => {
       </Descriptions>
       <br />
       <Card title={'Most common pango types over time'}>
-        <CheckboxGroup
-          options={plainOptions}
-          value={checkedList}
-          onChange={onChange}
-          disabled={true}
-        />
-      </Card>
-      <Card>
-        <Area {...config} />
+        <Space direction="vertical" size="large" style={{ display: 'flex' }}>
+          <CheckboxGroup
+            options={plainOptions}
+            value={checkedList}
+            onChange={onChange}
+            disabled={true}
+          />
+          <Area {...config} />
+        </Space>
       </Card>
     </Card>
   )
