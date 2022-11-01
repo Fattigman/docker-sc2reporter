@@ -1,0 +1,11 @@
+steps:
+  # running docker-compose
+  - name: 'docker/compose:1.29.2'
+    args: ['up', '-d']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['tag', 'workspace_fastapi:latest',
+    'gcr.io/able-rain-354612/sc2rep_fastapi:latest']
+options:
+  logging: CLOUD_LOGGING_ONLY
+images: ['gcr.io/able-rain-354612/sc2rep_fastapi:latest']

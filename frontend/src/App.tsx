@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './App.module.css'
 import { Button, Layout, Menu } from 'antd'
 import { Link, Route, Routes, useLocation } from 'react-router-dom'
@@ -12,11 +12,18 @@ import { PangolinPage } from 'pages/PangolinPage'
 import { SamplesPage } from 'pages/SamplesPage'
 import { DashboardPage } from 'pages/DashboardPage'
 
+import jwt_decode from 'jwt-decode'
+import moment from 'moment'
+
 const { Header, Content } = Layout
 export const App = () => {
   const [user, setUser] = useState<any>()
   const [samples, setSamples] = useState<any>()
   const [token, setToken] = useState<any>(null)
+  const tokenCookieName = 'sc2reporterToken'
+  const findCookiePattern = new RegExp(`(?<=${tokenCookieName}=)(.*)(?=;)`, 'g')
+  const cookieAge = 10 // hours
+  const currentTime = moment().unix()
 
   const menuItems = [
     {
@@ -31,17 +38,36 @@ export const App = () => {
     },
   ]
 
+  useEffect(() => {
+    const cookieToken = `${document.cookie};`.match(findCookiePattern)
+    if (cookieToken?.length === 1) {
+      setToken(cookieToken[0])
+      getSamples(cookieToken[0]).then((samples) => setSamples(samples))
+    }
+  }, [])
+
   const login = (formInput) => {
     getToken(formInput).then((response) => {
       setToken(response.access_token)
       setUser(formInput.username)
       getSamples(response.access_token).then((samples) => setSamples(samples))
+      document.cookie = `${tokenCookieName}=${response.access_token}; Max-Age=${
+        cookieAge * 60 * 60
+      };`
     })
   }
 
   const logout = () => {
     setToken(null)
     setUser(null)
+    document.cookie = `${tokenCookieName}=; Max-Age=0;`
+  }
+
+  if (token) {
+    const decoded = jwt_decode(token) as any
+    if (decoded?.exp < currentTime) {
+      logout()
+    }
   }
 
   return (
@@ -89,7 +115,7 @@ export const App = () => {
               element={
                 token ? (
                   samples ? (
-                    <SamplePage samples={samples} />
+                    <SamplePage token={token} />
                   ) : (
                     <LoadingPage />
                   )

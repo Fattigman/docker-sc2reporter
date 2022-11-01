@@ -1,14 +1,27 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { Card, Descriptions, PageHeader, Result, Tag } from 'antd'
 import { CheckCircleTwoTone } from '@ant-design/icons'
 import { formatDate } from '../helpers'
+import { getSample } from '../services/api'
+import { LoadingPage } from './LoadingPage'
 
-export const SamplePage = ({ samples }) => {
+export const SamplePage = ({ token }) => {
   const { id } = useParams()
-  const sample = samples.filter((sample) => sample.sample_id === id)[0]
+  const [sample, setSample] = useState<any>()
+  const [isLoading, setIsLoading] = useState(true)
 
-  return sample ? (
+  useEffect(() => {
+    setIsLoading(true)
+    getSample(token, id).then((response) => {
+      if (response?.[0]) setSample(response[0])
+      setIsLoading(false)
+    })
+  }, [id])
+
+  return isLoading ? (
+    <LoadingPage />
+  ) : sample.sample_id ? (
     <Card>
       <PageHeader onBack={() => history.back()} title={sample.sample_id}>
         <Descriptions bordered size="small">
@@ -30,6 +43,16 @@ export const SamplePage = ({ samples }) => {
             <Link to={`/nextclade/${sample.nextclade}`}>{sample.nextclade}</Link>
           </Descriptions.Item>
           <Descriptions.Item label="Nr variants">{sample.variants?.length}</Descriptions.Item>
+          <Descriptions.Item label="Similar samples">
+            {sample.similar_samples?.map((sampleId) => (
+              <>
+                <Link to={`/samples/${sampleId}`} key={sampleId}>
+                  {sampleId}
+                </Link>
+                <br />
+              </>
+            ))}
+          </Descriptions.Item>
         </Descriptions>
         <br />
         <Descriptions
