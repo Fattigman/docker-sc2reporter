@@ -1,17 +1,33 @@
 import React, { useEffect, useState } from 'react'
 import { getDashboard } from 'services/api'
 import { Area } from '@ant-design/plots'
-import { Card, Descriptions, PageHeader } from 'antd'
+import { Card, Descriptions, PageHeader, Checkbox } from 'antd'
+
+const CheckboxGroup = Checkbox.Group
+const plainOptions = [
+  'General monitoring',
+  'Vaccine breakthrough',
+  'Reinfection',
+  'Travel history',
+  'Others',
+]
+const defaultCheckedList = ['']
 
 export const DashboardPage = ({ token }) => {
   const [data, setData] = useState<any>()
   const [generalStats, setGeneralStats] = useState<any>()
+  const [checkedList, setCheckedList] = useState(defaultCheckedList)
+
   useEffect(() => {
     getDashboard(token).then((response) => {
       setData(response.dashboard_data.sort(customSort))
       setGeneralStats(response.general_stats)
     })
   }, [])
+
+  const onChange = (list) => {
+    setCheckedList(list)
+  }
 
   const customSort = (a, b) => {
     const dateA = new Date(a.date)
@@ -30,7 +46,11 @@ export const DashboardPage = ({ token }) => {
 
   return data ? (
     <Card>
-      <PageHeader onBack={() => history.back()} title={'Dashboard'}>
+      <PageHeader
+        onBack={() => history.back()}
+        title={'Dashboard'}
+        subTitle={'Most common pango types over time'}
+      >
         <>
           <Descriptions bordered size="small">
             <Descriptions.Item label="Passed qc samples">
@@ -44,6 +64,9 @@ export const DashboardPage = ({ token }) => {
             </Descriptions.Item>
           </Descriptions>
           <br />
+          <Card>
+            <CheckboxGroup options={plainOptions} value={checkedList} onChange={onChange} />
+          </Card>
           <Card>
             <Area {...config} />
           </Card>
