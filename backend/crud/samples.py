@@ -33,3 +33,6 @@ async def get_nextclade_samples(nextclade:str):
 
 async def delete_single_sample(sample_id : str):
     await db.sample.delete_one({"sample_id": sample_id})
+
+async def delete_multiple_samples(sample_ids: list):
+    await db.sample.delete_many({"sample_id": {'$in': sample_ids}})

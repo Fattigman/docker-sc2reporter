@@ -48,21 +48,18 @@ async def single_sample(
         sample_info[0]['similar_samples'] = similar_samples
     return sample_info
 
-# Deletes single specific sample
-@router.delete("/{sample_id}", response_model=Sample)
-async def delete_sample(
-    sample_id: str,
+
+# Delete multiple samples
+@router.delete("/", response_model=list[Sample])
+async def delete_samples(
+    sample_ids: list,
     current_user: User = Depends(get_current_active_user)
     ):
-    sample_info = await get_single_sample(sample_id)
-    if len(sample_info) == 0:
-        raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT,
-            detail="Sample can't be found in database",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
-    await delete_single_sample(sample_id)
-    return sample_info
+    if current_user.scope == 'user':
+        raise HTTPException(status_code=403, detail="Not allowed")
+    samples = await get_multiple_samples(sample_ids)
+    await delete_multiple_samples(sample_ids)
+    return samples
 
 # Gets multiple specified samples
 @router.get("/multiple/", response_model=list[Sample])
