@@ -23,10 +23,10 @@ export const UserListPage = ({ token }) => {
       .catch(() => setIsLoading(false))
   }
 
-  const confirmDeleteUser = (tolken: string, username: string) => {
+  const confirmDeleteUser = (token: string, username: string) => {
     deleteUser(token, username).then(() => {
       notification['success']({
-        message: `User deleted`,
+        message: `User ${username} deleted`,
       })
       getUsers(token).then((users) => {
         setUsers(users)
@@ -55,20 +55,18 @@ export const UserListPage = ({ token }) => {
       dataIndex: 'disabled',
       key: 'disabled',
       render: ({ disabled }) => {
-        return disabled ? <Tag color={'gray'}>DISABLED</Tag> : <Tag color={'green'}>ENABLED</Tag>
+        return disabled ? <Tag color={'gray'}>disabled</Tag> : <Tag color={'green'}>enabled</Tag>
       },
     },
     {
       title: 'Scope',
       key: 'scope',
-      render: ({ scope }) => (
-        <Tag color={scopes[scope.toUpperCase()].color}>{scope.toUpperCase()}</Tag>
-      ),
+      render: ({ scope }) => <Tag color={scopes[scope].color}>{scope}</Tag>,
     },
     {
       title: 'Actions',
       key: 'actions',
-      render: ({ username, email }) => (
+      render: ({ username }) => (
         <div style={{ display: 'flex' }}>
           <Tooltip title="Delete user">
             <Popconfirm
