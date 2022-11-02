@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import { Button, Form, Input, Modal, Result } from 'antd'
+import { Button, Form, Input, Modal, Result, Select } from 'antd'
 import { UserAddOutlined } from '@ant-design/icons'
 import { addUser } from '../services/api'
+import { scopes } from '../services/costants'
 
 export const NewUserModal = ({ updateUsers, token }) => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false)
@@ -65,7 +66,13 @@ export const NewUserModal = ({ updateUsers, token }) => {
               <Input placeholder="Username" />
             </Form.Item>
             <Form.Item name="scope">
-              <Input placeholder="Scope" />
+              <Select defaultValue={Object.keys(scopes)[0]}>
+                {Object.keys(scopes).map((scope) => (
+                  <Select.Option key={scope} value={scope}>
+                    {scope}
+                  </Select.Option>
+                ))}
+              </Select>
             </Form.Item>
             <Form.Item
               name="password"

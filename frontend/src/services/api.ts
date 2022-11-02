@@ -152,7 +152,6 @@ export const getUserInfo = async (token): Promise<any> => {
 
 export const addUser = async (token, formInput): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/users/add`
-  console.log(formInput)
   return new Promise((resolve) => {
     axios
       .post(endPoint, formInput, {
