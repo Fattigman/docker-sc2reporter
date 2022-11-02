@@ -34,7 +34,7 @@ export const App = () => {
     },
     {
       key: 'Dashboard',
-      label: <Link to="/Dashboard">Dashboard</Link>,
+      label: <Link to="/dashboard">Dashboard</Link>,
       disabled: token === null,
     },
     {
