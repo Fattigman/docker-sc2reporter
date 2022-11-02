@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { notification, Popconfirm, Table, Tag, Tooltip } from 'antd'
-import { Link } from 'react-router-dom'
 import { DeleteTwoTone } from '@ant-design/icons'
 import { deleteUser, getUsers } from '../../services/api'
 import { NewUserModal } from '../../components/NewUserModal'
@@ -36,10 +35,14 @@ export const UserListPage = ({ token }) => {
 
   const columns = [
     {
-      title: 'User',
-      dataIndex: 'name',
-      key: 'name',
-      render: (name, user) => <Link to={`/genotype/users/${user.id}`}>{name}</Link>,
+      title: 'Username',
+      dataIndex: 'username',
+      key: 'username',
+    },
+    {
+      title: 'Full Name',
+      dataIndex: 'fullname',
+      key: 'fullname',
     },
     {
       title: 'Email',
@@ -47,15 +50,15 @@ export const UserListPage = ({ token }) => {
       key: 'email',
     },
     {
-      title: 'Id',
-      dataIndex: 'id',
-      key: 'id',
+      title: 'Disabled',
+      dataIndex: 'disabled',
+      key: 'disabled',
     },
     {
-      title: 'status',
-      key: 'status',
-      render: ({ email }) => {
-        return email[0] === '_' ? <Tag>INACTIVE</Tag> : <Tag color={'cyan'}>ACTIVE</Tag>
+      title: 'scope',
+      key: 'scope',
+      render: ({ scope }) => {
+        return scope
       },
     },
     {
@@ -89,7 +92,7 @@ export const UserListPage = ({ token }) => {
               dataSource={users}
               columns={columns}
               pagination={false}
-              rowKey={(user) => user.id}
+              rowKey={({ email }) => email}
               tableLayout={'fixed'}
               title={() => (
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>

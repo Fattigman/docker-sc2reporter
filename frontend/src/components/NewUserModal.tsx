@@ -27,12 +27,7 @@ export const NewUserModal = ({ updateUsers, token }) => {
       <Button type={'primary'} onClick={showModal}>
         <UserAddOutlined style={{ fontSize: '20px' }} />
       </Button>
-      <Modal
-        title="Add new Genotype user"
-        visible={isModalVisible}
-        footer={null}
-        onCancel={handleCancel}
-      >
+      <Modal title="Add new user" visible={isModalVisible} footer={null} onCancel={handleCancel}>
         {!isRegistrationSuccessful && (
           <Form name="basic" onFinish={registerUser} autoComplete="off">
             <Form.Item

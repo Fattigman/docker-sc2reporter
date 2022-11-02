@@ -115,7 +115,7 @@ export const getSample = async (token, id): Promise<any> => {
 }
 
 export const getUsers = async (token): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/users`
+  const endPoint = `${REACT_APP_BACKEND_URL}/users/`
   return new Promise((resolve) => {
     axios
       .get(endPoint, {

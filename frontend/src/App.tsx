@@ -27,7 +27,7 @@ export const App = () => {
       label: <Link to="/">Home</Link>,
     },
     {
-      key: 'Home',
+      key: 'Users',
       label: <Link to="/users">Users</Link>,
     },
   ]
