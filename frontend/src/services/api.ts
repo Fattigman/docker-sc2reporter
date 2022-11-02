@@ -113,3 +113,58 @@ export const getSample = async (token, id): Promise<any> => {
       })
   })
 }
+
+export const getUsers = async (token): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/users`
+  return new Promise((resolve) => {
+    axios
+      .get(endPoint, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => resolve(response.data))
+      .catch((error) => {
+        console.log(error)
+        notification.error({
+          message: 'Could not load user list',
+          description: 'Something went wrong',
+        })
+      })
+  })
+}
+
+export const addUser = async (formInput): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/users/add`
+  return new Promise((resolve) => {
+    const params = new URLSearchParams(formInput)
+    axios
+      .post(endPoint, params, {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      })
+      .then((response) => resolve(response.data))
+      .catch((error) => {
+        console.log(error)
+        notification.error({
+          message: 'Could not add user',
+          description: 'Something went wrong',
+        })
+      })
+  })
+}
+
+export const deleteUser = async (username): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/users/delete/?user=${username}`
+  return new Promise((resolve) => {
+    axios
+      .delete(endPoint)
+      .then((response) => resolve(response.data))
+      .catch((error) => {
+        console.log(error)
+        notification.error({
+          message: 'Could not add user',
+          description: 'Something went wrong',
+        })
+      })
+  })
+}

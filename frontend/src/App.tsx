@@ -10,6 +10,7 @@ import { VariantPage } from './pages/VariantPage'
 import { NextcladePage } from './pages/NextcladePage'
 import { PangolinPage } from 'pages/PangolinPage'
 import { SamplesPage } from 'pages/SamplesPage'
+import { UserListPage } from './pages/UserListPage/UserListPage'
 
 const { Header, Content } = Layout
 export const App = () => {
@@ -24,6 +25,10 @@ export const App = () => {
     {
       key: 'Home',
       label: <Link to="/">Home</Link>,
+    },
+    {
+      key: 'Home',
+      label: <Link to="/users">Users</Link>,
     },
   ]
 
@@ -101,6 +106,10 @@ export const App = () => {
                   <LoginPage login={login} />
                 )
               }
+            />
+            <Route
+              path="/users"
+              element={token ? <UserListPage token={token} /> : <LoginPage login={login} />}
             />
             <Route
               path="/nextclade/:id"
