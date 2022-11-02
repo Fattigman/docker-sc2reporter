@@ -51,9 +51,12 @@ export const UserListPage = ({ token }) => {
       key: 'email',
     },
     {
-      title: 'Disabled',
+      title: 'Status',
       dataIndex: 'disabled',
       key: 'disabled',
+      render: ({ disabled }) => {
+        return disabled ? <Tag color={'gray'}>DISABLED</Tag> : <Tag color={'green'}>ENABLED</Tag>
+      },
     },
     {
       title: 'Scope',

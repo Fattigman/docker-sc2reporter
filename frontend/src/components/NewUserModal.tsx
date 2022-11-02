@@ -67,9 +67,6 @@ export const NewUserModal = ({ updateUsers, token }) => {
             <Form.Item name="scope">
               <Input placeholder="Scope" />
             </Form.Item>
-            <Form.Item name="disabled">
-              <Input placeholder="disabled" />
-            </Form.Item>
             <Form.Item
               name="password"
               rules={[
