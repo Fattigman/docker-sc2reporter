@@ -93,7 +93,7 @@ export const UserListPage = ({ token }) => {
               tableLayout={'fixed'}
               title={() => (
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <NewUserModal updateUsers={updateUsersList} />
+                  <NewUserModal updateUsers={updateUsersList} token={token} />
                 </div>
               )}
             />

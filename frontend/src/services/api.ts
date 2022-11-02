@@ -132,7 +132,7 @@ export const getUsers = async (token): Promise<any> => {
   })
 }
 
-export const addUser = async (formInput): Promise<any> => {
+export const addUser = async (token, formInput): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/users/add`
   return new Promise((resolve) => {
     const params = new URLSearchParams(formInput)
@@ -140,6 +140,7 @@ export const addUser = async (formInput): Promise<any> => {
       .post(endPoint, params, {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
+          Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => resolve(response.data))

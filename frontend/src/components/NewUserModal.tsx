@@ -3,7 +3,7 @@ import { Button, Form, Input, Modal, Result } from 'antd'
 import { UserAddOutlined } from '@ant-design/icons'
 import { addUser } from '../services/api'
 
-export const NewUserModal = ({ updateUsers }) => {
+export const NewUserModal = ({ updateUsers, token }) => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false)
   const [isRegistrationSuccessful, setIsRegistrationSuccessful] = useState<boolean>(false)
 
@@ -12,7 +12,7 @@ export const NewUserModal = ({ updateUsers }) => {
   }
 
   const registerUser = (user) => {
-    addUser(user).then(() => {
+    addUser(token, user).then(() => {
       updateUsers()
       setIsRegistrationSuccessful(true)
     })
