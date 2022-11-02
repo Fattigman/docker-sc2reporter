@@ -12,20 +12,30 @@ import { PangolinPage } from 'pages/PangolinPage'
 import { SamplesPage } from 'pages/SamplesPage'
 import { UserListPage } from './pages/UserListPage/UserListPage'
 import { UserDropdown } from './components/UserDropdown'
+import jwt_decode from 'jwt-decode'
+import moment from 'moment'
+import { DashboardPage } from './pages/DashboardPage'
 
 const { Header, Content } = Layout
 export const App = () => {
   const [user, setUser] = useState<any>()
   const [samples, setSamples] = useState<any>()
-  const [token, setToken] = useState<any>()
+  const [token, setToken] = useState<any>(null)
   const tokenCookieName = 'sc2reporterToken'
   const findCookiePattern = new RegExp(`(?<=${tokenCookieName}=)(.*)(?=;)`, 'g')
   const cookieAge = 10 // hours
+  const currentTime = moment().unix()
 
   const menuItems = [
     {
       key: 'Home',
       label: <Link to="/">Home</Link>,
+      disabled: token === null,
+    },
+    {
+      key: 'Dashboard',
+      label: <Link to="/Dashboard">Dashboard</Link>,
+      disabled: token === null,
     },
     {
       key: 'Users',
@@ -57,6 +67,13 @@ export const App = () => {
     setToken(null)
     setUser(null)
     document.cookie = `${tokenCookieName}=; Max-Age=0;`
+  }
+
+  if (token) {
+    const decoded = jwt_decode(token) as any
+    if (decoded?.exp < currentTime) {
+      logout()
+    }
   }
 
   return (
@@ -98,6 +115,10 @@ export const App = () => {
             <Route
               path="/"
               element={token ? <SamplesPage samples={samples} /> : <LoginPage login={login} />}
+            />
+            <Route
+              path="/dashboard"
+              element={token ? <DashboardPage token={token} /> : <LoginPage login={login} />}
             />
             <Route
               path="/samples/:id"

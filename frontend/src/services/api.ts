@@ -96,6 +96,24 @@ export const getVariant = async (token, variant): Promise<any> => {
   })
 }
 
+export const getDashboard = async (token): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/dashboard`
+  return new Promise((resolve) => {
+    axios
+      .get(endPoint, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => resolve(response.data))
+      .catch((error) => {
+        console.log(error)
+        notification.error({
+          message: 'Could not load dashboard info',
+          description: 'Something went wrong',
+        })
+      })
+  })
+}
+
 export const getSample = async (token, id): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/samples/${id}`
   return new Promise((resolve) => {

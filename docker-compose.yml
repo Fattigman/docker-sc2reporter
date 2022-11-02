@@ -1,7 +1,7 @@
 version: "3.1"
 services:
   fastapi:
-    build: ./sc2rep-api/.
+    build: ./backend/.
     container_name: sc2reporter-api
     platform: linux/amd64
     ports:
@@ -12,7 +12,7 @@ services:
     links: 
       - mongodb
     env_file:
-      - sc2rep-api/docker.env
+      - backend/docker.env
   
   mongodb:
     image: mongo
@@ -33,6 +33,7 @@ services:
   frontend:
     build: ./frontend
     container_name: sc2reporter-frontend
+    restart: unless-stopped
     ports:
       - '3000:3000'
     environment:
