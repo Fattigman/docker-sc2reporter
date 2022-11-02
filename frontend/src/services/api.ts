@@ -134,12 +134,11 @@ export const getUsers = async (token): Promise<any> => {
 
 export const addUser = async (token, formInput): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/users/add`
+  console.log(formInput)
   return new Promise((resolve) => {
-    const params = new URLSearchParams(formInput)
     axios
-      .post(endPoint, params, {
+      .post(endPoint, formInput, {
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
           Authorization: `Bearer ${token}`,
         },
       })
@@ -154,11 +153,15 @@ export const addUser = async (token, formInput): Promise<any> => {
   })
 }
 
-export const deleteUser = async (username): Promise<any> => {
+export const deleteUser = async (token, username): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/users/delete/?user=${username}`
   return new Promise((resolve) => {
     axios
-      .delete(endPoint)
+      .delete(endPoint, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => resolve(response.data))
       .catch((error) => {
         console.log(error)

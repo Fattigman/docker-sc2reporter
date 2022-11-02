@@ -43,7 +43,7 @@ export const NewUserModal = ({ updateUsers, token }) => {
               <Input placeholder="Email" />
             </Form.Item>
             <Form.Item
-              name="name"
+              name="fullname"
               rules={[
                 {
                   required: true,
@@ -63,6 +63,12 @@ export const NewUserModal = ({ updateUsers, token }) => {
               ]}
             >
               <Input placeholder="Username" />
+            </Form.Item>
+            <Form.Item name="scope">
+              <Input placeholder="Scope" />
+            </Form.Item>
+            <Form.Item name="disabled">
+              <Input placeholder="disabled" />
             </Form.Item>
             <Form.Item
               name="password"

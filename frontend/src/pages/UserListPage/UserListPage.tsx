@@ -22,8 +22,8 @@ export const UserListPage = ({ token }) => {
       .catch(() => setIsLoading(false))
   }
 
-  const confirmDeleteUser = (username: string) => {
-    deleteUser(username).then(() => {
+  const confirmDeleteUser = (tolken: string, username: string) => {
+    deleteUser(token, username).then(() => {
       notification['success']({
         message: `User deleted`,
       })
@@ -64,12 +64,12 @@ export const UserListPage = ({ token }) => {
     {
       title: 'Actions',
       key: 'actions',
-      render: ({ id, email }) => (
+      render: ({ username, email }) => (
         <div style={{ display: 'flex' }}>
           <Tooltip title="Delete user">
             <Popconfirm
               title="Are you sure you want to delete this user?"
-              onConfirm={() => confirmDeleteUser(id)}
+              onConfirm={() => confirmDeleteUser(token, username)}
               okText="Yes"
               cancelText="No"
             >
