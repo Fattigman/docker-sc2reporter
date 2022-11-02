@@ -4,6 +4,7 @@ import { DeleteTwoTone } from '@ant-design/icons'
 import { deleteUser, getUsers } from '../../services/api'
 import { NewUserModal } from '../../components/NewUserModal'
 import { LoadingPage } from '../LoadingPage'
+import { scopes } from '../../services/costants'
 
 export const UserListPage = ({ token }) => {
   const [users, setUsers] = useState<any[]>()
@@ -55,11 +56,11 @@ export const UserListPage = ({ token }) => {
       key: 'disabled',
     },
     {
-      title: 'scope',
+      title: 'Scope',
       key: 'scope',
-      render: ({ scope }) => {
-        return scope
-      },
+      render: ({ scope }) => (
+        <Tag color={scopes[scope.toUpperCase()].color}>{scope.toUpperCase()}</Tag>
+      ),
     },
     {
       title: 'Actions',
