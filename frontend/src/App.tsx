@@ -10,6 +10,8 @@ import { VariantPage } from './pages/VariantPage'
 import { NextcladePage } from './pages/NextcladePage'
 import { PangolinPage } from 'pages/PangolinPage'
 import { SamplesPage } from 'pages/SamplesPage'
+import { DashboardPage } from 'pages/DashboardPage'
+
 import jwt_decode from 'jwt-decode'
 import moment from 'moment'
 
@@ -17,7 +19,7 @@ const { Header, Content } = Layout
 export const App = () => {
   const [user, setUser] = useState<any>()
   const [samples, setSamples] = useState<any>()
-  const [token, setToken] = useState<any>()
+  const [token, setToken] = useState<any>(null)
   const tokenCookieName = 'sc2reporterToken'
   const findCookiePattern = new RegExp(`(?<=${tokenCookieName}=)(.*)(?=;)`, 'g')
   const cookieAge = 10 // hours
@@ -27,6 +29,12 @@ export const App = () => {
     {
       key: 'Home',
       label: <Link to="/">Home</Link>,
+      disabled: token === null,
+    },
+    {
+      key: 'Dashboard',
+      label: <Link to="/Dashboard">Dashboard</Link>,
+      disabled: token === null,
     },
   ]
 
@@ -97,6 +105,10 @@ export const App = () => {
             <Route
               path="/"
               element={token ? <SamplesPage samples={samples} /> : <LoginPage login={login} />}
+            />
+            <Route
+              path="/dashboard"
+              element={token ? <DashboardPage token={token} /> : <LoginPage login={login} />}
             />
             <Route
               path="/samples/:id"
