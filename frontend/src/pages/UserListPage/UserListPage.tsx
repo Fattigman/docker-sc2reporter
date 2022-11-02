@@ -5,6 +5,7 @@ import { deleteUser, getUsers } from '../../services/api'
 import { NewUserModal } from '../../components/NewUserModal'
 import { LoadingPage } from '../LoadingPage'
 import { scopes } from '../../services/costants'
+import { UserStatusTag } from '../../components/UserStatusTag'
 
 export const UserListPage = ({ token }) => {
   const [users, setUsers] = useState<any[]>()
@@ -54,9 +55,7 @@ export const UserListPage = ({ token }) => {
       title: 'Status',
       dataIndex: 'disabled',
       key: 'disabled',
-      render: ({ disabled }) => {
-        return disabled ? <Tag color={'gray'}>disabled</Tag> : <Tag color={'green'}>enabled</Tag>
-      },
+      render: ({ disabled }) => <UserStatusTag isDisabled={disabled} />,
     },
     {
       title: 'Scope',

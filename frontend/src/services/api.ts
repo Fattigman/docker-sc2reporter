@@ -132,6 +132,24 @@ export const getUsers = async (token): Promise<any> => {
   })
 }
 
+export const getUserInfo = async (token): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/users/me`
+  return new Promise((resolve) => {
+    axios
+      .get(endPoint, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => resolve(response.data))
+      .catch((error) => {
+        console.log(error)
+        notification.error({
+          message: 'Could not load user info and scope',
+          description: 'Something went wrong',
+        })
+      })
+  })
+}
+
 export const addUser = async (token, formInput): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/users/add`
   console.log(formInput)

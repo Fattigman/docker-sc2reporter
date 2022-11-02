@@ -3,7 +3,7 @@ import styles from './App.module.css'
 import { Button, Layout, Menu } from 'antd'
 import { Link, Route, Routes, useLocation } from 'react-router-dom'
 import { LoginPage } from './pages/Login/LoginPage'
-import { getSamples, getToken } from './services/api'
+import { getSamples, getToken, getUserInfo } from './services/api'
 import { SamplePage } from './pages/SamplePage'
 import { LoadingPage } from './pages/LoadingPage'
 import { VariantPage } from './pages/VariantPage'
@@ -11,6 +11,7 @@ import { NextcladePage } from './pages/NextcladePage'
 import { PangolinPage } from 'pages/PangolinPage'
 import { SamplesPage } from 'pages/SamplesPage'
 import { UserListPage } from './pages/UserListPage/UserListPage'
+import { UserDropdown } from './components/UserDropdown'
 
 const { Header, Content } = Layout
 export const App = () => {
@@ -36,6 +37,7 @@ export const App = () => {
     const cookieToken = `${document.cookie};`.match(findCookiePattern)
     if (cookieToken?.length === 1) {
       setToken(cookieToken[0])
+      getUserInfo(cookieToken[0]).then((response) => setUser(response))
       getSamples(cookieToken[0]).then((samples) => setSamples(samples))
     }
   }, [])
@@ -70,7 +72,11 @@ export const App = () => {
             items={menuItems}
           />
           <div className={styles.logout}>
-            <div className={styles.username}>{user}</div>
+            {user && (
+              <div className={styles.username}>
+                <UserDropdown user={user} />
+              </div>
+            )}
             <div>
               {token && (
                 <Button type="primary" onClick={() => logout()}>
