@@ -1,7 +1,7 @@
 from db import *
 #  Handling of the samples collection
 
-
+# Get samples from the database
 async def get_samples(query: Optional[any] = None):
     cursor =  db.sample.find(query)
     docs = [parse_json(x) for x in await cursor.to_list(None)]
@@ -17,6 +17,7 @@ async def get_multiple_samples(sample_ids: list):
     docs = [parse_json(x) for x in await curr.to_list(None)]
     return  docs
 
+# Get samples associated with a specific type
 async def get_pangotype_samples(pangolin:str):
     curr =  db.sample.find({"pangolin.type": pangolin})
     docs = [parse_json(x) for x in await curr.to_list(None)]
@@ -31,6 +32,8 @@ async def get_nextclade_samples(nextclade:str):
     curr =  db.sample.find({"nextclade": nextclade})
     docs = [parse_json(x) for x in await curr.to_list(None)]
     return  docs
+
+# Delete samples
 
 async def delete_single_sample(sample_id : str):
     await db.sample.delete_one({"sample_id": sample_id})
