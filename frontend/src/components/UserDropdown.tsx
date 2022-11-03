@@ -13,7 +13,7 @@ export const UserDropdown = ({ user }) => {
       content={
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 5 }}>
           <>{email}</>
-          <Tag color={scopes[scope].color}>{scope}</Tag>
+          <Tag color={scopes[scope]?.color}>{scope}</Tag>
           <UserStatusTag isDisabled={disabled} />
         </div>
       }
