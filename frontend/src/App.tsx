@@ -3,17 +3,19 @@ import styles from './App.module.css'
 import { Button, Layout, Menu } from 'antd'
 import { Link, Route, Routes, useLocation } from 'react-router-dom'
 import { LoginPage } from './pages/Login/LoginPage'
-import { getSamples, getToken } from './services/api'
+import { getSamples, getToken, getUserInfo } from './services/api'
 import { SamplePage } from './pages/SamplePage'
 import { LoadingPage } from './pages/LoadingPage'
 import { VariantPage } from './pages/VariantPage'
 import { NextcladePage } from './pages/NextcladePage'
 import { PangolinPage } from 'pages/PangolinPage'
 import { SamplesPage } from 'pages/SamplesPage'
-import { DashboardPage } from 'pages/DashboardPage'
-
+import { UserListPage } from './pages/UserListPage/UserListPage'
+import { UserDropdown } from './components/UserDropdown'
 import jwt_decode from 'jwt-decode'
 import moment from 'moment'
+import { DashboardPage } from './pages/DashboardPage'
+import { scopes } from './services/costants'
 
 const { Header, Content } = Layout
 export const App = () => {
@@ -30,18 +32,26 @@ export const App = () => {
       key: 'Home',
       label: <Link to="/">Home</Link>,
       disabled: token === null,
+      hide: 'false',
     },
     {
       key: 'Dashboard',
-      label: <Link to="/Dashboard">Dashboard</Link>,
+      label: <Link to="/dashboard">Dashboard</Link>,
       disabled: token === null,
+      hide: 'false',
     },
-  ]
+    {
+      key: 'Users',
+      label: <Link to="/users">Users</Link>,
+      hide: (user?.scope !== scopes.admin.id).toString(),
+    },
+  ].filter((item) => item.hide === 'false')
 
   useEffect(() => {
     const cookieToken = `${document.cookie};`.match(findCookiePattern)
     if (cookieToken?.length === 1) {
       setToken(cookieToken[0])
+      getUserInfo(cookieToken[0]).then((response) => setUser(response))
       getSamples(cookieToken[0]).then((samples) => setSamples(samples))
     }
   }, [])
@@ -49,7 +59,7 @@ export const App = () => {
   const login = (formInput) => {
     getToken(formInput).then((response) => {
       setToken(response.access_token)
-      setUser(formInput.username)
+      getUserInfo(response.access_token).then((response) => setUser(response))
       getSamples(response.access_token).then((samples) => setSamples(samples))
       document.cookie = `${tokenCookieName}=${response.access_token}; Max-Age=${
         cookieAge * 60 * 60
@@ -83,7 +93,11 @@ export const App = () => {
             items={menuItems}
           />
           <div className={styles.logout}>
-            <div className={styles.username}>{user}</div>
+            {user && (
+              <div className={styles.username}>
+                <UserDropdown user={user} />
+              </div>
+            )}
             <div>
               {token && (
                 <Button type="primary" onClick={() => logout()}>
@@ -123,6 +137,10 @@ export const App = () => {
                   <LoginPage login={login} />
                 )
               }
+            />
+            <Route
+              path="/users"
+              element={token ? <UserListPage token={token} /> : <LoginPage login={login} />}
             />
             <Route
               path="/nextclade/:id"
