@@ -144,7 +144,7 @@ export const getUsers = async (token): Promise<any> => {
         console.log(error)
         notification.error({
           message: 'Could not load user list',
-          description: 'Something went wrong',
+          description: error.response.data.detail,
         })
       })
   })
