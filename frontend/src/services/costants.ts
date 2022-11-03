@@ -1,4 +1,4 @@
 export const scopes = {
-  admin: { color: 'blue' },
-  user: { color: 'purple' },
+  admin: { id: 'admin', color: 'blue' },
+  user: { id: 'user', color: 'purple' },
 }
