@@ -30,8 +30,9 @@ class GeneralStats(BaseModel):
     unique_mutations: int
 
 class DashboardGraph(BaseModel):
-    dashboard_data: list[DashBoardGraphElement]
+    graph_list: list[DashBoardGraphElement]
     general_stats: GeneralStats
+    selection_criterions: list[str]
 
 
 class Sample(BaseModel):
