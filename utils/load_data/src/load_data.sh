@@ -6,9 +6,9 @@
 
 python ./db_init.py
 
-perl ./load_run_to_db.pl ../../data/testdata/results/210319_NB501697_0239_AHMV7CAFX2/
-perl ./add_metadata_to_db.pl ../../data/testdata/metadata/test.csv
-perl ./add_ct_to_db.pl $(date +%Y-%m-%d) ../../data/testdata/qpcr/quantstudio_test.txt
+perl ./load_run_to_db.pl $LOAD_DATA_RESULTS
+perl ./add_metadata_to_db.pl $LOAD_DATA_META
+perl ./add_ct_to_db.pl $(date +%Y-%m-%d) $LOAD_DATA_QPCR
 
 python ./add_snp_mtx.py 
 
