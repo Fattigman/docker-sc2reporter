@@ -10,7 +10,7 @@ import time
 import datetime
 
 router = APIRouter()
-@router.post("/", response_model=DashboardGraph)
+@router.get("/", response_model=DashboardGraph)
 async def get_dashboard_data(
     selection_criterion: list = Query([]),
     current_user: User = Depends(get_current_active_user)
