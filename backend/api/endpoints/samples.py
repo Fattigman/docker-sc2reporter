@@ -16,11 +16,13 @@ router = APIRouter()
 import time
 
 # Gets all samples 
-@router.get("/", response_model=list[Sample])
+@router.get("/", response_model = list[Sample])
 async def read_samples(
-    current_user: User = Depends(get_current_active_user)
-    ):
-    samples = await get_samples()
+    current_user: User = Depends(get_current_active_user),
+    advanced_search: Optional[bool] = False,
+    ): 
+
+    samples = await get_samples(advanced_search)
     return samples
 
 # Gets single specific sample
