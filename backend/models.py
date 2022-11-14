@@ -42,8 +42,8 @@ class Sample(BaseModel):
     time_added: dict
     pangolin: Pangolin
     nextclade: str
-    vcf_filename: str
-    depth_filename: str
+    vcf_filename: Union[str, None]
+    depth_filename: Union[str, None]
     sample_id: str
     age: Union[str, None]
     collection_date: Union[dict, None]
