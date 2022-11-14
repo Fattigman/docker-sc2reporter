@@ -1,13 +1,44 @@
 from db import *
+
+from api.config import *
 #  Handling of the samples collection
 
 # Get samples from the database
-async def get_samples(query: Optional[any] = None):
-    cursor =  db.sample.find(query)
+async def get_samples(advanced_search:bool = False):
+    if not advanced_search:
+        # Filter out variants that are not in VARIANTS OF BIOLOGICAL SIGNIFICANCE
+        pipeline = [
+            {
+                '$project': {
+                    'sample_id': 1,
+                    'nextclade': 1,
+                    'pangolin': 1,
+                    'collection_date': 1,
+                    'selection_criterion': 1,
+                    'qc': 1,
+                    'time_added': 1,
+                    'variants': {
+                        '$filter': {
+                            'input': '$variants',
+                            'as': 'variant',
+                            'cond': {
+                                '$in': [
+                                    '$$variant.aa', VARIANTS_OF_BIOLOGICAL_SIGNIFICANCE
+                                ]
+                            }
+                    }
+                }
+            }
+        }
+        ]
+        cursor =  db.sample.aggregate(pipeline)
+    else:
+        cursor =  db.sample.find()
     docs = [parse_json(x) for x in await cursor.to_list(None)]
     return (docs)
 
 async def get_single_sample(sample_id : str):
+    
     curr =  db.sample.find({"sample_id": sample_id})
     docs = [parse_json(x) for x in await curr.to_list(None)]
     return  docs
