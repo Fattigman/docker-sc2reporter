@@ -19,7 +19,7 @@ async def get_dashboard_data(
     graph_list = fill_graph_data(graph_list)
     selection_criterions = await get_selection_criterions()
     general_stats = await get_general_stats()
-    return {'general_stats':general_stats,'graph_list':graph_list, 'selection_criterions':selection_criterions}
+    return {'general_stats':general_stats,'dashboard_data':graph_list, 'selection_criterions':selection_criterions}
 
 def fill_graph_data(graph_list:list) -> list:
     dates = {}
