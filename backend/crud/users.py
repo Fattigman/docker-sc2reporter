@@ -17,7 +17,7 @@ def create_user(user):
 
     try:
         print('test')
-        collection.insert_one({"_id":db_user.username,"username": db_user.username, "password": hashed_password, "email": db_user.email, "fullname": db_user.fullname, "disabled":False})
+        collection.insert_one({"_id":db_user.username,"username": db_user.username, "password": hashed_password, "email": db_user.email, "fullname": db_user.fullname, "disabled":False, "scope":db_user.scope})
         print("User created.")
     except DuplicateKeyError:
         print ('User already exists in the database')
@@ -37,3 +37,7 @@ async def get_users():
     cursor =  db.users.find()
     docs = [parse_json(x) for x in await cursor.to_list(None)]
     return (docs)
+
+async def del_user(username):
+    user = await db.users.delete_one({'username': username})
+    return user
