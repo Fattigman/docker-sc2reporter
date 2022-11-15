@@ -13,7 +13,7 @@ export const PangolinPage = ({ token }) => {
   useEffect(() => {
     if (id)
       getPangolin(token, id).then((response) => {
-        setSamples(response)
+        setSamples(response.samples)
       })
   }, [id])
 

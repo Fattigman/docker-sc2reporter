@@ -12,7 +12,7 @@ export const NextcladePage = ({ token }) => {
   useEffect(() => {
     if (id)
       getNextclade(token, id).then((response) => {
-        setSamples(response)
+        setSamples(response.samples)
       })
   }, [id])
 
