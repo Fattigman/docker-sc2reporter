@@ -1,4 +1,4 @@
-# docker-sc2reporter v2
+# SarsCov2 Reporter
 Dockerized version of the sc2reporter program.
 
 ## To run with dummy data:
