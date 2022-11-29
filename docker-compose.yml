@@ -41,3 +41,11 @@ services:
       - 'REACT_APP_BACKEND_URL=http://0.0.0.0:8000'
     depends_on:
       - fastapi
+  grapetree:
+    build: ./grapetree/.
+    container_name: sc2reporter-grapetree
+    restart: unless-stopped
+    ports:
+      - '4000:8000'
+    depends_on:
+      - fastapi
