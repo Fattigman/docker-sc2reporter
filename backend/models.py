@@ -18,6 +18,12 @@ class DashBoardGraphElement(BaseModel):
     pango_count: int
     pangolin: str
 
+class SimpleGraphElement(BaseModel):
+    date: str
+    count: int
+
+
+
 class GeneralStats(BaseModel):
     passed_qc_samples: int
     unique_pangos: int
@@ -26,6 +32,7 @@ class GeneralStats(BaseModel):
 class DashboardGraph(BaseModel):
     dashboard_data: list[DashBoardGraphElement]
     general_stats: GeneralStats
+    selection_criterions: list[str]
 
 
 class Sample(BaseModel):
@@ -35,8 +42,8 @@ class Sample(BaseModel):
     time_added: dict
     pangolin: Pangolin
     nextclade: str
-    vcf_filename: str
-    depth_filename: str
+    vcf_filename: Union[str, None]
+    depth_filename: Union[str, None]
     sample_id: str
     age: Union[str, None]
     collection_date: Union[dict, None]
@@ -48,6 +55,9 @@ class Sample(BaseModel):
     similar_samples: Union[list, None]
     
 
+class GroupedSamples(BaseModel):
+    samples: list[Sample]
+    graph: list[SimpleGraphElement]
 class Basic_User(BaseModel):
     username: str 
     email: str

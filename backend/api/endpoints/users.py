@@ -36,7 +36,7 @@ async def read_own_items(
     ):
     return [{"item_id": "Foo", "owner": current_user['username']}]
 
-@router.post("/add/", response_model=User)
+@router.post("/add/", response_model=User, status_code=201)
 async def post_user(
         user: User,
         current_user: User = Depends(get_current_active_user)
