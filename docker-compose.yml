@@ -30,6 +30,18 @@ services:
       - mongodb
     depends_on:
       - mongodb
+      
+  mongo-express:
+    image: mongo-express:0.54.0
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+    environment:
+    - ME_CONFIG_MONGODB_SERVER=mongodb
+    - ME_CONFIG_MONGODB_PORT=27017
+    depends_on:
+      - mongodb
 
   frontend:
     build: ./frontend/.
