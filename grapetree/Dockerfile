@@ -13,4 +13,4 @@ RUN pip3 install . && \
     pip3 install pandas requests gunicorn
 
 # Run grapetree
-CMD ["gunicorn", "-b", ":8000", "wsgi:application"]
+CMD ["gunicorn", "-b", ":4000", "wsgi:application"]

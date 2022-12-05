@@ -46,6 +46,6 @@ services:
     container_name: sc2reporter-grapetree
     restart: unless-stopped
     ports:
-      - '4000:8000'
+      - '4000:4000'
     depends_on:
       - fastapi
