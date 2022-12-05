@@ -20,10 +20,9 @@ router = APIRouter()
 @router.get("/")
 async def get_distances(
     # current_user: User = Depends(get_current_active_user),
-    group: str = Query(..., description="The group to get the distances for"),
-    sample_list: List[str] = Query(..., description="The list of samples to get the distances for")
+    group: str = Query(..., description="The group to get the distances for (samples)"),
+    sample_list: List[str] = Query(..., description="The list of samples to get the distances for (need at least 3 samples)")
     ):
-    print('test2')
     if group == 'samples':
 
         curr = db.sample.find(
@@ -64,7 +63,6 @@ async def get_distances(
                 r(), r(), r())
 
         date = time.strftime('%Y-%m-%d', time.localtime(sample.get("collection_date")['$date']))
-        print(date)
         sample_metadata[sample.get('sample_id')] = {
             'year': date.split('-')[0],
             'month': date.split('-')[1],
