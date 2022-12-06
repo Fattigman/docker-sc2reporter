@@ -19,8 +19,8 @@ router = APIRouter()
 
 @router.get("/")
 async def get_distances(
-    # current_user: User = Depends(get_current_active_user),
-    group: str = Query(..., description="The group to get the distances for (samples)"),
+    current_user: User = Depends(get_current_active_user),
+    group: str = Query(..., description="The group to get the distances for (try 'samples')"),
     sample_list: List[str] = Query(..., description="The list of samples to get the distances for (need at least 3 samples)")
     ):
     if group == 'samples':
@@ -32,10 +32,12 @@ async def get_distances(
         samples =  [parse_json(x) for x in await curr.to_list(None)]
         if len(samples) < 3:
             return {"error": "Not enough samples to create a tree"}
+    else:
+        return {"error": "Invalid group"}
+
 
     presence = defaultdict(set)
     all_samples = set()
-    # sample_metadata = []
     sample_metadata = {}
     pango_color = {}
     nextstrain_color = {}
@@ -63,6 +65,7 @@ async def get_distances(
                 r(), r(), r())
 
         date = time.strftime('%Y-%m-%d', time.localtime(sample.get("collection_date")['$date']))
+
         sample_metadata[sample.get('sample_id')] = {
             'year': date.split('-')[0],
             'month': date.split('-')[1],
