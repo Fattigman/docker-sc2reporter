@@ -3,31 +3,34 @@ import { getDashboard } from 'services/api'
 import { Area } from '@ant-design/plots'
 import { Card, Descriptions, Checkbox, Space } from 'antd'
 import { Loading } from 'components/Loading'
+import { decodeHTMLEntities } from 'helpers'
 
 const CheckboxGroup = Checkbox.Group
-const plainOptions = [
-  'General monitoring',
-  'Vaccine breakthrough',
-  'Reinfection',
-  'Travel history',
-  'Others',
-]
-const defaultCheckedList = ['']
 
 export const DashboardPage = ({ token }) => {
   const [data, setData] = useState<any>()
+  const [selectionCriterions, setSelectionCriterions] = useState([])
   const [generalStats, setGeneralStats] = useState<any>()
-  const [checkedList, setCheckedList] = useState(defaultCheckedList)
+  let filters = ''
+
+  const filtersList = decodeHTMLEntities(selectionCriterions)
 
   useEffect(() => {
-    getDashboard(token).then((response) => {
+    getDashboard(token, filters).then((response) => {
       setData(response.dashboard_data)
       setGeneralStats(response.general_stats)
+      setSelectionCriterions(response.selection_criterions)
     })
   }, [])
 
   const onChange = (list) => {
-    setCheckedList(list)
+    list.map((item) => {
+      filters += 'selection_criterion=' + item + '&'
+    })
+
+    getDashboard(token, filters).then((response) => {
+      setData(response.dashboard_data)
+    })
   }
 
   const config = {
@@ -53,12 +56,7 @@ export const DashboardPage = ({ token }) => {
       <br />
       <Card title={'Most common pango types over time'}>
         <Space direction="vertical" size="large" style={{ display: 'flex' }}>
-          <CheckboxGroup
-            options={plainOptions}
-            value={checkedList}
-            onChange={onChange}
-            disabled={true}
-          />
+          <CheckboxGroup options={filtersList} onChange={onChange} />
           <Area {...config} />
         </Space>
       </Card>
