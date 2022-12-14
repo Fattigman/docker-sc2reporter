@@ -3,19 +3,20 @@ from db import *
 from authentication import *
 from models import *
 
-from api.config import * 
+from api.config import settings
 
-from api.endpoints import samples, users, login, variants, dashboard
+from api.endpoints import samples, users, login, variants, dashboard, phyllogeny
 
 from fastapi import Depends, FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
 
 
-
 app = FastAPI(
-    title='SarsCov 2 API', 
-    description='API for SarsCov 2 visualisation tool', 
-    version='development')
+    title=settings.PROJECT_NAME,
+    description=settings.DESCRIPTION,
+    version='development',
+    root_path=settings.ROOT_PATH,
+    )
 
 app.add_middleware(
     CORSMiddleware,
@@ -27,7 +28,7 @@ app.add_middleware(
 
 @app.get('/')
 def root():
-    return {'message': 'Hello and welcome to the SarsCov 2 API'}
+    return {'message': 'Hello and welcome to the SarsCov 2 API', 'root_path': app.root_path}
 
 app.include_router(
     samples.router,
@@ -61,6 +62,13 @@ app.include_router(
     dashboard.router,
     prefix="/dashboard",
     tags=["Dashboard"],
+    responses={status.HTTP_404_NOT_FOUND: {"description": "Not found"}},
+)
+
+app.include_router(
+    phyllogeny.router,
+    prefix="/phyllogeny",
+    tags=["Phyllogeny"],
     responses={status.HTTP_404_NOT_FOUND: {"description": "Not found"}},
 )
 

@@ -1,6 +1,6 @@
 from db import *
 
-from api.config import *
+from api.config import settings
 #  Handling of the samples collection
 
 # Get samples from the database
@@ -23,7 +23,7 @@ async def get_samples(advanced_search:bool = False):
                             'as': 'variant',
                             'cond': {
                                 '$in': [
-                                    '$$variant.aa', VARIANTS_OF_BIOLOGICAL_SIGNIFICANCE
+                                    '$$variant.aa', settings.VARIANTS_OF_BIOLOGICAL_SIGNIFICANCE
                                 ]
                             }
                     }

@@ -1,13 +1,10 @@
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, Query
 from crud.samples import *
 from db import * 
 from models import *
 from authentication import *
 from pprint import pprint
-from typing import Literal
 
-import time
-import datetime
 
 router = APIRouter()
 @router.get("/", response_model=DashboardGraph)
