@@ -23,8 +23,15 @@ services:
     restart: unless-stopped
     ports: 
      - "27017:27017"
-     
 
+  mongo_seed:
+    build: ./mongo-seed/.
+    command:
+      - /mongo-seed/import.sh
+    links: 
+      - mongodb
+    depends_on:
+      - mongodb
       
   mongo-express:
     image: mongo-express:0.54.0
