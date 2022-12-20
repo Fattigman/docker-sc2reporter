@@ -1,4 +1,5 @@
 from db import *
+from typing import Optional
 
 async def get_matrix(query: Optional[any] = None):
     cursor =  db.matrix.find(query)

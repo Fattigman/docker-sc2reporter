@@ -1,4 +1,5 @@
 from db import * 
+from typing import Optional
 # Handling of the variants collection
 
 async def get_variants(query: Optional[any] = None):
