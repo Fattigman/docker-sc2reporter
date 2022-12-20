@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, Query, Header, Body
 from fastapi.security import OAuth2PasswordRequestForm
 
 from authentication import *
-from crud.users import get_user, create_user, get_users, del_user
+from crud import get_user, create_user, get_users, del_user
 
 from models import User, Basic_User
 
