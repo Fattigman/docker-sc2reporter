@@ -66,18 +66,3 @@ async def update_consensus_endpoint(
             headers={"WWW-Authenticate": "Bearer"},
         )
     return {f'{id}': 'failed to update'}
-
-@router.delete("/{id}")
-async def delete_consensus_endpoint(
-    id: str,
-    current_user: User = Depends(get_current_active_user)
-):
-    data = await consensus.delete(id, "sample_id")
-    if data.deleted_count == 0:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Sample can't be found in database",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
-
-    return {f'{id}': 'deleted successfully'}
