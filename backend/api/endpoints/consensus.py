@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Query, Body
+from fastapi import APIRouter, Depends, Query, Body, HTTPException, status
 from crud import consensus
 from models import Consensus, User
 from authentication import get_current_active_user
@@ -18,6 +18,13 @@ async def get_single_consensus_endpoint(
     current_user: User = Depends(get_current_active_user)
 ):  
     data = await consensus.get_single(id, "sample_id")
+
+    if len(data) == 0:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Consensus sequence can't be found in database",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
     return data
 
 @router.get("/multiple", response_model=List[Consensus])
@@ -26,15 +33,24 @@ async def get_multiple_consensus_endpoint(
     current_user: User = Depends(get_current_active_user)
 ):  
     data = await consensus.get_multiple(ids, "sample_id")
+    if len(data) == 0:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Consensus sequences can't be found in database",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
     return data
 
-@router.post("/", response_model=List[Consensus])
+@router.post("/")
 async def create_consensus_endpoint(
     obj_in: Consensus = Body(..., description="The consensus object to create"),
     current_user: User = Depends(get_current_active_user)
 ):
     data = await consensus.create(obj_in)
-    return data
+    if data:
+        return {f'{obj_in.sample_id}': 'created successfully'}
+    else:
+        return {f'{obj_in.sample_id}': 'failed to create'}
 
 @router.put("/{id}")
 async def update_consensus_endpoint(
@@ -43,10 +59,13 @@ async def update_consensus_endpoint(
     current_user: User = Depends(get_current_active_user)
 ):
     data = await consensus.update(id, obj_in, "sample_id")
-    if data:
-        return {f'{id}': 'updated successfully'}
-    else:
-        return {f'{id}': 'failed to update'}
+    if not data:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Sample failed to update in the database",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    return {f'{id}': 'failed to update'}
 
 @router.delete("/{id}")
 async def delete_consensus_endpoint(
@@ -54,7 +73,11 @@ async def delete_consensus_endpoint(
     current_user: User = Depends(get_current_active_user)
 ):
     data = await consensus.delete(id, "sample_id")
-    if data.deleted_count == 1:
-        return {f'{id}': 'deleted successfully'}
-    else:
-        return {f'{id}': 'failed to delete'}
+    if data.deleted_count == 0:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Sample can't be found in database",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    return {f'{id}': 'deleted successfully'}
