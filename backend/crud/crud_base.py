@@ -42,9 +42,11 @@ class CRUDBase(Generic[CreateSchemaType, UpdateSchemaType]):
         return result
     
     async def update(self, id: str, obj_in: BaseModel, id_field: str = "_id"):
+        # Returns None if no document was updated
+        # else returns the _id of the updated document
         obj_in = obj_in.dict()
         result = await db[self.collection_name].update_one({id_field: id}, {"$set": obj_in})
-        return result
+        return result.upserted_id
 
     async def delete(self, id: str, id_field: str = "_id"):
         result = await db[self.collection_name].delete_one({id_field: id})
