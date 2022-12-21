@@ -45,3 +45,9 @@ class GroupedSamples(BaseModel):
     samples: list[Sample]
     graph: list[SimpleGraphElement]
 
+class Consensus(BaseModel):
+    _id : str
+    sample_oid: str
+    seq: str
+    qual: str
+    sample_id: str
