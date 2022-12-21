@@ -7,7 +7,7 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - mongo_seed
+      - mongodb
     restart: "unless-stopped"
     links: 
       - mongodb
