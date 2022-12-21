@@ -4,7 +4,12 @@ from models import Consensus, User
 from authentication import get_current_active_user
 from typing import List
 
+"""
+This module contains all the endpoints for the consensus collection in the database.
+They use the functions from the crud module to interact with the database with the Consensus model.
+"""
 router = APIRouter()
+
 @router.get("/", response_model=List[Consensus])
 async def get_consensus_endpoint(
     current_user: User = Depends(get_current_active_user)
