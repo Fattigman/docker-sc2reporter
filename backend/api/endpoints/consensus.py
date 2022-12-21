@@ -54,4 +54,7 @@ async def delete_consensus_endpoint(
     current_user: User = Depends(get_current_active_user)
 ):
     data = await consensus.delete(id, "sample_id")
-    return data
+    if data.deleted_count == 1:
+        return {f'{id}': 'deleted successfully'}
+    else:
+        return {f'{id}': 'failed to delete'}
