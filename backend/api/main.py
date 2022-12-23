@@ -10,12 +10,12 @@ from api.endpoints import samples, users, login, variants, dashboard, phyllogeny
 from fastapi import Depends, FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
 
+from crud import get_depth
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
     description=settings.DESCRIPTION,
     version='development',
-    root_path=settings.ROOT_PATH,
     )
 
 app.add_middleware(
@@ -83,4 +83,7 @@ app.include_router(
 async def depth(current_user: User = Depends(get_current_active_user)):
     return await get_depth()
 
-
+# Weird bug that requires this to be set
+# At the end of the file.
+# If not set at the end, the back end will duplicate the root path
+app.openapi_prefix = settings.ROOT_PATH
