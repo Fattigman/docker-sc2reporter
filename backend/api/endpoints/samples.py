@@ -5,8 +5,8 @@ from starlette.responses import JSONResponse
 
 import pandas as pd 
 
-from crud.samples import *
-from crud.matrix import * 
+from crud import *
+
 from models import *
 from authentication import *
 

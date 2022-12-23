@@ -1,7 +1,10 @@
 from db import *
-
 from api.config import settings
-#  Handling of the samples collection
+
+"""
+This module is used to interact with the sample collection in the database.
+It contains all the CRUD functions for the sample collection.
+"""
 
 # Get samples from the database
 async def get_samples(advanced_search:bool = False):
