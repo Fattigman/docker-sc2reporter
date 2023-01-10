@@ -1,6 +1,7 @@
 from typing import Optional, Union
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import Depends, HTTPException, Query
 from starlette.responses import JSONResponse
+from api.router import APIRouter
 
 from crud import get_multiple_variants, get_single_variant, get_variants
 from models import *
