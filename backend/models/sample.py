@@ -14,17 +14,22 @@ class Pangolin(BaseModel):
     type: str
     pangolearn_version: str
 
-class Variant(BaseModel):
+class SampleVariant(BaseModel):
     # Variant detection of a sample
     dp: int
     aa: str
     id: str
     alt_freq: float
 
+class Variant(BaseModel):
+    # Variant collection
+    _id: str
+    csq: dict
+
 class Sample(BaseModel):
     # SarsCov2 sample
     _id: dict
-    variants : Union[list[Variant],None] = None
+    variants : Union[list[SampleVariant],None] = None
     qc: dict
     time_added: dict
     pangolin: Pangolin
