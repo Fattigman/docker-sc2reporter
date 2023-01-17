@@ -164,7 +164,7 @@ class CRUDSamples(CRUDBase):
         docs = [parse_json(x) for x in await curr.to_list(None)]
         return  docs
 
-    async def get_general_stats():
+    async def get_general_stats(self):
         curr = db.sample.aggregate([
             {
                 '$group': {
