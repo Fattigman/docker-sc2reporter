@@ -1,9 +1,9 @@
-from fastapi import APIRouter, Depends, Query, Body, HTTPException, status
+from fastapi import  Depends, Query, Body, HTTPException, status
 from crud import consensus
 from models import Consensus, User
 from authentication import get_current_active_user
 from typing import List
-
+from api.router import APIRouter
 """
 This module contains all the endpoints for the consensus collection in the database.
 They use the functions from the crud module to interact with the database with the Consensus model.
