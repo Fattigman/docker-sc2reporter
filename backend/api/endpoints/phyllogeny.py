@@ -1,10 +1,11 @@
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import Depends, HTTPException, Query
 
 from models import User
 
 from typing import List
 
 from collections import defaultdict
+from api.router import APIRouter
 
 import time
 from crud import samples

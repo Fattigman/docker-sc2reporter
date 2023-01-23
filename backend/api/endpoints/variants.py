@@ -1,8 +1,10 @@
+
 from fastapi import APIRouter, Depends, Query, Body, HTTPException, status
 from crud import variants
 from models import User, Variant
 from authentication import get_current_active_user
 from typing import List
+
 
 """
 This module contains all the endpoints for the Variant collection in the database.
