@@ -10,7 +10,6 @@ from api.endpoints import samples, users, login, variants, dashboard, phyllogeny
 from fastapi import Depends, FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
 
-from crud import get_depth
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -86,7 +85,3 @@ app.include_router(
     tags=["Phyllogeny"],
     responses={status.HTTP_404_NOT_FOUND: {"description": "Not found"}},
 )
-
-@app.get("/depth")
-async def depth(current_user: User = Depends(get_current_active_user)):
-    return await get_depth()
