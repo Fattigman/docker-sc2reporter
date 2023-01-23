@@ -1,9 +1,0 @@
-from db import *
-from typing import Optional
-
-# Handling of the depth collection
-async def get_depth(query: Optional[any] = None):
-    cursor =  db.depth.find(query)
-    docs = [parse_json(x) for x in await cursor.to_list(None)]
-    return (docs)
-

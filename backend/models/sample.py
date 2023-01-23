@@ -26,6 +26,20 @@ class Variant(BaseModel):
     _id: str
     csq: dict
 
+class Depth(BaseModel):
+    # Depth collection
+    _id: str
+    sample_id: str
+    sample_oid: str
+    A: int
+    C: int
+    T: int
+    G: int
+    DEL: int
+    REFSKIP: int
+    pos: int
+    dp: int
+    
 class Sample(BaseModel):
     # SarsCov2 sample
     _id: dict
