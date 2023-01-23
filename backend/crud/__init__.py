@@ -7,5 +7,5 @@ from .crud_users import get_users, get_user, del_user, create_user
 from .crud_matrix import get_matrix
 from .crud_samples import samples
 from .crud_variants import variants
-from .crud_misc import get_depth
+from .crud_depth import depth
 from .crud_consensus import consensus
