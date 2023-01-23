@@ -5,7 +5,7 @@ from models import *
 
 from api.config import settings
 
-from api.endpoints import samples, users, login, variants, dashboard, phyllogeny, consensus
+from api.endpoints import samples, users, login, variants, dashboard, phyllogeny, consensus, depth
 
 from fastapi import Depends, FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
@@ -41,6 +41,13 @@ app.include_router(
     consensus.router,
     prefix="/consensus",
     tags=["Consensus"],
+    responses={status.HTTP_404_NOT_FOUND: {"description": "Not found"}},
+)
+
+app.include_router(
+    depth.router,
+    prefix="/depth",
+    tags=["Depth"],
     responses={status.HTTP_404_NOT_FOUND: {"description": "Not found"}},
 )
 
