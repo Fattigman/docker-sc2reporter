@@ -50,7 +50,7 @@ async def single_sample(
     return sample_info
 
 
-# Delete multiple samples
+# Delete multiple samples and all associated data
 @router.delete("/", response_model=list[Sample])
 async def delete_samples(
     sample_ids: list[str] | None = Query(default=None),
@@ -59,7 +59,7 @@ async def delete_samples(
     if current_user['scope'] == 'user':
         raise HTTPException(status_code=403, detail="Not allowed")
     samples_to_delete = await samples.get_multiple(sample_ids, id_field='sample_id')
-    await samples.delete_multiple(sample_ids, id_field='sample_id')
+    await samples.delete_samples(sample_ids)
     return samples_to_delete
 
 # Gets multiple specified samples
