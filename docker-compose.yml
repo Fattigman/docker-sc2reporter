@@ -51,6 +51,6 @@ services:
       - '3000:3000'
     environment:
       - 'REACT_APP_BACKEND_URL=http://0.0.0.0:8000'
-      - 'PUBLIC_URL=v-1'
+      - 'PUBLIC_URL=v1'
     depends_on:
       - fastapi
