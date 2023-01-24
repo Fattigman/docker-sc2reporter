@@ -8,7 +8,7 @@ from collections import defaultdict
 from api.router import APIRouter
 
 import time
-
+from crud import samples
 
 import random
 from authentication import get_current_active_user
@@ -25,7 +25,6 @@ async def get_distances(
     sample_list: List[str] = Query(..., description="The list of samples to get the distances for (need at least 3 samples)")
     ):
     if group == 'samples':
-
         curr = db.sample.find(
             {'sample_id': 
             {'$in': sample_list }

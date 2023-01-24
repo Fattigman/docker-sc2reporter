@@ -10,7 +10,6 @@ from db import *
 
 
 def create_user(user):
-    db = get_db()
     hashed_password = CryptContext(schemes=["bcrypt"], deprecated="auto").hash(user.password)
     db_user = user
     collection = db.users

@@ -5,12 +5,11 @@ from models import *
 
 from api.config import settings
 
-from api.endpoints import samples, users, login, variants, dashboard, phyllogeny, consensus
+from api.endpoints import samples, users, login, variants, dashboard, phyllogeny, consensus, depth
 
 from fastapi import Depends, FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
 
-from crud import get_depth
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -42,6 +41,13 @@ app.include_router(
     consensus.router,
     prefix="/consensus",
     tags=["Consensus"],
+    responses={status.HTTP_404_NOT_FOUND: {"description": "Not found"}},
+)
+
+app.include_router(
+    depth.router,
+    prefix="/depth",
+    tags=["Depth"],
     responses={status.HTTP_404_NOT_FOUND: {"description": "Not found"}},
 )
 
@@ -79,7 +85,3 @@ app.include_router(
     tags=["Phyllogeny"],
     responses={status.HTTP_404_NOT_FOUND: {"description": "Not found"}},
 )
-
-@app.get("/depth")
-async def depth(current_user: User = Depends(get_current_active_user)):
-    return await get_depth()

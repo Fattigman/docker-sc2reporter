@@ -1,10 +1,13 @@
-from fastapi import Depends, Query
-from crud import *
+
+from fastapi import APIRouter, Depends, Query
+from crud import samples
+
 from db import * 
 from models import *
 from authentication import *
 from pprint import pprint
 from api.router import APIRouter
+
 
 router = APIRouter()
 @router.get("/", response_model=DashboardGraph)
@@ -12,10 +15,10 @@ async def get_dashboard_data(
     selection_criterion: list = Query([]),
     current_user: User = Depends(get_current_active_user)
 ):
-    graph_list = await group_by_samples(selection_criterion)
+    graph_list = await samples.group_by_samples(selection_criterion)
     graph_list = fill_graph_data(graph_list)
-    selection_criterions = await get_selection_criterions()
-    general_stats = await get_general_stats()
+    selection_criterions = await samples.get_selection_criterions()
+    general_stats = await samples.get_general_stats()
     return {'general_stats':general_stats,'dashboard_data':graph_list, 'selection_criterions':selection_criterions}
 
 def fill_graph_data(graph_list:list) -> list:
