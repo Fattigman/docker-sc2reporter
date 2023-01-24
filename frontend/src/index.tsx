@@ -6,9 +6,10 @@ import { App } from './App'
 import { BrowserRouter } from 'react-router-dom'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
+const prefix = 'v1'
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename={prefix}>
       <App />
     </BrowserRouter>
   </React.StrictMode>
