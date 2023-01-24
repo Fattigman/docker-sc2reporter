@@ -22,7 +22,7 @@ jobs:
       - name: Test
         run: yarn test --passWithNoTests
       - name: Build
-        run: yarn build
+        run: yarn start
         env:
           REACT_APP_BACKEND_URL: ${{ secrets.REACT_APP_BACKEND_URL }}
           PUBLIC_URL: ${{ secrets.PUBLIC_URL }}
