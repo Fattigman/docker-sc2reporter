@@ -201,7 +201,11 @@ class CRUDSamples(CRUDBase):
         unique_variants = len([x for x in unique_variants])
         return  {'passed_qc_samples':qc_samples,'unique_pangos':unique_pangos, 'unique_mutations':unique_variants}
 
-
+    async def delete_samples(self, sample_names: list):
+        curr = await db.sample.delete_many({'sample_id': {'$in': sample_names}})
+        curr = await db.consensus.delete_many({'sample_id': {'$in': sample_names}})
+        curr = await db.depth.delete_many({'sample_id': {'$in': sample_names}})
+        return  curr.deleted_count
 
 samples = CRUDSamples()
 
