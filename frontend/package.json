@@ -2,7 +2,7 @@
   "name": "sc2reporter-ui",
   "version": "0.1.0",
   "private": true,
-  "homepage" : "/v1",
+  "homepage" : "https://sc2reporter--pr106-fix-prefix-url-j8c0ljwt.web.app/v1",
   "dependencies": {
     "@ant-design/charts": "^1.4.2",
     "@testing-library/jest-dom": "^5.14.1",
