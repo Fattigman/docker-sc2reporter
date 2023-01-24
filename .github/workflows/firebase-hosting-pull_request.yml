@@ -31,3 +31,4 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}'
           projectId: sc2reporter
           entryPoint: "./frontend"
+          PUBLIC_URL: ${{ secrets.PUBLIC_URL }}
