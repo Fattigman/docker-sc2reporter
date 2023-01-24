@@ -27,7 +27,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint 'src/**'"
+    "lint": "eslint 'src/**'",
+    "homepage" : "/PUBLIC_URL=$(grep PUBLIC_URL .env | cut -d '=' -f2) some_script"
   },
   "eslintConfig": {
     "extends": [
