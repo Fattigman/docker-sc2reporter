@@ -1,13 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Table, Tag } from 'antd'
 import { formatDate, sortDate } from '../helpers'
 import { CheckCircleTwoTone } from '@ant-design/icons'
 import { Link, useLocation } from 'react-router-dom'
 
 export const SamplesTable = ({ samples }) => {
+  const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([])
   const location = useLocation()
   const nextclade = 'nextclade'
   const pangolin = 'pangolin'
+
+  const rowSelection = {
+    onChange: (selectedRowKeys) => {
+      console.log(selectedRowKeys)
+      setSelectedRowKeys(selectedRowKeys)
+    },
+    selectedRowKeys,
+  }
+
+  const handleSelect = (record, selected) => {
+    console.log(selected)
+  }
 
   const columns = [
     {
@@ -100,6 +113,10 @@ export const SamplesTable = ({ samples }) => {
       columns={columns}
       rowKey={'sample_id'}
       loading={!samples}
+      rowSelection={{
+        ...rowSelection,
+        onSelect: handleSelect,
+      }}
     />
   )
 }
