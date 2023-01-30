@@ -207,3 +207,23 @@ export const deleteUser = async (token, username): Promise<any> => {
       })
   })
 }
+
+export const deleteSample = async (token, sample_ids): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/samples?sample_ids?${sample_ids}`
+  return new Promise((resolve) => {
+    axios
+      .delete(endPoint, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => resolve(response.data))
+      .catch((error) => {
+        console.log(error)
+        notification.error({
+          message: 'Could not delete sample',
+          description: 'Something went wrong',
+        })
+      })
+  })
+}
