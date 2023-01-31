@@ -1,17 +1,17 @@
 import React, { useState } from 'react'
 import { Button, Popconfirm, Table, Tag } from 'antd'
 import { formatDate, sortDate } from '../helpers'
-import { CheckCircleTwoTone } from '@ant-design/icons'
+import { CheckCircleTwoTone, DeleteTwoTone } from '@ant-design/icons'
 import { Link, useLocation } from 'react-router-dom'
 import { deleteSample } from 'services/api'
 
 export const SamplesTable = ({ token, samples }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([])
   const [samplesId, setSamplesId] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
   const location = useLocation()
   const nextclade = 'nextclade'
   const pangolin = 'pangolin'
+  const hasSelected = selectedRowKeys.length > 0
 
   const rowSelection = {
     onChange: (selectedRowKeys) => {
@@ -21,13 +21,9 @@ export const SamplesTable = ({ token, samples }) => {
     },
     selectedRowKeys,
   }
-  const hasSelected = selectedRowKeys.length > 0
 
   const confirmDelete = () => {
-    setIsLoading(true)
-    deleteSample(token, samplesId).then((response) => {
-      console.log(response)
-      setIsLoading(false)
+    deleteSample(token, samplesId).then(() => {
       setSelectedRowKeys([])
     })
   }
@@ -118,15 +114,6 @@ export const SamplesTable = ({ token, samples }) => {
   ].filter((column) => !column.hidden)
   return (
     <>
-      <Popconfirm
-        title="Are you sure you want to delete this item?"
-        disabled={!hasSelected}
-        onConfirm={confirmDelete}
-      >
-        <Button type="primary" disabled={!hasSelected} loading={isLoading}>
-          Delete
-        </Button>
-      </Popconfirm>
       <Table
         pagination={false}
         dataSource={samples}
@@ -134,6 +121,20 @@ export const SamplesTable = ({ token, samples }) => {
         rowKey={'sample_id'}
         loading={!samples}
         rowSelection={{
+          columnTitle: (
+            <Popconfirm
+              title="Are you sure you want to delete?"
+              disabled={!hasSelected}
+              onConfirm={confirmDelete}
+            >
+              <Button
+                shape="circle"
+                disabled={!hasSelected}
+                icon={<DeleteTwoTone />}
+                style={{ width: 30 }}
+              />
+            </Popconfirm>
+          ),
           ...rowSelection,
         }}
       />
