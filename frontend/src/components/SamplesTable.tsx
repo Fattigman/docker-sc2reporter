@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import { Table, Tag } from 'antd'
+import { Button, Popconfirm, Table, Tag } from 'antd'
 import { formatDate, sortDate } from '../helpers'
 import { CheckCircleTwoTone } from '@ant-design/icons'
 import { Link, useLocation } from 'react-router-dom'
 
 export const SamplesTable = ({ samples }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([])
+  const [isLoading, setIsLoading] = useState(false)
   const location = useLocation()
   const nextclade = 'nextclade'
   const pangolin = 'pangolin'
@@ -17,9 +18,13 @@ export const SamplesTable = ({ samples }) => {
     },
     selectedRowKeys,
   }
+  const hasSelected = selectedRowKeys.length > 0
 
-  const handleSelect = (record, selected) => {
-    console.log(selected)
+  const confirmDelete = () => {
+    setIsLoading(true)
+    console.log('delete')
+    setIsLoading(false)
+    setSelectedRowKeys([])
   }
 
   const columns = [
@@ -107,16 +112,26 @@ export const SamplesTable = ({ samples }) => {
     },
   ].filter((column) => !column.hidden)
   return (
-    <Table
-      pagination={false}
-      dataSource={samples}
-      columns={columns}
-      rowKey={'sample_id'}
-      loading={!samples}
-      rowSelection={{
-        ...rowSelection,
-        onSelect: handleSelect,
-      }}
-    />
+    <>
+      <Popconfirm
+        title="Are you sure you want to delete this item?"
+        disabled={!hasSelected}
+        onConfirm={confirmDelete}
+      >
+        <Button type="primary" disabled={!hasSelected} loading={isLoading}>
+          Delete
+        </Button>
+      </Popconfirm>
+      <Table
+        pagination={false}
+        dataSource={samples}
+        columns={columns}
+        rowKey={'sample_id'}
+        loading={!samples}
+        rowSelection={{
+          ...rowSelection,
+        }}
+      />
+    </>
   )
 }
