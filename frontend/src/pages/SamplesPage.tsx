@@ -2,11 +2,11 @@ import React from 'react'
 import { SamplesTable } from 'components/SamplesTable'
 import { Card, PageHeader } from 'antd'
 
-export const SamplesPage = ({ samples }) => {
+export const SamplesPage = ({ token, samples }) => {
   return (
     <Card>
       <PageHeader backIcon={false} title="Samples">
-        <SamplesTable samples={samples} />
+        <SamplesTable token={token} samples={samples} />
       </PageHeader>
     </Card>
   )

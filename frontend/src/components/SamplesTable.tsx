@@ -3,9 +3,11 @@ import { Button, Popconfirm, Table, Tag } from 'antd'
 import { formatDate, sortDate } from '../helpers'
 import { CheckCircleTwoTone } from '@ant-design/icons'
 import { Link, useLocation } from 'react-router-dom'
+import { deleteSample } from 'services/api'
 
-export const SamplesTable = ({ samples }) => {
+export const SamplesTable = ({ token, samples }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([])
+  const [samplesId, setSamplesId] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const location = useLocation()
   const nextclade = 'nextclade'
@@ -13,8 +15,9 @@ export const SamplesTable = ({ samples }) => {
 
   const rowSelection = {
     onChange: (selectedRowKeys) => {
-      console.log(selectedRowKeys)
       setSelectedRowKeys(selectedRowKeys)
+      const selectedSamples = selectedRowKeys.map((item) => `&sample_ids=${item}`).join('')
+      setSamplesId(selectedSamples)
     },
     selectedRowKeys,
   }
@@ -22,9 +25,11 @@ export const SamplesTable = ({ samples }) => {
 
   const confirmDelete = () => {
     setIsLoading(true)
-    console.log('delete')
-    setIsLoading(false)
-    setSelectedRowKeys([])
+    deleteSample(token, samplesId).then((response) => {
+      console.log(response)
+      setIsLoading(false)
+      setSelectedRowKeys([])
+    })
   }
 
   const columns = [
