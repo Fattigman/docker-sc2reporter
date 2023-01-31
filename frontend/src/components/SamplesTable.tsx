@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Popconfirm, Table, Tag } from 'antd'
 import { formatDate, sortDate } from '../helpers'
 import { CheckCircleTwoTone, DeleteTwoTone } from '@ant-design/icons'
@@ -7,11 +7,16 @@ import { deleteSample } from 'services/api'
 
 export const SamplesTable = ({ token, samples }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([])
-  const [samplesId, setSamplesId] = useState('')
+  const [samplesId, setSamplesId] = useState<string>('')
+  const [sampleList, setSampleList] = useState<any[]>([])
   const location = useLocation()
   const nextclade = 'nextclade'
   const pangolin = 'pangolin'
   const hasSelected = selectedRowKeys.length > 0
+
+  useEffect(() => {
+    setSampleList(samples)
+  }, [samples])
 
   const rowSelection = {
     onChange: (selectedRowKeys) => {
@@ -24,6 +29,7 @@ export const SamplesTable = ({ token, samples }) => {
 
   const confirmDelete = () => {
     deleteSample(token, samplesId).then(() => {
+      setSampleList(sampleList.filter((sample) => !selectedRowKeys.includes(sample.sample_id)))
       setSelectedRowKeys([])
     })
   }
@@ -116,10 +122,10 @@ export const SamplesTable = ({ token, samples }) => {
     <>
       <Table
         pagination={false}
-        dataSource={samples}
+        dataSource={sampleList}
         columns={columns}
         rowKey={'sample_id'}
-        loading={!samples}
+        loading={!sampleList}
         rowSelection={{
           columnTitle: (
             <Popconfirm
@@ -127,12 +133,7 @@ export const SamplesTable = ({ token, samples }) => {
               disabled={!hasSelected}
               onConfirm={confirmDelete}
             >
-              <Button
-                shape="circle"
-                disabled={!hasSelected}
-                icon={<DeleteTwoTone />}
-                style={{ width: 30 }}
-              />
+              <Button shape="circle" disabled={!hasSelected} icon={<DeleteTwoTone />} />
             </Popconfirm>
           ),
           ...rowSelection,
