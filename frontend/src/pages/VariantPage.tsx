@@ -6,6 +6,7 @@ import { SamplesTable } from '../components/SamplesTable'
 
 export const VariantPage = ({ token }) => {
   const [samples, setSamples] = useState<any>()
+  const [refresh, setRefresh] = useState<boolean>(false)
   const { id } = useParams()
   const title = `Variant ${id}`
 
@@ -14,12 +15,16 @@ export const VariantPage = ({ token }) => {
       getVariant(token, id).then((response) => {
         setSamples(response)
       })
-  }, [id])
+  }, [id, refresh])
+
+  const refreshSamples = () => {
+    setRefresh((prevRefresh) => !prevRefresh)
+  }
 
   return (
     <Card>
       <PageHeader onBack={() => history.back()} title={title}>
-        <SamplesTable token={token} />
+        <SamplesTable token={token} samples={samples} refreshSamples={refreshSamples} />
       </PageHeader>
     </Card>
   )

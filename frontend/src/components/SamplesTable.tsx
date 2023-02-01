@@ -3,19 +3,19 @@ import { Button, notification, Popconfirm, Table, Tag } from 'antd'
 import { formatDate, sortDate } from '../helpers'
 import { CheckCircleTwoTone, DeleteTwoTone } from '@ant-design/icons'
 import { Link, useLocation } from 'react-router-dom'
-import { deleteSample, getSamples } from 'services/api'
-export const SamplesTable = ({ token }) => {
+import { deleteSample } from 'services/api'
+export const SamplesTable = ({ token, samples, refreshSamples }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([])
   const [samplesId, setSamplesId] = useState<string>('')
-  const [samples, setSamples] = useState<any[]>()
+  const [sampleList, setSampleList] = useState<any[]>([])
   const location = useLocation()
   const nextclade = 'nextclade'
   const pangolin = 'pangolin'
   const hasSelected = selectedRowKeys.length > 0
 
   useEffect(() => {
-    getSamples(token).then((samples) => setSamples(samples))
-  }, [])
+    setSampleList(samples)
+  })
 
   const rowSelection = {
     onChange: (selectedRowKeys) => {
@@ -34,7 +34,7 @@ export const SamplesTable = ({ token }) => {
             ? `Samples (${selectedRowKeys}) have been successfully deleted.`
             : `Sample (${selectedRowKeys}) has been successfully deleted.`,
       })
-      getSamples(token).then((samples) => setSamples(samples))
+      refreshSamples()
     })
   }
 
@@ -126,10 +126,10 @@ export const SamplesTable = ({ token }) => {
     <>
       <Table
         pagination={false}
-        dataSource={samples}
+        dataSource={sampleList}
         columns={columns}
         rowKey={'sample_id'}
-        loading={!samples}
+        loading={!sampleList}
         bordered
         rowSelection={{
           columnTitle: (
