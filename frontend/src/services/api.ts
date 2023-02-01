@@ -209,7 +209,7 @@ export const deleteUser = async (token, username): Promise<any> => {
 }
 
 export const deleteSample = async (token, sample_ids): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/samples?sample_ids?${sample_ids}`
+  const endPoint = `${REACT_APP_BACKEND_URL}/samples?${sample_ids}`
   return new Promise((resolve) => {
     axios
       .delete(endPoint, {

@@ -3,19 +3,19 @@ import { Button, notification, Popconfirm, Table, Tag } from 'antd'
 import { formatDate, sortDate } from '../helpers'
 import { CheckCircleTwoTone, DeleteTwoTone } from '@ant-design/icons'
 import { Link, useLocation } from 'react-router-dom'
-import { deleteSample } from 'services/api'
-export const SamplesTable = ({ token, samples }) => {
+import { deleteSample, getSamples } from 'services/api'
+export const SamplesTable = ({ token }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([])
   const [samplesId, setSamplesId] = useState<string>('')
-  const [sampleList, setSampleList] = useState<any[]>([])
+  const [samples, setSamples] = useState<any[]>()
   const location = useLocation()
   const nextclade = 'nextclade'
   const pangolin = 'pangolin'
   const hasSelected = selectedRowKeys.length > 0
 
   useEffect(() => {
-    setSampleList(samples)
-  }, [samples])
+    getSamples(token).then((samples) => setSamples(samples))
+  }, [])
 
   const rowSelection = {
     onChange: (selectedRowKeys) => {
@@ -28,14 +28,13 @@ export const SamplesTable = ({ token, samples }) => {
 
   const confirmDelete = () => {
     deleteSample(token, samplesId).then(() => {
-      setSampleList(sampleList.filter((sample) => !selectedRowKeys.includes(sample.sample_id)))
-      setSelectedRowKeys([])
       notification['success']({
         message:
           selectedRowKeys.length > 1
             ? `Samples (${selectedRowKeys}) have been successfully deleted.`
             : `Sample (${selectedRowKeys}) has been successfully deleted.`,
       })
+      getSamples(token).then((samples) => setSamples(samples))
     })
   }
 
@@ -127,10 +126,10 @@ export const SamplesTable = ({ token, samples }) => {
     <>
       <Table
         pagination={false}
-        dataSource={sampleList}
+        dataSource={samples}
         columns={columns}
         rowKey={'sample_id'}
-        loading={!sampleList}
+        loading={!samples}
         bordered
         rowSelection={{
           columnTitle: (

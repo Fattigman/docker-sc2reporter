@@ -19,7 +19,7 @@ export const VariantPage = ({ token }) => {
   return (
     <Card>
       <PageHeader onBack={() => history.back()} title={title}>
-        <SamplesTable token={token} samples={samples} />
+        <SamplesTable token={token} />
       </PageHeader>
     </Card>
   )

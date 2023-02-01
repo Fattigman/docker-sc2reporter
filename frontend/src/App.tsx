@@ -118,13 +118,7 @@ export const App = () => {
           <Routes>
             <Route
               path="/"
-              element={
-                token ? (
-                  <SamplesPage token={token} samples={samples} />
-                ) : (
-                  <LoginPage login={login} />
-                )
-              }
+              element={token ? <SamplesPage token={token} /> : <LoginPage login={login} />}
             />
             <Route
               path="/dashboard"

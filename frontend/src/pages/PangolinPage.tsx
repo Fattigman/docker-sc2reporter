@@ -24,7 +24,7 @@ export const PangolinPage = ({ token }) => {
         title={title}
         subTitle={<a href={covLineagesLink}>Lineage information</a>}
       >
-        <SamplesTable token={token} samples={samples} />
+        <SamplesTable token={token} />
       </PageHeader>
     </Card>
   )
