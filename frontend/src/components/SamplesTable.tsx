@@ -4,7 +4,6 @@ import { formatDate, sortDate } from '../helpers'
 import { CheckCircleTwoTone, DeleteTwoTone } from '@ant-design/icons'
 import { Link, useLocation } from 'react-router-dom'
 import { deleteSample } from 'services/api'
-
 export const SamplesTable = ({ token, samples }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([])
   const [samplesId, setSamplesId] = useState<string>('')
@@ -132,6 +131,7 @@ export const SamplesTable = ({ token, samples }) => {
         columns={columns}
         rowKey={'sample_id'}
         loading={!sampleList}
+        bordered
         rowSelection={{
           columnTitle: (
             <Popconfirm
