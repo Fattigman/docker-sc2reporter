@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Popconfirm, Table, Tag } from 'antd'
+import { Button, notification, Popconfirm, Table, Tag } from 'antd'
 import { formatDate, sortDate } from '../helpers'
 import { CheckCircleTwoTone, DeleteTwoTone } from '@ant-design/icons'
 import { Link, useLocation } from 'react-router-dom'
@@ -31,6 +31,12 @@ export const SamplesTable = ({ token, samples }) => {
     deleteSample(token, samplesId).then(() => {
       setSampleList(sampleList.filter((sample) => !selectedRowKeys.includes(sample.sample_id)))
       setSelectedRowKeys([])
+      notification['success']({
+        message:
+          selectedRowKeys.length > 1
+            ? `Samples (${selectedRowKeys}) have been successfully deleted.`
+            : `Sample (${selectedRowKeys}) has been successfully deleted.`,
+      })
     })
   }
 
