@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Button, notification, Popconfirm, Table, Tag } from 'antd'
 import { formatDate, sortDate } from '../helpers'
 import { CheckCircleTwoTone, DeleteTwoTone } from '@ant-design/icons'
@@ -7,15 +7,10 @@ import { deleteSample } from 'services/api'
 export const SamplesTable = ({ token, samples, refreshSamples }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([])
   const [samplesId, setSamplesId] = useState<string>('')
-  const [sampleList, setSampleList] = useState<any[]>([])
   const location = useLocation()
   const nextclade = 'nextclade'
   const pangolin = 'pangolin'
   const hasSelected = selectedRowKeys.length > 0
-
-  useEffect(() => {
-    setSampleList(samples)
-  })
 
   const rowSelection = {
     onChange: (selectedRowKeys) => {
@@ -126,10 +121,10 @@ export const SamplesTable = ({ token, samples, refreshSamples }) => {
     <>
       <Table
         pagination={false}
-        dataSource={sampleList}
+        dataSource={samples}
         columns={columns}
         rowKey={'sample_id'}
-        loading={!sampleList}
+        loading={!samples}
         bordered
         rowSelection={{
           columnTitle: (
