@@ -5,7 +5,7 @@ import { CheckCircleTwoTone, DeleteTwoTone } from '@ant-design/icons'
 import { Link, useLocation } from 'react-router-dom'
 import { deleteSample } from 'services/api'
 
-export const SamplesTable = ({ token, samples, refreshSamples }) => {
+export const SamplesTable = ({ token, samples, refreshSamples, isAdmin }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([])
   const [samplesId, setSamplesId] = useState<string>('')
   const location = useLocation()
@@ -127,18 +127,22 @@ export const SamplesTable = ({ token, samples, refreshSamples }) => {
         rowKey={'sample_id'}
         loading={!samples}
         bordered
-        rowSelection={{
-          columnTitle: (
-            <Popconfirm
-              title="Are you sure you want to delete?"
-              disabled={!hasSelected}
-              onConfirm={confirmDelete}
-            >
-              <Button shape="circle" disabled={!hasSelected} icon={<DeleteTwoTone />} />
-            </Popconfirm>
-          ),
-          ...rowSelection,
-        }}
+        rowSelection={
+          isAdmin
+            ? {
+                columnTitle: (
+                  <Popconfirm
+                    title="Are you sure you want to delete?"
+                    disabled={!hasSelected}
+                    onConfirm={confirmDelete}
+                  >
+                    <Button shape="circle" disabled={!hasSelected} icon={<DeleteTwoTone />} />
+                  </Popconfirm>
+                ),
+                ...rowSelection,
+              }
+            : undefined
+        }
       />
     </>
   )

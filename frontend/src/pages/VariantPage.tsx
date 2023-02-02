@@ -4,7 +4,7 @@ import { Card, PageHeader } from 'antd'
 import { getVariant } from '../services/api'
 import { SamplesTable } from '../components/SamplesTable'
 
-export const VariantPage = ({ token }) => {
+export const VariantPage = ({ token, isAdmin }) => {
   const [samples, setSamples] = useState<any>()
   const [refresh, setRefresh] = useState<boolean>(false)
   const { id } = useParams()
@@ -24,7 +24,12 @@ export const VariantPage = ({ token }) => {
   return (
     <Card>
       <PageHeader onBack={() => history.back()} title={title}>
-        <SamplesTable token={token} samples={samples} refreshSamples={refreshSamples} />
+        <SamplesTable
+          token={token}
+          samples={samples}
+          refreshSamples={refreshSamples}
+          isAdmin={isAdmin}
+        />
       </PageHeader>
     </Card>
   )

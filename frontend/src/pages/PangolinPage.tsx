@@ -4,7 +4,7 @@ import { SamplesTable } from 'components/SamplesTable'
 import { useParams } from 'react-router-dom'
 import { getPangolin } from 'services/api'
 
-export const PangolinPage = ({ token }) => {
+export const PangolinPage = ({ token, isAdmin }) => {
   const [samples, setSamples] = useState<any>()
   const [refresh, setRefresh] = useState<boolean>(false)
   const { id } = useParams()
@@ -29,7 +29,12 @@ export const PangolinPage = ({ token }) => {
         title={title}
         subTitle={<a href={covLineagesLink}>Lineage information</a>}
       >
-        <SamplesTable token={token} samples={samples} refreshSamples={refreshSamples} />
+        <SamplesTable
+          token={token}
+          samples={samples}
+          refreshSamples={refreshSamples}
+          isAdmin={isAdmin}
+        />
       </PageHeader>
     </Card>
   )

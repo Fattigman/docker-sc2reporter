@@ -3,7 +3,7 @@ import { SamplesTable } from 'components/SamplesTable'
 import { Card, PageHeader } from 'antd'
 import { getSamples } from 'services/api'
 
-export const SamplesPage = ({ token }) => {
+export const SamplesPage = ({ token, isAdmin }) => {
   const [samples2, setSamples2] = useState<any>()
   const [refresh, setRefresh] = useState<boolean>(false)
 
@@ -18,7 +18,12 @@ export const SamplesPage = ({ token }) => {
   return (
     <Card>
       <PageHeader backIcon={false} title="Samples">
-        <SamplesTable token={token} samples={samples2} refreshSamples={refreshSamples} />
+        <SamplesTable
+          token={token}
+          samples={samples2}
+          refreshSamples={refreshSamples}
+          isAdmin={isAdmin}
+        />
       </PageHeader>
     </Card>
   )

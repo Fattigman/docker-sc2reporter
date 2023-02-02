@@ -4,7 +4,7 @@ import { getNextclade } from '../services/api'
 import { SamplesTable } from '../components/SamplesTable'
 import { Card, PageHeader } from 'antd'
 
-export const NextcladePage = ({ token }) => {
+export const NextcladePage = ({ token, isAdmin }) => {
   const [samples, setSamples] = useState<any>()
   const [refresh, setRefresh] = useState<boolean>(false)
   const { id } = useParams()
@@ -24,7 +24,12 @@ export const NextcladePage = ({ token }) => {
   return (
     <Card>
       <PageHeader onBack={() => history.back()} title={title}>
-        <SamplesTable token={token} samples={samples} refreshSamples={refreshSamples} />
+        <SamplesTable
+          token={token}
+          samples={samples}
+          refreshSamples={refreshSamples}
+          isAdmin={isAdmin}
+        />
       </PageHeader>
     </Card>
   )
