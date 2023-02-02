@@ -4,6 +4,7 @@ import { formatDate, sortDate } from '../helpers'
 import { CheckCircleTwoTone, DeleteTwoTone } from '@ant-design/icons'
 import { Link, useLocation } from 'react-router-dom'
 import { deleteSample } from 'services/api'
+
 export const SamplesTable = ({ token, samples, refreshSamples }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([])
   const [samplesId, setSamplesId] = useState<string>('')

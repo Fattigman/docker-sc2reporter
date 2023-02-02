@@ -6,6 +6,7 @@ import { getSamples } from 'services/api'
 export const SamplesPage = ({ token }) => {
   const [samples2, setSamples2] = useState<any>()
   const [refresh, setRefresh] = useState<boolean>(false)
+
   useEffect(() => {
     getSamples(token).then((samples) => setSamples2(samples))
   }, [refresh])

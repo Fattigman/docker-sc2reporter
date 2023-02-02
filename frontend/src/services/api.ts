@@ -132,6 +132,26 @@ export const getSample = async (token, id): Promise<any> => {
   })
 }
 
+export const deleteSample = async (token, sample_ids): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/samples?${sample_ids}`
+  return new Promise((resolve) => {
+    axios
+      .delete(endPoint, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => resolve(response.data))
+      .catch((error) => {
+        console.log(error)
+        notification.error({
+          message: 'Could not delete sample',
+          description: 'Something went wrong',
+        })
+      })
+  })
+}
+
 export const getUsers = async (token): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/users/`
   return new Promise((resolve) => {
@@ -201,27 +221,7 @@ export const deleteUser = async (token, username): Promise<any> => {
       .catch((error) => {
         console.log(error)
         notification.error({
-          message: 'Could not add user',
-          description: 'Something went wrong',
-        })
-      })
-  })
-}
-
-export const deleteSample = async (token, sample_ids): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/samples?${sample_ids}`
-  return new Promise((resolve) => {
-    axios
-      .delete(endPoint, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => resolve(response.data))
-      .catch((error) => {
-        console.log(error)
-        notification.error({
-          message: 'Could not delete sample',
+          message: 'Could not delete user',
           description: 'Something went wrong',
         })
       })
