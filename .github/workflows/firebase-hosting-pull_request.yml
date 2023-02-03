@@ -26,6 +26,8 @@ jobs:
         env:
           REACT_APP_BACKEND_URL: ${{ secrets.REACT_APP_BACKEND_URL }}
           PUBLIC_URL: ${{ secrets.PUBLIC_URL }}
+      - name: Print environment variable
+        run: echo "PUBLIC_URL=${{ secrets.PUBLIC_URL }}"
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
