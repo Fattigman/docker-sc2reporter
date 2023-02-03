@@ -1,6 +1,7 @@
 import React from 'react'
 import { SamplesTable } from 'components/SamplesTable'
-import { Card, PageHeader } from 'antd'
+import { Card } from 'antd'
+import { PageHeader } from '@ant-design/pro-layout'
 
 export const SamplesPage = ({ samples }) => {
   return (

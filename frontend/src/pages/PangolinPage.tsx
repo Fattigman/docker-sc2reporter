@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Card, PageHeader } from 'antd'
+import { Card } from 'antd'
+import { PageHeader } from '@ant-design/pro-layout'
 import { SamplesTable } from 'components/SamplesTable'
 import { useParams } from 'react-router-dom'
 import { getPangolin } from 'services/api'
