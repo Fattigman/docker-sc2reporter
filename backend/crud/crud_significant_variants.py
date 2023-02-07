@@ -1,9 +1,9 @@
 from .crud_base import CRUDBase
-from models import Depth
+from models import SignificantVariant
 
 # Handling of the depth collection
-class CRUDSignificantVariants(CRUDBase[Depth, Depth]):
+class CRUDSignificantVariants(CRUDBase[SignificantVariant, SignificantVariant]):
     def __init__(self):
-        super().__init__(Depth, "depth")
+        super().__init__(SignificantVariant, "depth")
 
 significant_variants = CRUDSignificantVariants()
