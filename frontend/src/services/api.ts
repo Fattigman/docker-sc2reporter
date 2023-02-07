@@ -4,7 +4,7 @@ import { notification } from 'antd'
 export const { REACT_APP_BACKEND_URL } = process.env
 
 export const getToken = async (formInput): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/login/token/`
+  const endPoint = `${REACT_APP_BACKEND_URL}/login/token`
   return new Promise((resolve) => {
     const params = new URLSearchParams(formInput)
     axios
