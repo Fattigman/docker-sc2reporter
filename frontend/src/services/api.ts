@@ -25,7 +25,7 @@ export const getToken = async (formInput): Promise<any> => {
 }
 
 export const getSamples = async (token): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/samples`
+  const endPoint = `${REACT_APP_BACKEND_URL}/samples/`
   return new Promise((resolve) => {
     axios
       .get(endPoint, {
