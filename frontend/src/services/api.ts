@@ -133,7 +133,7 @@ export const getSample = async (token, id): Promise<any> => {
 }
 
 export const deleteSample = async (token, sample_ids): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/samples?${sample_ids}`
+  const endPoint = `${REACT_APP_BACKEND_URL}/samples?${sample_ids}/`
   return new Promise((resolve) => {
     axios
       .delete(endPoint, {
