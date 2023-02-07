@@ -8,3 +8,4 @@ from .sample import Sample, GroupedSamples, Variant, Pangolin, Consensus, Sample
 from .user import User, Basic_User
 from .graph import SimpleGraphElement, DashBoardGraphElement, GeneralStats, DashboardGraph
 from .login import Token, TokenData, UserInDB
+from .significant_variant import SignificantVariant
