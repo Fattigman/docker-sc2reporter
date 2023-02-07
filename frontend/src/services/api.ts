@@ -4,7 +4,7 @@ import { notification } from 'antd'
 export const { REACT_APP_BACKEND_URL } = process.env
 
 export const getToken = async (formInput): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/login/token`
+  const endPoint = `${REACT_APP_BACKEND_URL}/login/token/`
   return new Promise((resolve) => {
     const params = new URLSearchParams(formInput)
     axios
@@ -25,7 +25,7 @@ export const getToken = async (formInput): Promise<any> => {
 }
 
 export const getSamples = async (token): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/samples`
+  const endPoint = `${REACT_APP_BACKEND_URL}/samples/`
   return new Promise((resolve) => {
     axios
       .get(endPoint, {
@@ -97,7 +97,7 @@ export const getVariant = async (token, variant): Promise<any> => {
 }
 
 export const getDashboard = async (token): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/dashboard`
+  const endPoint = `${REACT_APP_BACKEND_URL}/dashboard/`
   return new Promise((resolve) => {
     axios
       .get(endPoint, {
@@ -151,7 +151,7 @@ export const getUsers = async (token): Promise<any> => {
 }
 
 export const getUserInfo = async (token): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/users/me`
+  const endPoint = `${REACT_APP_BACKEND_URL}/users/me/`
   return new Promise((resolve) => {
     axios
       .get(endPoint, {
@@ -169,7 +169,7 @@ export const getUserInfo = async (token): Promise<any> => {
 }
 
 export const addUser = async (token, formInput): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/users/add`
+  const endPoint = `${REACT_APP_BACKEND_URL}/users/add/`
   return new Promise((resolve) => {
     axios
       .post(endPoint, formInput, {
@@ -189,7 +189,7 @@ export const addUser = async (token, formInput): Promise<any> => {
 }
 
 export const deleteUser = async (token, username): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/users/delete/?user=${username}`
+  const endPoint = `${REACT_APP_BACKEND_URL}/users/delete/?user=${username}/`
   return new Promise((resolve) => {
     axios
       .delete(endPoint, {
