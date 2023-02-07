@@ -45,13 +45,24 @@ def create_superuser():
     db.users.drop()
     # create user collection
     db.create_collection('users')
-    hashed_password = CryptContext(schemes=["bcrypt"], deprecated="auto").hash('admin')
+    hashed_password = CryptContext(schemes=["bcrypt"], deprecated="auto").hash('<YOUR_PASSWORD>')
     db_user = 'admin'
     collection = db.users
 
     try:
-        collection.insert_one({"_id":db_user.username,"username": db_user.username, "password": hashed_password, "email": db_user.email, "fullname": db_user.fullname, "disabled":False, "scope":'admin'})
+        collection.insert_one({
+            "_id":'admin',
+            "username": 'admin', 
+            "password": hashed_password, 
+            "email": 'admin@admin.com', 
+            "fullname": 'Admin Adminson', 
+            "disabled":False, 
+            "scope":'admin'})
         print("User created.")
     except DuplicateKeyError:
         print ('User already exists in the database')
     return db_user
+
+if __name__ == '__main__':
+    create_matrix()
+    create_superuser()
