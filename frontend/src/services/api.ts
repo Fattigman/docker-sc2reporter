@@ -43,7 +43,7 @@ export const getSamples = async (token): Promise<any> => {
 }
 
 export const getNextclade = async (token, nextclade): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/samples/nextclade/?nextclade=${nextclade}/`
+  const endPoint = `${REACT_APP_BACKEND_URL}/samples/nextclade/?nextclade=${nextclade}`
   return new Promise((resolve) => {
     axios
       .get(endPoint, {
@@ -61,7 +61,7 @@ export const getNextclade = async (token, nextclade): Promise<any> => {
 }
 
 export const getPangolin = async (token, pangolin): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/samples/pango/?pangolin=${pangolin}/`
+  const endPoint = `${REACT_APP_BACKEND_URL}/samples/pango/?pangolin=${pangolin}`
   return new Promise((resolve) => {
     axios
       .get(endPoint, {
@@ -79,7 +79,7 @@ export const getPangolin = async (token, pangolin): Promise<any> => {
 }
 
 export const getVariant = async (token, variant): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/variants/${variant}/`
+  const endPoint = `${REACT_APP_BACKEND_URL}/variants/${variant}`
   return new Promise((resolve) => {
     axios
       .get(endPoint, {
@@ -115,7 +115,7 @@ export const getDashboard = async (token): Promise<any> => {
 }
 
 export const getSample = async (token, id): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/samples/${id}/`
+  const endPoint = `${REACT_APP_BACKEND_URL}/samples/${id}`
   return new Promise((resolve) => {
     axios
       .get(endPoint, {
@@ -189,7 +189,7 @@ export const addUser = async (token, formInput): Promise<any> => {
 }
 
 export const deleteUser = async (token, username): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/users/delete/?user=${username}/`
+  const endPoint = `${REACT_APP_BACKEND_URL}/users/delete/?user=${username}`
   return new Promise((resolve) => {
     axios
       .delete(endPoint, {
