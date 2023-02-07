@@ -189,7 +189,7 @@ export const addUser = async (token, formInput): Promise<any> => {
 }
 
 export const deleteUser = async (token, username): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/users/delete/?user=${username}/`
+  const endPoint = `${REACT_APP_BACKEND_URL}/users/delete/?user=${username}`
   return new Promise((resolve) => {
     axios
       .delete(endPoint, {
