@@ -6,7 +6,7 @@ from db import *
 from models import *
 from authentication import *
 from pprint import pprint
-from api.router import APIRouter
+from fastapi import APIRouter
 
 
 router = APIRouter()

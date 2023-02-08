@@ -5,7 +5,7 @@ from models import User
 from typing import List
 
 from collections import defaultdict
-from api.router import APIRouter
+from fastapi import APIRouter
 
 import time
 from crud import samples

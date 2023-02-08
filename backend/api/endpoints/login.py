@@ -5,7 +5,7 @@ from models import *
 
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
-from api.router import APIRouter
+from fastapi import APIRouter
 ACCESS_TOKEN_EXPIRE_MINUTES = 480
 
 router = APIRouter()
