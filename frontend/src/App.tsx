@@ -58,9 +58,8 @@ export const App = () => {
   }, [])
 
   useEffect(() => {
-    if (user && user.scope === scopes.admin.id) {
-      setIsAdmin(true)
-    }
+    if (user?.scope === scopes.admin.id) setIsAdmin(true)
+    else setIsAdmin(false)
   }, [user])
 
   const login = (formInput) => {
