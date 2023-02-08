@@ -20,6 +20,7 @@ import { scopes } from './services/costants'
 const { Header, Content } = Layout
 export const App = () => {
   const [user, setUser] = useState<any>()
+  const [isAdmin, setIsAdmin] = useState<boolean>(false)
   const [samples, setSamples] = useState<any>()
   const [token, setToken] = useState<any>(null)
   const tokenCookieName = 'sc2reporterToken'
@@ -43,7 +44,7 @@ export const App = () => {
     {
       key: 'Users',
       label: <Link to="/users">Users</Link>,
-      hide: (user?.scope !== scopes.admin.id).toString(),
+      hide: (!isAdmin).toString(),
     },
   ].filter((item) => item.hide === 'false')
 
@@ -55,6 +56,12 @@ export const App = () => {
       getSamples(cookieToken[0]).then((samples) => setSamples(samples))
     }
   }, [])
+
+  useEffect(() => {
+    if (user && user.scope === scopes.admin.id) {
+      setIsAdmin(true)
+    }
+  }, [user])
 
   const login = (formInput) => {
     getToken(formInput).then((response) => {
@@ -118,7 +125,13 @@ export const App = () => {
           <Routes>
             <Route
               path="/"
-              element={token ? <SamplesPage samples={samples} /> : <LoginPage login={login} />}
+              element={
+                token ? (
+                  <SamplesPage token={token} isAdmin={isAdmin} />
+                ) : (
+                  <LoginPage login={login} />
+                )
+              }
             />
             <Route
               path="/dashboard"
@@ -144,15 +157,33 @@ export const App = () => {
             />
             <Route
               path="/nextclade/:id"
-              element={token ? <NextcladePage token={token} /> : <LoginPage login={login} />}
+              element={
+                token ? (
+                  <NextcladePage token={token} isAdmin={isAdmin} />
+                ) : (
+                  <LoginPage login={login} />
+                )
+              }
             />
             <Route
               path="/pangolin/:id"
-              element={token ? <PangolinPage token={token} /> : <LoginPage login={login} />}
+              element={
+                token ? (
+                  <PangolinPage token={token} isAdmin={isAdmin} />
+                ) : (
+                  <LoginPage login={login} />
+                )
+              }
             />
             <Route
               path="/variants/:id"
-              element={token ? <VariantPage token={token} /> : <LoginPage login={login} />}
+              element={
+                token ? (
+                  <VariantPage token={token} isAdmin={isAdmin} />
+                ) : (
+                  <LoginPage login={login} />
+                )
+              }
             />
           </Routes>
         </Content>
