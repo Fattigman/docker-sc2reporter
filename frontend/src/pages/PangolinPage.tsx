@@ -4,8 +4,9 @@ import { SamplesTable } from 'components/SamplesTable'
 import { useParams } from 'react-router-dom'
 import { getPangolin } from 'services/api'
 
-export const PangolinPage = ({ token }) => {
+export const PangolinPage = ({ token, isAdmin }) => {
   const [samples, setSamples] = useState<any>()
+  const [refresh, setRefresh] = useState<boolean>(false)
   const { id } = useParams()
   const title = `Pangolin ${id}`
   const covLineagesLink = `https://cov-lineages.org/lineage.html?lineage=${id}`
@@ -15,7 +16,11 @@ export const PangolinPage = ({ token }) => {
       getPangolin(token, id).then((response) => {
         setSamples(response.samples)
       })
-  }, [id])
+  }, [id, refresh])
+
+  const refreshSamples = () => {
+    setRefresh((prevRefresh) => !prevRefresh)
+  }
 
   return (
     <Card>
@@ -24,7 +29,12 @@ export const PangolinPage = ({ token }) => {
         title={title}
         subTitle={<a href={covLineagesLink}>Lineage information</a>}
       >
-        <SamplesTable samples={samples} />
+        <SamplesTable
+          token={token}
+          samples={samples}
+          refreshSamples={refreshSamples}
+          isAdmin={isAdmin}
+        />
       </PageHeader>
     </Card>
   )
