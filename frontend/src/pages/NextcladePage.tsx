@@ -5,8 +5,9 @@ import { SamplesTable } from '../components/SamplesTable'
 import { Card } from 'antd'
 import { PageHeader } from '@ant-design/pro-layout'
 
-export const NextcladePage = ({ token }) => {
+export const NextcladePage = ({ token, isAdmin }) => {
   const [samples, setSamples] = useState<any>()
+  const [refresh, setRefresh] = useState<boolean>(false)
   const { id } = useParams()
   const title = `Nextclade ${id}`
 
@@ -15,12 +16,21 @@ export const NextcladePage = ({ token }) => {
       getNextclade(token, id).then((response) => {
         setSamples(response.samples)
       })
-  }, [id])
+  }, [id, refresh])
+
+  const refreshSamples = () => {
+    setRefresh((prevRefresh) => !prevRefresh)
+  }
 
   return (
     <Card>
       <PageHeader onBack={() => history.back()} title={title}>
-        <SamplesTable samples={samples} />
+        <SamplesTable
+          token={token}
+          samples={samples}
+          refreshSamples={refreshSamples}
+          isAdmin={isAdmin}
+        />
       </PageHeader>
     </Card>
   )

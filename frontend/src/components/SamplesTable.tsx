@@ -1,13 +1,38 @@
-import React from 'react'
-import { Table, Tag } from 'antd'
+import React, { useState } from 'react'
+import { Button, notification, Popconfirm, Table, Tag } from 'antd'
 import { formatDate, sortDate } from '../helpers'
-import { CheckCircleTwoTone } from '@ant-design/icons'
+import { CheckCircleTwoTone, DeleteTwoTone } from '@ant-design/icons'
 import { Link, useLocation } from 'react-router-dom'
+import { deleteSample } from 'services/api'
 
-export const SamplesTable = ({ samples }) => {
+export const SamplesTable = ({ token, samples, refreshSamples, isAdmin }) => {
+  const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([])
+  const [samplesId, setSamplesId] = useState<string>('')
   const location = useLocation()
   const nextclade = 'nextclade'
   const pangolin = 'pangolin'
+  const hasSelected = selectedRowKeys.length > 0
+
+  const rowSelection = {
+    onChange: (selectedRowKeys) => {
+      setSelectedRowKeys(selectedRowKeys)
+      const selectedSamples = selectedRowKeys.map((item) => `&sample_ids=${item}`).join('')
+      setSamplesId(selectedSamples)
+    },
+    selectedRowKeys,
+  }
+
+  const confirmDelete = () => {
+    deleteSample(token, samplesId).then(() => {
+      notification['success']({
+        message:
+          selectedRowKeys.length > 1
+            ? `Samples (${selectedRowKeys}) have been successfully deleted.`
+            : `Sample (${selectedRowKeys}) has been successfully deleted.`,
+      })
+      refreshSamples()
+    })
+  }
 
   const columns = [
     {
@@ -94,12 +119,31 @@ export const SamplesTable = ({ samples }) => {
     },
   ].filter((column) => !column.hidden)
   return (
-    <Table
-      pagination={false}
-      dataSource={samples}
-      columns={columns}
-      rowKey={'sample_id'}
-      loading={!samples}
-    />
+    <>
+      <Table
+        pagination={false}
+        dataSource={samples}
+        columns={columns}
+        rowKey={'sample_id'}
+        loading={!samples}
+        bordered
+        rowSelection={
+          isAdmin
+            ? {
+                columnTitle: (
+                  <Popconfirm
+                    title="Are you sure you want to delete?"
+                    disabled={!hasSelected}
+                    onConfirm={confirmDelete}
+                  >
+                    <Button shape="circle" disabled={!hasSelected} icon={<DeleteTwoTone />} />
+                  </Popconfirm>
+                ),
+                ...rowSelection,
+              }
+            : undefined
+        }
+      />
+    </>
   )
 }

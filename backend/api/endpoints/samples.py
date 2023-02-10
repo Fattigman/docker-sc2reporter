@@ -2,7 +2,8 @@ from re import M
 from typing import Optional, Union
 from fastapi import Depends, HTTPException, Query
 from starlette.responses import JSONResponse
-from api.router import APIRouter
+from fastapi import APIRouter
+
 
 import pandas as pd 
 
