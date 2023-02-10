@@ -35,9 +35,8 @@ class CRUDBase(Generic[CreateSchemaType, UpdateSchemaType]):
         docs = [parse_json(x) for x in await curr.to_list(None)]
         return  docs
 
-    async def create(self, obj_in: BaseModel, id_field: str = "_id"):
+    async def create(self, obj_in: BaseModel):
         obj_in = obj_in.dict()
-        obj_in[id_field] = obj_in["sample_id"]
         result = await db[self.collection_name].insert_one(obj_in)
         return result
     
