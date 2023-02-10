@@ -30,19 +30,19 @@ export const App = () => {
 
   const menuItems = [
     {
-      key: 'Home',
+      key: '',
       label: <Link to="/">Home</Link>,
       disabled: token === null,
       hide: 'false',
     },
     {
-      key: 'Dashboard',
+      key: 'dashboard',
       label: <Link to="/dashboard">Dashboard</Link>,
       disabled: token === null,
       hide: 'false',
     },
     {
-      key: 'Users',
+      key: 'users',
       label: <Link to="/users">Users</Link>,
       hide: (!isAdmin).toString(),
     },
