@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Card, PageHeader } from 'antd'
+import { Card } from 'antd'
+import { PageHeader } from '@ant-design/pro-layout'
 import { getVariant } from '../services/api'
 import { SamplesTable } from '../components/SamplesTable'
 
