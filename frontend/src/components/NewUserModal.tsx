@@ -30,7 +30,14 @@ export const NewUserModal = ({ updateUsers, token }) => {
       </Button>
       <Modal title="Add new user" visible={isModalVisible} footer={null} onCancel={handleCancel}>
         {!isRegistrationSuccessful && (
-          <Form name="basic" onFinish={registerUser} autoComplete="off">
+          <Form
+            name="basic"
+            initialValues={{
+              scope: Object.keys(scopes)[0],
+            }}
+            onFinish={registerUser}
+            autoComplete="off"
+          >
             <Form.Item
               name="email"
               rules={[
@@ -66,7 +73,7 @@ export const NewUserModal = ({ updateUsers, token }) => {
               <Input placeholder="Username" />
             </Form.Item>
             <Form.Item name="scope">
-              <Select defaultValue={Object.keys(scopes)[0]}>
+              <Select>
                 {Object.keys(scopes).map((scope) => (
                   <Select.Option key={scope} value={scope}>
                     {scope}
