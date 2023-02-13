@@ -6,11 +6,11 @@ import { App } from './App'
 import { BrowserRouter } from 'react-router-dom'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
-const { PREFIX_URL } = process.env
-console.log(PREFIX_URL)
+const { REACT_APP_PREFIX_URL } = process.env
+console.log(REACT_APP_PREFIX_URL)
 root.render(
   <React.StrictMode>
-    <BrowserRouter basename={PREFIX_URL}>
+    <BrowserRouter basename={REACT_APP_PREFIX_URL}>
       <App />
     </BrowserRouter>
   </React.StrictMode>
