@@ -7,7 +7,6 @@ import { BrowserRouter } from 'react-router-dom'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 const { REACT_APP_PREFIX_URL } = process.env
-console.log(REACT_APP_PREFIX_URL)
 root.render(
   <React.StrictMode>
     <BrowserRouter basename={REACT_APP_PREFIX_URL}>
