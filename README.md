@@ -9,5 +9,7 @@ git clone https://github.com/genomic-medicine-sweden/docker-sc2reporter
 cd docker-sc2reporter
 docker-compose up
 ```
+## Prefix URL Configuration
+The prefix URL in this project is controlled by the environment variable REACT_APP_PREFIX_URL, and is set to / by default to prevent any potential interference with Firebase hosting actions. When the project is run in production, the REACT_APP_PREFIX_URL variable can be configured with a different value as needed.
 
 Then navigate to localhost:3000 for the front end and localhost:8000 for the back-end
