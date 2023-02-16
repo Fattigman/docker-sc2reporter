@@ -42,8 +42,8 @@ async def single_sample(
         )
     
     matrix = await get_matrix()
-    del matrix[0]['_id']
-    df = pd.DataFrame(matrix[0])
+    dict_to_df = {x['_id']: x['array'] for x in matrix}
+    df = pd.DataFrame(dict_to_df)
     if sample_id in df.columns:
         distances = abs(df.subtract(df[sample_id], axis = 0)).sum()
         similar_samples = distances[abs(distances) < 10].index.tolist()
