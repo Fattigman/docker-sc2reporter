@@ -10,8 +10,8 @@ from passlib.context import CryptContext
 from pymongo.errors import DuplicateKeyError
 
 # creates the matrix
-def create_matrix():
-    db = pymongo.MongoClient('localhost',27017).sarscov2_standalone
+def create_matrix(db_name:str='sarscov2_standalone'):
+    db = pymongo.MongoClient('localhost',27017)[db_name]
     samples = [x for x in db.sample.find()]
     variants = [x for x in db.variant.find()]
     depth = [x for x in db.depth.find()]
@@ -41,31 +41,32 @@ def create_matrix():
     db['matrix'].insert_one(dict_df)
 
 # creates the superuser
-def create_superuser():
-    db = pymongo.MongoClient('localhost',27017).sarscov2_standalone
+def create_superuser(db_name:str='sarscov2_standalone'):
+    db = pymongo.MongoClient('localhost',27017)[db_name]
     db.users.drop()
     # create user collection
     db.create_collection('users')
-    hashed_password = CryptContext(schemes=["bcrypt"], deprecated="auto").hash('<YOUR_PASSWORD>')
-    db_user = 'admin'
+    # create user
+    username = input('Enter username: ')
+    password = input('Enter password: ')
+    hashed_password = CryptContext(schemes=["bcrypt"], deprecated="auto").hash(password)
     collection = db.users
 
     try:
         collection.insert_one({
             "_id":'admin',
-            "username": 'admin', 
+            "username": username,
             "password": hashed_password, 
             "email": 'admin@admin.com', 
             "fullname": 'Admin Adminson', 
             "disabled":False, 
             "scope":'admin'})
-        print("User created.")
+        print (f'User created: {username}')
     except DuplicateKeyError:
         print ('User already exists in the database')
     except Exception as e:
         print (e)
-    print (f'User created: {db_user}')
-    return db_user
+    return username
 
 if __name__ == '__main__':
     print ('Creating matrix...')
