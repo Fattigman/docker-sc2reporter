@@ -5,7 +5,7 @@
 import pandas as pd
 import numpy as np
 import pymongo
-
+from tqdm import tqdm
 from passlib.context import CryptContext
 from pymongo.errors import DuplicateKeyError
 
@@ -20,7 +20,7 @@ def create_matrix():
     col_name = ''
     col = []
     index = []
-    for i, ele in enumerate(depth):
+    for i, ele in enumerate(tqdm(depth)):
         if i == 0:
             col_name = ele['sample_id']
         if ele['sample_id'] != col_name:
@@ -37,6 +37,7 @@ def create_matrix():
     df = df.transpose().fillna(df.transpose().mean()).transpose()
 
     dict_df = df.to_dict('list')
+    print ('Inserting matrix into mongodb...')
     db['matrix'].insert_one(dict_df)
 
 # creates the superuser
@@ -61,8 +62,12 @@ def create_superuser():
         print("User created.")
     except DuplicateKeyError:
         print ('User already exists in the database')
+    except Exception as e:
+        print (e)
+    print (f'User created: {db_user}')
     return db_user
 
 if __name__ == '__main__':
+    print ('Creating matrix...')
     create_matrix()
     create_superuser()
