@@ -8,7 +8,7 @@ import pymongo
 from tqdm import tqdm
 from passlib.context import CryptContext
 from pymongo.errors import DuplicateKeyError
-
+from pprint import pprint
 # creates the matrix
 def create_matrix(db_name:str='sarscov2_standalone'):
     db = pymongo.MongoClient('localhost',27017)[db_name]
@@ -38,7 +38,14 @@ def create_matrix(db_name:str='sarscov2_standalone'):
 
     dict_df = df.to_dict('list')
     print ('Inserting matrix into mongodb...')
-    db['matrix'].insert_one(dict_df)
+    for i, ele in enumerate(tqdm(dict_df)):
+        try:
+            db['matrix'].insert_one({
+                '_id': ele,
+                'matrix': dict_df[ele]
+            })
+        except DuplicateKeyError:
+            print (f'{ele} already exists in the database')
 
 # creates the superuser
 def create_superuser(db_name:str='sarscov2_standalone'):
