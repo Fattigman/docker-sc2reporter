@@ -5,11 +5,11 @@ import { PageHeader } from '@ant-design/pro-layout'
 import { getSamples } from 'services/api'
 
 export const SamplesPage = ({ token, isAdmin }) => {
-  const [samples2, setSamples2] = useState<any>()
+  const [samples, setSamples] = useState<any>()
   const [refresh, setRefresh] = useState<boolean>(false)
 
   useEffect(() => {
-    getSamples(token).then((samples) => setSamples2(samples))
+    getSamples(token).then((samples) => setSamples(samples))
   }, [refresh])
 
   const refreshSamples = () => {
@@ -21,7 +21,7 @@ export const SamplesPage = ({ token, isAdmin }) => {
       <PageHeader backIcon={false} title="Samples">
         <SamplesTable
           token={token}
-          samples={samples2}
+          samples={samples}
           refreshSamples={refreshSamples}
           isAdmin={isAdmin}
         />
