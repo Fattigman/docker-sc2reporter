@@ -37,7 +37,7 @@ def create_matrix(db_name:str='sarscov2_standalone'):
     df = df.transpose().fillna(df.transpose().mean()).transpose()
 
     dict_df = df.to_dict('list')
-    print ('Inserting matrix into mongodb...')
+    print ('Inserting samples into matrix...')
     for i, ele in enumerate(tqdm(dict_df)):
         try:
             db['matrix'].insert_one({
