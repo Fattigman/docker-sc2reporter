@@ -42,7 +42,7 @@ def create_matrix(db_name:str='sarscov2_standalone'):
         try:
             db['matrix'].insert_one({
                 '_id': ele,
-                'matrix': dict_df[ele]
+                'array': dict_df[ele]
             })
         except DuplicateKeyError:
             print (f'{ele} already exists in the database')
