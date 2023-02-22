@@ -162,7 +162,7 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin, title, s
   return (
     <>
       <PageHeader
-        onBack={() => history.back()}
+        onBack={title !== 'Samples' ? () => history.back() : undefined}
         title={title}
         subTitle={subTitle}
         extra={[
