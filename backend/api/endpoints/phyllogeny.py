@@ -22,12 +22,12 @@ router = APIRouter()
 async def get_distances(
     current_user: User = Depends(get_current_active_user),
     group: str = Query(..., description="The group to get the distances for (try 'samples')"),
-    sample_list: List[str] = Query(..., description="The list of samples to get the distances for (need at least 3 samples)")
+    sample_id: List[str] = Query(..., description="The list of samples to get the distances for (need at least 3 samples)")
     ):
     if group == 'samples':
         curr = db.sample.find(
             {'sample_id': 
-            {'$in': sample_list }
+            {'$in': sample_id }
             })
         samples =  [parse_json(x) for x in await curr.to_list(None)]
         if len(samples) < 3:
