@@ -4,7 +4,7 @@ import { PageHeader } from '@ant-design/pro-layout'
 import { formatDate, sortDate } from '../helpers'
 import { CheckCircleTwoTone } from '@ant-design/icons'
 import { Link, useLocation } from 'react-router-dom'
-import { deleteSample, getPhyllogeny } from 'services/api'
+import { deleteSample, getPhylogeny } from 'services/api'
 
 export const SamplesTable = ({ token, samples, refreshSamples, isAdmin, title, subTitle }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([])
@@ -56,9 +56,9 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin, title, s
     setSelectedRowKeys([])
   }
 
-  const fetchPhyllogenyData = async () => {
+  const fetchPhylogenyData = async () => {
     if (selectedRowKeys.length > 2) {
-      getPhyllogeny(token, group, sampleList).then((response) => {
+      getPhylogeny(token, group, sampleList).then((response) => {
         setCopiedText(JSON.stringify(response))
         if (response != '') {
           showModal()
@@ -68,7 +68,7 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin, title, s
     } else {
       notification['info']({
         message:
-          'To obtain Phyllogeny data, you must select a minimum of three samples from the list provided below.',
+          'To obtain Phylogeny data, you must select a minimum of three samples from the list provided below.',
         duration: 8,
       })
     }
@@ -166,8 +166,8 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin, title, s
         title={title}
         subTitle={subTitle}
         extra={[
-          <Button key="1" onClick={fetchPhyllogenyData} type="primary">
-            Fetch Phyllogeny Data
+          <Button key="1" onClick={fetchPhylogenyData} type="primary">
+            Fetch Phylogeny Data
           </Button>,
           isAdmin && (
             <Popconfirm
@@ -184,7 +184,7 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin, title, s
       >
         <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
           <p>
-            The Phyllogeny data has been successfully copied. Please click &apos;OK&apos; to go to
+            The Phylogeny data has been successfully copied. Please click &apos;OK&apos; to go to
             the Grapetree site, then click on the &apos;Load files&apos; button and paste the data
             into the designated rectangle. Finally, click on the &apos;Confirm&apos; button to
             proceed.
