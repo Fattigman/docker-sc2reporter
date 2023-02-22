@@ -1,0 +1,8 @@
+.samplesTableButtons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  width: 300px;
+  margin-left: auto;
+}
