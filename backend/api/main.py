@@ -5,7 +5,7 @@ from models import *
 
 from api.config import settings
 
-from api.endpoints import samples, users, login, variants, dashboard, phyllogeny, consensus, depth, significant_variants
+from api.endpoints import samples, users, login, variants, dashboard, phylogeny, consensus, depth, significant_variants
 
 from fastapi import Depends, FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
@@ -86,9 +86,9 @@ app.include_router(
 )
 
 app.include_router(
-    phyllogeny.router,
-    prefix="/phyllogeny",
-    tags=["Phyllogeny"],
+    phylogeny.router,
+    prefix="/phylogeny",
+    tags=["Phylogeny"],
     responses={status.HTTP_404_NOT_FOUND: {"description": "Not found"}},
 )
 
