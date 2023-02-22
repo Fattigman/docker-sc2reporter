@@ -14,9 +14,10 @@ def create_matrix(db_name:str='sarscov2_standalone'):
 
     db = pymongo.MongoClient('localhost',27017)[db_name]
     df = pd.DataFrame()
-    
+
     # Get all sample names to iterate over
     sample_names = [x['sample_id'] for x in db.sample.find()]
+    print ('Calculating matrix from depth collection...')
     for name in tqdm(sample_names):
         col = []
         index = []
