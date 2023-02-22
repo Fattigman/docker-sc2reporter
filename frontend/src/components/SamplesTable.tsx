@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import { Button, Modal, notification, Popconfirm, Table, Tag } from 'antd'
+import { PageHeader } from '@ant-design/pro-layout'
 import { formatDate, sortDate } from '../helpers'
 import { CheckCircleTwoTone } from '@ant-design/icons'
 import { Link, useLocation } from 'react-router-dom'
 import { deleteSample, getPhyllogeny } from 'services/api'
 import styles from './SamplesTable.module.css'
 
-export const SamplesTable = ({ token, samples, refreshSamples, isAdmin }) => {
+export const SamplesTable = ({ token, samples, refreshSamples, isAdmin, title, subTitle }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([])
   const [samplesId, setSamplesId] = useState<string>('')
   const [samplesId2, setSamplesId2] = useState<string>('')
@@ -160,40 +161,43 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin }) => {
   ].filter((column) => !column.hidden)
   return (
     <>
-      <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-        <p>
-          The Phyllogeny data has been successfully copied. Please click &apos;OK&apos; to go to the
-          Grapetree site, then click on the &apos;Load files&apos; button and paste the data into
-          the designated rectangle. Finally, click on the &apos;Confirm&apos; button to proceed.
-        </p>
-      </Modal>
-      <div className={styles.samplesTableButtons}>
-        <Button onClick={fetchPhyllogenyData} type="primary">
-          Fetch Phyllogeny Data
-        </Button>
-        {isAdmin && (
-          <Popconfirm
-            title="Are you sure you want to delete?"
-            disabled={!hasSelected}
-            onConfirm={confirmDelete}
-          >
-            <Button disabled={!hasSelected} type="primary">
-              Delete
-            </Button>
-          </Popconfirm>
-        )}
-      </div>
-      <Table
-        pagination={false}
-        dataSource={samples}
-        columns={columns}
-        rowKey={'sample_id'}
-        loading={!samples}
-        bordered
-        rowSelection={{
-          ...rowSelection,
-        }}
-      />
+      <PageHeader onBack={() => history.back()} title={title} subTitle={subTitle}>
+        <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+          <p>
+            The Phyllogeny data has been successfully copied. Please click &apos;OK&apos; to go to
+            the Grapetree site, then click on the &apos;Load files&apos; button and paste the data
+            into the designated rectangle. Finally, click on the &apos;Confirm&apos; button to
+            proceed.
+          </p>
+        </Modal>
+        <div className={styles.samplesTableButtons}>
+          <Button onClick={fetchPhyllogenyData} type="primary">
+            Fetch Phyllogeny Data
+          </Button>
+          {isAdmin && (
+            <Popconfirm
+              title="Are you sure you want to delete?"
+              disabled={!hasSelected}
+              onConfirm={confirmDelete}
+            >
+              <Button disabled={!hasSelected} type="primary">
+                Delete
+              </Button>
+            </Popconfirm>
+          )}
+        </div>
+        <Table
+          pagination={false}
+          dataSource={samples}
+          columns={columns}
+          rowKey={'sample_id'}
+          loading={!samples}
+          bordered
+          rowSelection={{
+            ...rowSelection,
+          }}
+        />
+      </PageHeader>
     </>
   )
 }

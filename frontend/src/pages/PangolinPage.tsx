@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { Card } from 'antd'
-import { PageHeader } from '@ant-design/pro-layout'
 import { SamplesTable } from 'components/SamplesTable'
 import { useParams } from 'react-router-dom'
 import { getPangolin } from 'services/api'
@@ -25,18 +24,14 @@ export const PangolinPage = ({ token, isAdmin }) => {
 
   return (
     <Card>
-      <PageHeader
-        onBack={() => history.back()}
+      <SamplesTable
+        token={token}
+        samples={samples}
+        refreshSamples={refreshSamples}
+        isAdmin={isAdmin}
         title={title}
         subTitle={<a href={covLineagesLink}>Lineage information</a>}
-      >
-        <SamplesTable
-          token={token}
-          samples={samples}
-          refreshSamples={refreshSamples}
-          isAdmin={isAdmin}
-        />
-      </PageHeader>
+      />
     </Card>
   )
 }
