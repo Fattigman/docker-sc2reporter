@@ -8,8 +8,8 @@ import { deleteSample, getPhyllogeny } from 'services/api'
 
 export const SamplesTable = ({ token, samples, refreshSamples, isAdmin, title, subTitle }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([])
-  const [samplesId, setSamplesId] = useState<string>('')
-  const [samplesId2, setSamplesId2] = useState<string>('')
+  const [samplesIds, setSamplesIds] = useState<string>('')
+  const [sampleList, setSampleList] = useState<string>('')
   const [copiedText, setCopiedText] = useState<string>('')
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const location = useLocation()
@@ -21,16 +21,16 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin, title, s
   const rowSelection = {
     onChange: (selectedRowKeys) => {
       setSelectedRowKeys(selectedRowKeys)
-      const selectedSamples = selectedRowKeys.map((item) => `&sample_ids=${item}`).join('')
-      const selectedSamples2 = selectedRowKeys.map((item) => `&sample_list=${item}`).join('')
-      setSamplesId(selectedSamples)
-      setSamplesId2(selectedSamples2)
+      const selectedSamplesIds = selectedRowKeys.map((item) => `&sample_ids=${item}`).join('')
+      const selectedSampleList = selectedRowKeys.map((item) => `&sample_list=${item}`).join('')
+      setSamplesIds(selectedSamplesIds)
+      setSampleList(selectedSampleList)
     },
     selectedRowKeys,
   }
 
   const confirmDelete = () => {
-    deleteSample(token, samplesId).then(() => {
+    deleteSample(token, samplesIds).then(() => {
       notification['success']({
         message:
           selectedRowKeys.length > 1
@@ -58,7 +58,7 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin, title, s
 
   const fetchPhyllogenyData = async () => {
     if (selectedRowKeys.length > 2) {
-      getPhyllogeny(token, group, samplesId2).then((response) => {
+      getPhyllogeny(token, group, sampleList).then((response) => {
         setCopiedText(JSON.stringify(response))
         if (response != '') {
           showModal()
@@ -158,6 +158,7 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin, title, s
       key: 'selection_criterion',
     },
   ].filter((column) => !column.hidden)
+
   return (
     <>
       <PageHeader
