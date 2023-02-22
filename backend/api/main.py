@@ -91,3 +91,7 @@ app.include_router(
     tags=["Phyllogeny"],
     responses={status.HTTP_404_NOT_FOUND: {"description": "Not found"}},
 )
+
+@app.on_event("startup")
+async def startup_event():
+    await startup_db()
