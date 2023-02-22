@@ -200,6 +200,7 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin, title, s
           rowSelection={{
             ...rowSelection,
           }}
+          style={{ marginTop: '50px' }}
         />
       </PageHeader>
     </>
