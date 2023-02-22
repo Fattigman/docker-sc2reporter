@@ -5,7 +5,6 @@ import { formatDate, sortDate } from '../helpers'
 import { CheckCircleTwoTone } from '@ant-design/icons'
 import { Link, useLocation } from 'react-router-dom'
 import { deleteSample, getPhyllogeny } from 'services/api'
-import styles from './SamplesTable.module.css'
 
 export const SamplesTable = ({ token, samples, refreshSamples, isAdmin, title, subTitle }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([])
@@ -161,20 +160,15 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin, title, s
   ].filter((column) => !column.hidden)
   return (
     <>
-      <PageHeader onBack={() => history.back()} title={title} subTitle={subTitle}>
-        <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-          <p>
-            The Phyllogeny data has been successfully copied. Please click &apos;OK&apos; to go to
-            the Grapetree site, then click on the &apos;Load files&apos; button and paste the data
-            into the designated rectangle. Finally, click on the &apos;Confirm&apos; button to
-            proceed.
-          </p>
-        </Modal>
-        <div className={styles.samplesTableButtons}>
-          <Button onClick={fetchPhyllogenyData} type="primary">
+      <PageHeader
+        onBack={() => history.back()}
+        title={title}
+        subTitle={subTitle}
+        extra={[
+          <Button key="1" onClick={fetchPhyllogenyData} type="primary">
             Fetch Phyllogeny Data
-          </Button>
-          {isAdmin && (
+          </Button>,
+          isAdmin && (
             <Popconfirm
               title="Are you sure you want to delete?"
               disabled={!hasSelected}
@@ -184,8 +178,17 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin, title, s
                 Delete
               </Button>
             </Popconfirm>
-          )}
-        </div>
+          ),
+        ]}
+      >
+        <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+          <p>
+            The Phyllogeny data has been successfully copied. Please click &apos;OK&apos; to go to
+            the Grapetree site, then click on the &apos;Load files&apos; button and paste the data
+            into the designated rectangle. Finally, click on the &apos;Confirm&apos; button to
+            proceed.
+          </p>
+        </Modal>
         <Table
           pagination={false}
           dataSource={samples}
