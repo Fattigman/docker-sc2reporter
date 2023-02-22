@@ -2,6 +2,7 @@ import os
 from pydantic import BaseSettings
 
 class Settings(BaseSettings):
+    # MongoDB settings
     MONGO_HOST: str = os.environ.get('MONGO_HOST', 'localhost')
     MONGO_PORT: int = os.environ.get('MONGO_PORT', 27017)
     MONGO_DB: str = os.environ.get('MONGO_DB', 'sarscov2_standalone')
@@ -10,7 +11,9 @@ class Settings(BaseSettings):
     MONGO_AUTH_SOURCE: str = os.environ.get('MONGO_AUTH_SOURCE', 'admin')
     MONGO_AUTH_MECHANISM: str = os.environ.get('MONGO_AUTH_MECHANISM', 'SCRAM-SHA-256')
 
-    # Database settings
+    # Database configs
+    DATABASE_NAME: str = os.environ.get('DATABASE_NAME', 'sarscov2_standalone')
+    VIRUS_TYPE: str = os.environ.get('VIRUS_TYPE', 'SARS-CoV-2')
     VARIANTS_OF_BIOLOGICAL_SIGNIFICANCE:list = os.environ.get("VARIANTS", ["S:N501Y","S:N501T", "S:N501S", "S:E484K", "S:K417T", "S:F157L", "S:V367F", "S:Q613H", "S:P681R", "S:Q677H", "S:F888L", "S:H69_V70del", "S:N439K", "S:Y453F", "S:S98F", "S:L452R", "S:D80Y", "S:A626S", "S:V1122L", "S:A222V", "S:S477N"])
     PANGO_LINEAGES_OF_CONCERN:list = os.environ.get("PANGO_TYPES",["B.1.351","P.1","A.23.1","B.1.525","B.1.1.28.1","B.1.427", "B.1.429", "B.1.617"])
     POSITIONS_OF_BIOLOGICAL_SIGNIFICANCE:list = os.environ.get("POSITIONS", ["S:501", "S:484"])
