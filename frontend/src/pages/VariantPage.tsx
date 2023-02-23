@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Card } from 'antd'
-import { PageHeader } from '@ant-design/pro-layout'
 import { getVariant } from '../services/api'
 import { SamplesTable } from '../components/SamplesTable'
 
@@ -24,14 +23,14 @@ export const VariantPage = ({ token, isAdmin }) => {
 
   return (
     <Card>
-      <PageHeader onBack={() => history.back()} title={title}>
-        <SamplesTable
-          token={token}
-          samples={samples}
-          refreshSamples={refreshSamples}
-          isAdmin={isAdmin}
-        />
-      </PageHeader>
+      <SamplesTable
+        token={token}
+        samples={samples}
+        refreshSamples={refreshSamples}
+        isAdmin={isAdmin}
+        title={title}
+        subTitle={null}
+      />
     </Card>
   )
 }
