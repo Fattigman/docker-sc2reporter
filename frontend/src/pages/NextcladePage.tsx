@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { getNextclade } from '../services/api'
 import { SamplesTable } from '../components/SamplesTable'
 import { Card } from 'antd'
+import { PageHeader } from '@ant-design/pro-layout'
 
 export const NextcladePage = ({ token, isAdmin }) => {
   const [samples, setSamples] = useState<any>()
@@ -23,14 +24,14 @@ export const NextcladePage = ({ token, isAdmin }) => {
 
   return (
     <Card>
-      <SamplesTable
-        token={token}
-        samples={samples}
-        refreshSamples={refreshSamples}
-        isAdmin={isAdmin}
-        title={title}
-        subTitle={null}
-      />
+      <PageHeader onBack={() => history.back()} title={title}>
+        <SamplesTable
+          token={token}
+          samples={samples}
+          refreshSamples={refreshSamples}
+          isAdmin={isAdmin}
+        />
+      </PageHeader>
     </Card>
   )
 }

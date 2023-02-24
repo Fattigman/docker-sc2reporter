@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { SamplesTable } from 'components/SamplesTable'
 import { Card } from 'antd'
 import { getSamples } from 'services/api'
+import { PageHeader } from '@ant-design/pro-layout'
 
 export const SamplesPage = ({ token, isAdmin }) => {
   const [samples, setSamples] = useState<any>()
@@ -17,14 +18,14 @@ export const SamplesPage = ({ token, isAdmin }) => {
 
   return (
     <Card>
-      <SamplesTable
-        token={token}
-        samples={samples}
-        refreshSamples={refreshSamples}
-        isAdmin={isAdmin}
-        title="Samples"
-        subTitle={null}
-      />
+      <PageHeader title={'Samples'}>
+        <SamplesTable
+          token={token}
+          samples={samples}
+          refreshSamples={refreshSamples}
+          isAdmin={isAdmin}
+        />
+      </PageHeader>
     </Card>
   )
 }

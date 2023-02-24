@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Card } from 'antd'
+import { Card, Descriptions } from 'antd'
 import { getVariant } from '../services/api'
 import { SamplesTable } from '../components/SamplesTable'
+import { PageHeader } from '@ant-design/pro-layout'
 
 export const VariantPage = ({ token, isAdmin }) => {
   const [samples, setSamples] = useState<any>()
@@ -23,14 +24,25 @@ export const VariantPage = ({ token, isAdmin }) => {
 
   return (
     <Card>
-      <SamplesTable
-        token={token}
-        samples={samples}
-        refreshSamples={refreshSamples}
-        isAdmin={isAdmin}
-        title={title}
-        subTitle={null}
-      />
+      <PageHeader onBack={() => history.back()} title={title}>
+        <Descriptions bordered size="small">
+          <Descriptions.Item label="Genomics change">Genomics change</Descriptions.Item>
+          <Descriptions.Item label="Gene">Gene</Descriptions.Item>
+          <Descriptions.Item label="cDNA change">cDNA change</Descriptions.Item>
+          <Descriptions.Item label="Protein change">Protein change</Descriptions.Item>
+          <Descriptions.Item label="Codon change">Codon change</Descriptions.Item>
+          <Descriptions.Item label="Consequence">Consequence</Descriptions.Item>
+          <Descriptions.Item label="External link: CoVariants">
+            External link: CoVariants
+          </Descriptions.Item>
+        </Descriptions>
+        <SamplesTable
+          token={token}
+          samples={samples}
+          refreshSamples={refreshSamples}
+          isAdmin={isAdmin}
+        />
+      </PageHeader>
     </Card>
   )
 }

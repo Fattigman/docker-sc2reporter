@@ -3,6 +3,7 @@ import { Card } from 'antd'
 import { SamplesTable } from 'components/SamplesTable'
 import { useParams } from 'react-router-dom'
 import { getPangolin } from 'services/api'
+import { PageHeader } from '@ant-design/pro-layout'
 
 export const PangolinPage = ({ token, isAdmin }) => {
   const [samples, setSamples] = useState<any>()
@@ -24,14 +25,18 @@ export const PangolinPage = ({ token, isAdmin }) => {
 
   return (
     <Card>
-      <SamplesTable
-        token={token}
-        samples={samples}
-        refreshSamples={refreshSamples}
-        isAdmin={isAdmin}
+      <PageHeader
+        onBack={() => history.back()}
         title={title}
         subTitle={<a href={covLineagesLink}>Lineage information</a>}
-      />
+      >
+        <SamplesTable
+          token={token}
+          samples={samples}
+          refreshSamples={refreshSamples}
+          isAdmin={isAdmin}
+        />
+      </PageHeader>
     </Card>
   )
 }
