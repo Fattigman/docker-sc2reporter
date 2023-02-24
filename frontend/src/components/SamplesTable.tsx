@@ -14,6 +14,7 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin }) => {
   const location = useLocation()
   const nextclade = 'nextclade'
   const pangolin = 'pangolin'
+  const variants = 'variants'
   const group = 'samples'
   const hasSelected = selectedRowKeys.length > 0
 
@@ -143,6 +144,7 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin }) => {
           </Link>
         )),
       ellipsis: true,
+      hidden: location?.pathname?.includes(variants),
     },
     {
       title: 'Collection date',
