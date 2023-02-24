@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Modal, notification, Popconfirm, Space, Table, Tag } from 'antd'
+import { Button, Card, Modal, notification, Popconfirm, Space, Table, Tag } from 'antd'
 import { formatDate, sortDate } from '../helpers'
 import { CheckCircleTwoTone } from '@ant-design/icons'
 import { Link, useLocation } from 'react-router-dom'
@@ -159,7 +159,7 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin }) => {
   ].filter((column) => !column.hidden)
 
   return (
-    <>
+    <Card>
       <Space direction="horizontal">
         <Button onClick={fetchPhylogenyData} type="primary">
           Fetch Phylogeny Data
@@ -195,6 +195,6 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin }) => {
         }}
         style={{ marginTop: '30px' }}
       />
-    </>
+    </Card>
   )
 }

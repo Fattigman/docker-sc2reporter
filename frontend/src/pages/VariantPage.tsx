@@ -25,7 +25,7 @@ export const VariantPage = ({ token, isAdmin }) => {
   return (
     <Card>
       <PageHeader onBack={() => history.back()} title={title}>
-        <Descriptions bordered size="small">
+        <Descriptions bordered size="small" style={{ marginBottom: '40px' }}>
           <Descriptions.Item label="Genomics change">Genomics change</Descriptions.Item>
           <Descriptions.Item label="Gene">Gene</Descriptions.Item>
           <Descriptions.Item label="cDNA change">cDNA change</Descriptions.Item>
