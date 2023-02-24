@@ -25,7 +25,7 @@ export const VariantPage = ({ token, isAdmin }) => {
     setRefresh((prevRefresh) => !prevRefresh)
   }
 
-  return !samples ? (
+  return isLoading ? (
     <Loading />
   ) : (
     <Card>
