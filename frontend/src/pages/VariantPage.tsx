@@ -4,10 +4,12 @@ import { Card, Descriptions } from 'antd'
 import { getVariant } from '../services/api'
 import { SamplesTable } from '../components/SamplesTable'
 import { PageHeader } from '@ant-design/pro-layout'
+import { Loading } from 'components/Loading'
 
 export const VariantPage = ({ token, isAdmin }) => {
   const [samples, setSamples] = useState<any>()
   const [refresh, setRefresh] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
   const { id } = useParams()
   const title = `Variant ${id}`
 
@@ -15,6 +17,7 @@ export const VariantPage = ({ token, isAdmin }) => {
     if (id)
       getVariant(token, id).then((response) => {
         setSamples(response)
+        setIsLoading(false)
       })
   }, [id, refresh])
 
@@ -22,7 +25,9 @@ export const VariantPage = ({ token, isAdmin }) => {
     setRefresh((prevRefresh) => !prevRefresh)
   }
 
-  return (
+  return !samples ? (
+    <Loading />
+  ) : (
     <Card>
       <PageHeader onBack={() => history.back()} title={title}>
         <Descriptions bordered size="small" style={{ marginBottom: '40px' }}>
