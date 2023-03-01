@@ -21,8 +21,11 @@ class Settings(BaseSettings):
     # Authentication settings
     SECRET_KEY = "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7"
     ALGORITHM = "HS256"
+
     ADMIN_USERNAME = os.environ.get('ADMIN_USERNAME', 'admin')
     ADMIN_PASSWORD: str = os.environ.get('ADMIN_PASSWORD', 'admin')
+    ADMIN_FULLNAME = os.environ.get('ADMIN_FULLNAME', 'Admin')
+    ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', 'admin@localhost')
 
 
     # Application settings
