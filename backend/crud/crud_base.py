@@ -46,7 +46,13 @@ class CRUDBase(Generic[CreateSchemaType, UpdateSchemaType]):
         obj_in = obj_in.dict()
         result = await db[self.collection_name].update_one({id_field: id}, {"$set": obj_in})
         return result.upserted_id
-
+    async def patch(self, id: str, obj_in: BaseModel, patch_field: str, patch_value, id_field: str = "_id"):
+        # Updates only the patch_field
+        # Returns None if no document was updated
+        # else returns the _id of the updated document
+        result = await db[self.collection_name].update_one({id_field: id}, {"$set": {patch_field: patch_value}})
+        return result.upserted_id
+        
     async def delete(self, id: str, id_field: str = "_id"):
         result = await db[self.collection_name].delete_one({id_field: id})
         return result
