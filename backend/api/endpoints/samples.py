@@ -1,7 +1,6 @@
 from re import M
 from typing import Optional, Union
 from fastapi import Depends, HTTPException, Query
-from starlette.responses import JSONResponse
 from fastapi import APIRouter
 
 
@@ -12,7 +11,6 @@ from crud import *
 from models import *
 from authentication import *
 
-from pprint import pprint
 router = APIRouter()
 
 import time

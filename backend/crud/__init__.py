@@ -9,3 +9,4 @@ from .crud_samples import samples
 from .crud_variants import variants
 from .crud_depth import depth
 from .crud_consensus import consensus
+from .crud_significant_variants import significant_variants

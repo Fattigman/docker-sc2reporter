@@ -5,7 +5,7 @@ from models import *
 
 from api.config import settings
 
-from api.endpoints import samples, users, login, variants, dashboard, phyllogeny, consensus, depth
+from api.endpoints import samples, users, login, variants, dashboard, phylogeny, consensus, depth, significant_variants
 
 from fastapi import Depends, FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
@@ -64,6 +64,12 @@ app.include_router(
     tags=["Login"],
     responses={status.HTTP_404_NOT_FOUND: {"description": "Not found"}},
 )
+app.include_router(
+    significant_variants.router,
+    prefix="/significant_variants",
+    tags=["Significant Variants"],
+    responses={status.HTTP_404_NOT_FOUND: {"description": "Not found"}},
+)
 
 app.include_router(
     variants.router,
@@ -80,8 +86,12 @@ app.include_router(
 )
 
 app.include_router(
-    phyllogeny.router,
-    prefix="/phyllogeny",
-    tags=["Phyllogeny"],
+    phylogeny.router,
+    prefix="/phylogeny",
+    tags=["Phylogeny"],
     responses={status.HTTP_404_NOT_FOUND: {"description": "Not found"}},
 )
+
+@app.on_event("startup")
+async def startup_event():
+    await startup_db()

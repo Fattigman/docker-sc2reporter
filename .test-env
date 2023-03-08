@@ -1,0 +1,8 @@
+# Mongo-express configs
+ME_CONFIG_MONGODB_SERVER=mongodb
+ME_CONFIG_MONGODB_PORT=27017
+ME_CONFIG_SITE_BASEURL=/mongo-express
+
+# React App configs
+'REACT_APP_BACKEND_URL=http://0.0.0.0:8000'
+'PUBLIC_URL=v1'
