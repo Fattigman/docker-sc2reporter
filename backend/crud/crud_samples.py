@@ -6,6 +6,7 @@ This module is used to interact with the sample collection in the database.
 It contains all the CRUD functions for the sample collection.
 """
 from .crud_base import CRUDBase
+from .crud_significant_variants import significant_variants
 from models import Sample
 # Handling of the variants collection
 
@@ -15,7 +16,10 @@ class CRUDSamples(CRUDBase):
         
     
     async def get_samples(self, advanced_search:bool = False):
+
         if not advanced_search:
+            variants = await significant_variants.get()
+            variants = variants[0]['variants']
             # Filter out variants that are not in VARIANTS OF BIOLOGICAL SIGNIFICANCE
             pipeline = [
                 {
@@ -36,7 +40,7 @@ class CRUDSamples(CRUDBase):
                                 'as': 'variant',
                                 'cond': {
                                     '$in': [
-                                        '$$variant.aa', settings.VARIANTS_OF_BIOLOGICAL_SIGNIFICANCE
+                                        '$$variant.aa', variants
                                     ]
                                 }
                         }

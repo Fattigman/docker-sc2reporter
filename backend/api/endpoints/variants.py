@@ -25,12 +25,12 @@ async def get_single_Variant_endpoint(
     id: str = Query(..., description="The sample id of the Variant sequence to get"),
     current_user: User = Depends(get_current_active_user)
 ):  
-    data = await variants.get_single(id, "sample_id")
+    data = await variants.get_single(id)
 
     if len(data) == 0:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Variant sequence can't be found in database",
+            detail="Variant can't be found in database",
             headers={"WWW-Authenticate": "Bearer"},
         )
     return data
@@ -40,7 +40,7 @@ async def get_multiple_Variant_endpoint(
     ids: List[str] = Query(..., description="List of sample ids of the Variant sequences to get"),
     current_user: User = Depends(get_current_active_user)
 ):  
-    data = await variants.get_multiple(ids, "sample_id")
+    data = await variants.get_multiple(ids)
     if len(data) == 0:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -66,7 +66,7 @@ async def update_Variant_endpoint(
     obj_in: Variant,
     current_user: User = Depends(get_current_active_user)
 ):
-    data = await variants.update(id, obj_in, "sample_id")
+    data = await variants.update(id, obj_in)
     if not data:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
