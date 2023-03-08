@@ -1,13 +1,78 @@
-import React from 'react'
-import { Table, Tag } from 'antd'
+import React, { useState } from 'react'
+import { Button, Modal, notification, Popconfirm, Table, Tag } from 'antd'
+import { PageHeader } from '@ant-design/pro-layout'
 import { formatDate, sortDate } from '../helpers'
 import { CheckCircleTwoTone } from '@ant-design/icons'
 import { Link, useLocation } from 'react-router-dom'
+import { deleteSample, getPhylogeny } from 'services/api'
 
-export const SamplesTable = ({ samples }) => {
+export const SamplesTable = ({ token, samples, refreshSamples, isAdmin, title, subTitle }) => {
+  const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([])
+  const [samplesIds, setSamplesIds] = useState<string>('')
+  const [sampleList, setSampleList] = useState<string>('')
+  const [copiedText, setCopiedText] = useState<string>('')
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const location = useLocation()
   const nextclade = 'nextclade'
   const pangolin = 'pangolin'
+  const group = 'samples'
+  const hasSelected = selectedRowKeys.length > 0
+
+  const rowSelection = {
+    onChange: (selectedRowKeys) => {
+      setSelectedRowKeys(selectedRowKeys)
+      const selectedSamplesIds = selectedRowKeys.map((item) => `&sample_ids=${item}`).join('')
+      const selectedSampleList = selectedRowKeys.map((item) => `&sample_list=${item}`).join('')
+      setSamplesIds(selectedSamplesIds)
+      setSampleList(selectedSampleList)
+    },
+    selectedRowKeys,
+  }
+
+  const confirmDelete = () => {
+    deleteSample(token, samplesIds).then(() => {
+      notification['success']({
+        message:
+          selectedRowKeys.length > 1
+            ? `Samples (${selectedRowKeys}) have been successfully deleted.`
+            : `Sample (${selectedRowKeys}) has been successfully deleted.`,
+      })
+      refreshSamples()
+    })
+  }
+
+  const showModal = () => {
+    setIsModalOpen(true)
+  }
+
+  const handleCancel = () => {
+    setIsModalOpen(false)
+  }
+
+  const handleOk = () => {
+    navigator.clipboard.writeText(copiedText)
+    setIsModalOpen(false)
+    window.open('https://34.125.84.98/grapetree/')
+    setSelectedRowKeys([])
+  }
+
+  const fetchPhylogenyData = async () => {
+    if (selectedRowKeys.length > 2) {
+      getPhylogeny(token, group, sampleList).then((response) => {
+        setCopiedText(JSON.stringify(response))
+        if (response != '') {
+          showModal()
+          navigator.clipboard.writeText(JSON.stringify(response))
+        }
+      })
+    } else {
+      notification['info']({
+        message:
+          'To obtain Phylogeny data, you must select a minimum of three samples from the list provided below.',
+        duration: 8,
+      })
+    }
+  }
 
   const columns = [
     {
@@ -93,13 +158,51 @@ export const SamplesTable = ({ samples }) => {
       key: 'selection_criterion',
     },
   ].filter((column) => !column.hidden)
+
   return (
-    <Table
-      pagination={false}
-      dataSource={samples}
-      columns={columns}
-      rowKey={'sample_id'}
-      loading={!samples}
-    />
+    <>
+      <PageHeader
+        onBack={title !== 'Samples' ? () => history.back() : undefined}
+        title={title}
+        subTitle={subTitle}
+        extra={[
+          <Button key="1" onClick={fetchPhylogenyData} type="primary">
+            Fetch Phylogeny Data
+          </Button>,
+          isAdmin && (
+            <Popconfirm
+              title="Are you sure you want to delete?"
+              disabled={!hasSelected}
+              onConfirm={confirmDelete}
+            >
+              <Button disabled={!hasSelected} type="primary">
+                Delete
+              </Button>
+            </Popconfirm>
+          ),
+        ]}
+      >
+        <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+          <p>
+            The Phylogeny data has been successfully copied. Please click &apos;OK&apos; to go to
+            the Grapetree site, then click on the &apos;Load files&apos; button and paste the data
+            into the designated rectangle. Finally, click on the &apos;Confirm&apos; button to
+            proceed.
+          </p>
+        </Modal>
+        <Table
+          pagination={false}
+          dataSource={samples}
+          columns={columns}
+          rowKey={'sample_id'}
+          loading={!samples}
+          bordered
+          rowSelection={{
+            ...rowSelection,
+          }}
+          style={{ marginTop: '30px' }}
+        />
+      </PageHeader>
+    </>
   )
 }

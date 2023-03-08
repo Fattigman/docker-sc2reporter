@@ -1,10 +1,12 @@
 
 from typing import  Optional
-from fastapi import APIRouter, Depends, Query, Header, Body
+from fastapi import Depends, Query, Header, Body
+from fastapi import APIRouter
+
 from fastapi.security import OAuth2PasswordRequestForm
 
 from authentication import *
-from crud.users import get_user, create_user, get_users, del_user
+from crud import get_user, create_user, get_users, del_user
 
 from models import User, Basic_User
 
@@ -36,7 +38,7 @@ async def read_own_items(
     ):
     return [{"item_id": "Foo", "owner": current_user['username']}]
 
-@router.post("/add/", response_model=User)
+@router.post("/add/", response_model=User, status_code=201)
 async def post_user(
         user: User,
         current_user: User = Depends(get_current_active_user)

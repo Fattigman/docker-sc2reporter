@@ -7,10 +7,12 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - mongo_seed
+      - mongodb
     restart: "unless-stopped"
     links: 
       - mongodb
+    environment:
+      - ROOT_PATH=/api
     env_file:
       - backend/docker.env
   
@@ -21,13 +23,19 @@ services:
     restart: unless-stopped
     ports: 
      - "27017:27017"
+     
 
-  mongo_seed:
-    build: ./mongo-seed/.
-    command:
-      - /mongo-seed/import.sh
-    links: 
-      - mongodb
+      
+  mongo-express:
+    image: mongo-express:0.54.0
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+    environment:
+    - ME_CONFIG_MONGODB_SERVER=mongodb
+    - ME_CONFIG_MONGODB_PORT=27017
+    - ME_CONFIG_SITE_BASEURL=/mongo-express
     depends_on:
       - mongodb
 
@@ -38,6 +46,15 @@ services:
     ports:
       - '3000:3000'
     environment:
-      - 'REACT_APP_BACKEND_URL=http://0.0.0.0:8000'
+      - REACT_APP_BACKEND_URL=http://0.0.0.0:8000
+      - REACT_APP_PREFIX_URL=/
+    depends_on:
+      - fastapi
+  grapetree:
+    build: ./grapetree/.
+    container_name: sc2reporter-grapetree
+    restart: unless-stopped
+    ports:
+      - '4000:4000'
     depends_on:
       - fastapi

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { Card, Descriptions, PageHeader, Result, Tag } from 'antd'
+import { Card, Descriptions, Result, Tag } from 'antd'
+import { PageHeader } from '@ant-design/pro-layout'
 import { CheckCircleTwoTone } from '@ant-design/icons'
 import { formatDate } from '../helpers'
 import { getSample } from '../services/api'

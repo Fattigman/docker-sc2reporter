@@ -3,19 +3,20 @@ from db import *
 from authentication import *
 from models import *
 
-from api.config import * 
+from api.config import settings
 
-from api.endpoints import samples, users, login, variants, dashboard
+from api.endpoints import samples, users, login, variants, dashboard, phyllogeny, consensus, depth
 
 from fastapi import Depends, FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
 
 
-
 app = FastAPI(
-    title='SarsCov 2 API', 
-    description='API for SarsCov 2 visualisation tool', 
-    version='development')
+    title=settings.PROJECT_NAME,
+    description=settings.DESCRIPTION,
+    version='development',
+    root_path=settings.ROOT_PATH,
+    )
 
 app.add_middleware(
     CORSMiddleware,
@@ -27,12 +28,26 @@ app.add_middleware(
 
 @app.get('/')
 def root():
-    return {'message': 'Hello and welcome to the SarsCov 2 API'}
+    return {'message': 'Hello and welcome to the SarsCov 2 API', 'root_path': app.root_path}
 
 app.include_router(
     samples.router,
     prefix="/samples",
     tags=["Samples"],
+    responses={status.HTTP_404_NOT_FOUND: {"description": "Not found"}},
+)
+
+app.include_router(
+    consensus.router,
+    prefix="/consensus",
+    tags=["Consensus"],
+    responses={status.HTTP_404_NOT_FOUND: {"description": "Not found"}},
+)
+
+app.include_router(
+    depth.router,
+    prefix="/depth",
+    tags=["Depth"],
     responses={status.HTTP_404_NOT_FOUND: {"description": "Not found"}},
 )
 
@@ -64,11 +79,9 @@ app.include_router(
     responses={status.HTTP_404_NOT_FOUND: {"description": "Not found"}},
 )
 
-@app.get("/depth")
-async def depth(current_user: User = Depends(get_current_active_user)):
-    return await get_depth()
-
-
-@app.get("/consensus")
-async def consensus(current_user: User = Depends(get_current_active_user)):
-    return await get_consensus()
+app.include_router(
+    phyllogeny.router,
+    prefix="/phyllogeny",
+    tags=["Phyllogeny"],
+    responses={status.HTTP_404_NOT_FOUND: {"description": "Not found"}},
+)
