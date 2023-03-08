@@ -97,9 +97,7 @@ export const getVariant = async (token, variant): Promise<any> => {
 }
 
 export const getDashboard = async (token, selectionCriterion): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/dashboard?${selectionCriterion}`
-  /* export const getDashboard = async (token): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/dashboard/` */
+  const endPoint = `${REACT_APP_BACKEND_URL}/dashboard/?${selectionCriterion}`
   return new Promise((resolve) => {
     axios
       .get(endPoint, {
