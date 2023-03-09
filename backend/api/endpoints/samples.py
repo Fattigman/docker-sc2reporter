@@ -52,22 +52,22 @@ async def single_sample(
 # Delete multiple samples and all associated data
 @router.delete("/", response_model=list[Sample])
 async def delete_samples(
-    sample_ids: list[str] | None = Query(default=None),
+    sample_id: list[str] | None = Query(default=None),
     current_user: User = Depends(get_current_active_user)
     ):
     if current_user['scope'] == 'user':
         raise HTTPException(status_code=403, detail="Not allowed")
-    samples_to_delete = await samples.get_multiple(sample_ids, id_field='sample_id')
-    await samples.delete_samples(sample_ids)
+    samples_to_delete = await samples.get_multiple(sample_id, id_field='sample_id')
+    await samples.delete_samples(sample_id)
     return samples_to_delete
 
 # Gets multiple specified samples
 @router.get("/multiple/", response_model=list[Sample])
 async def multiple_samples(
-    sample_ids:list[str] | None = Query(default=None),
+    sample_id:list[str] | None = Query(default=None),
     current_user: User = Depends(get_current_active_user)
     ):
-    return await samples.get_multiple(sample_ids, id_field='sample_id')
+    return await samples.get_multiple(sample_id, id_field='sample_id')
 
 # Gets all samples with matching specified pango type
 @router.get("/pango/", response_model=GroupedSamples)

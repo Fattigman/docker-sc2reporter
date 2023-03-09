@@ -7,8 +7,9 @@ from api.config import settings
 
 from api.endpoints import samples, users, login, variants, dashboard, phylogeny, consensus, depth, significant_variants
 
-from fastapi import Depends, FastAPI, status, JSONResponse, HTTPException
+from fastapi import Depends, FastAPI, status, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
 
 app = FastAPI(
