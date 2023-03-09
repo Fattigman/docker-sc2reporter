@@ -3,7 +3,7 @@ import { getDashboard } from 'services/api'
 import { Area } from '@ant-design/plots'
 import { Card, Descriptions, Checkbox, Space } from 'antd'
 import { Loading } from 'components/Loading'
-import { decodeHTMLEntities } from 'helpers'
+import { decodeHTMLEntities, urlEncode } from 'helpers'
 
 const CheckboxGroup = Checkbox.Group
 
@@ -25,7 +25,7 @@ export const DashboardPage = ({ token }) => {
 
   const onChange = (list) => {
     list.map((item) => {
-      filters += 'selection_criterion=' + item + '&'
+      filters += 'selection_criterion=' + urlEncode(item) + '&'
     })
 
     getDashboard(token, filters).then((response) => {
@@ -39,6 +39,11 @@ export const DashboardPage = ({ token }) => {
     yField: 'pango_count',
     seriesField: 'pangolin',
   }
+
+  const options = filtersList.map((label, index) => ({
+    label,
+    value: selectionCriterions[index],
+  }))
 
   return !data ? (
     <Loading />
@@ -56,7 +61,7 @@ export const DashboardPage = ({ token }) => {
       <br />
       <Card title={'Most common pango types over time'}>
         <Space direction="vertical" size="large" style={{ display: 'flex' }}>
-          <CheckboxGroup options={filtersList} onChange={onChange} />
+          <CheckboxGroup options={options} onChange={onChange} />
           <Area {...config} />
         </Space>
       </Card>
