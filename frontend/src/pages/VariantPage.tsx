@@ -14,7 +14,7 @@ export const VariantPage = ({ token }) => {
   useEffect(() => {
     if (id)
       getVariant(token, id).then((response) => {
-        setVariant(response)
+        setVariant(response[0].csq)
         setIsLoading(false)
       })
   }, [id])
@@ -25,13 +25,14 @@ export const VariantPage = ({ token }) => {
     <Card>
       <PageHeader onBack={() => history.back()} title={title}>
         <Descriptions bordered size="small" style={{ marginBottom: '40px' }}>
-          <Descriptions.Item label="Genomics change">{variant}</Descriptions.Item>
-          <Descriptions.Item label="Gene">{variant}</Descriptions.Item>
-          <Descriptions.Item label="cDNA change">{variant}</Descriptions.Item>
-          <Descriptions.Item label="Protein change">{variant}</Descriptions.Item>
-          <Descriptions.Item label="Codon change">{variant}</Descriptions.Item>
-          <Descriptions.Item label="Consequence">{variant}</Descriptions.Item>
-          <Descriptions.Item label="External link: CoVariants">{variant}</Descriptions.Item>
+          <Descriptions.Item label="Gene">{variant.Gene}</Descriptions.Item>
+          <Descriptions.Item label="cDNA change">{variant.HGVSc}</Descriptions.Item>
+          <Descriptions.Item label="Protein change">{variant.MUTATION}</Descriptions.Item>
+          <Descriptions.Item label="Codon change">{variant.Codons}</Descriptions.Item>
+          <Descriptions.Item label="Consequence">{variant.Consequence}</Descriptions.Item>
+          <Descriptions.Item label="External link: CoVariants">
+            {variant.MUTATION}
+          </Descriptions.Item>
         </Descriptions>
       </PageHeader>
     </Card>
