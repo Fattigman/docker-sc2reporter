@@ -8,12 +8,11 @@ import { decodeHTMLEntities, urlEncode } from 'helpers'
 const CheckboxGroup = Checkbox.Group
 
 export const DashboardPage = ({ token }) => {
-  const [data, setData] = useState<any>()
-  const [selectionCriterions, setSelectionCriterions] = useState([])
+  const [data, setData] = useState<any[]>()
+  const [selectionCriterions, setSelectionCriterions] = useState<any[]>([])
   const [generalStats, setGeneralStats] = useState<any>()
-  let filters = ''
-
   const filtersList = decodeHTMLEntities(selectionCriterions)
+  let filters = ''
 
   useEffect(() => {
     getDashboard(token, filters).then((response) => {
@@ -34,7 +33,7 @@ export const DashboardPage = ({ token }) => {
   }
 
   const config = {
-    data,
+    data: data as Record<string, any>[],
     xField: 'date',
     yField: 'pango_count',
     seriesField: 'pangolin',
