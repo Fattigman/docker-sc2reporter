@@ -8,8 +8,7 @@ import { deleteSample, getPhylogeny } from 'services/api'
 
 export const SamplesTable = ({ token, samples, refreshSamples, isAdmin, title, subTitle }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([])
-  const [samplesIds, setSamplesIds] = useState<string>('')
-  const [sampleList, setSampleList] = useState<string>('')
+  const [samplesId, setSamplesId] = useState<string>('')
   const [copiedText, setCopiedText] = useState<string>('')
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const location = useLocation()
@@ -22,15 +21,13 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin, title, s
     onChange: (selectedRowKeys) => {
       setSelectedRowKeys(selectedRowKeys)
       const selectedSamplesIds = selectedRowKeys.map((item) => `&sample_ids=${item}`).join('')
-      const selectedSampleList = selectedRowKeys.map((item) => `&sample_list=${item}`).join('')
-      setSamplesIds(selectedSamplesIds)
-      setSampleList(selectedSampleList)
+      setSamplesId(selectedSamplesIds)
     },
     selectedRowKeys,
   }
 
   const confirmDelete = () => {
-    deleteSample(token, samplesIds).then(() => {
+    deleteSample(token, samplesId).then(() => {
       notification['success']({
         message:
           selectedRowKeys.length > 1
@@ -58,7 +55,7 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin, title, s
 
   const fetchPhylogenyData = async () => {
     if (selectedRowKeys.length > 2) {
-      getPhylogeny(token, group, sampleList).then((response) => {
+      getPhylogeny(token, group, samplesId).then((response) => {
         setCopiedText(JSON.stringify(response))
         if (response != '') {
           showModal()
