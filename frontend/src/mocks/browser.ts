@@ -1,9 +1,10 @@
-/* eslint-disable @typescript-eslint/no-inferrable-types */
+/* eslint-disable @typescript-eslint/ban-types */
 import { setupWorker, rest } from 'msw'
 
 export const { REACT_APP_BACKEND_URL } = process.env
 
-const endpoints = {
+const getEndpoints = {
+  doNotInterrupt: 'doNotInterrupt',
   samples: 'samples/',
   samplesNextclade: `samples/nextclade/?nextclade=testNextclade`,
   samplesPango: `samples/pango/?pangolin=testPangolin`,
@@ -16,9 +17,43 @@ const endpoints = {
   phyllogeny: `phyllogeny/?group=group&samples`,
 }
 
+const postEndpoints = {
+  doNotInterrupt: 'doNotInterrupt',
+  addUser: 'users/add/',
+  getToken: 'login/token',
+}
+
+const deleteEndpoints = {
+  doNotInterrupt: 'doNotInterrupt',
+  deleteUser: 'users/delete/?user=username',
+  deleteSample: 'samples/?sample_ids',
+}
+
 const worker = setupWorker(
-  rest.get(`${REACT_APP_BACKEND_URL}/${endpoints.phyllogeny}`, (req, res, ctx) => {
-    const statusCode: number = 401
+  rest.get(`${REACT_APP_BACKEND_URL}/${getEndpoints.doNotInterrupt}`, (req, res, ctx) => {
+    const statusCode: Number = 500
+    if (statusCode === 401) {
+      return res(ctx.status(401), ctx.json({ message: 'Unauthorized' }))
+    } else if (statusCode === 404) {
+      return res(ctx.status(404), ctx.json({ message: 'Not found' }))
+    } else {
+      return res(ctx.status(500), ctx.json({ message: 'Internal server error' }))
+    }
+  }),
+
+  rest.post(`${REACT_APP_BACKEND_URL}/${postEndpoints.doNotInterrupt}`, (req, res, ctx) => {
+    const statusCode: Number = 500
+    if (statusCode === 401) {
+      return res(ctx.status(401), ctx.json({ message: 'Unauthorized' }))
+    } else if (statusCode === 404) {
+      return res(ctx.status(404), ctx.json({ message: 'Not found' }))
+    } else {
+      return res(ctx.status(500), ctx.json({ message: 'Internal server error' }))
+    }
+  }),
+
+  rest.delete(`${REACT_APP_BACKEND_URL}/${deleteEndpoints.doNotInterrupt}`, (req, res, ctx) => {
+    const statusCode: Number = 500
     if (statusCode === 401) {
       return res(ctx.status(401), ctx.json({ message: 'Unauthorized' }))
     } else if (statusCode === 404) {
