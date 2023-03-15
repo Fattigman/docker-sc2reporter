@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-types */
 import { setupWorker, rest } from 'msw'
 
 export const { REACT_APP_BACKEND_URL } = process.env
@@ -31,7 +30,7 @@ const deleteEndpoints = {
 
 const worker = setupWorker(
   rest.get(`${REACT_APP_BACKEND_URL}/${getEndpoints.doNotInterrupt}`, (req, res, ctx) => {
-    const statusCode: Number = 500
+    const statusCode = 500 as number
     if (statusCode === 401) {
       return res(ctx.status(401), ctx.json({ message: 'Unauthorized' }))
     } else if (statusCode === 404) {
@@ -42,7 +41,7 @@ const worker = setupWorker(
   }),
 
   rest.post(`${REACT_APP_BACKEND_URL}/${postEndpoints.doNotInterrupt}`, (req, res, ctx) => {
-    const statusCode: Number = 500
+    const statusCode = 500 as number
     if (statusCode === 401) {
       return res(ctx.status(401), ctx.json({ message: 'Unauthorized' }))
     } else if (statusCode === 404) {
@@ -53,7 +52,7 @@ const worker = setupWorker(
   }),
 
   rest.delete(`${REACT_APP_BACKEND_URL}/${deleteEndpoints.doNotInterrupt}`, (req, res, ctx) => {
-    const statusCode: Number = 500
+    const statusCode = 500 as number
     if (statusCode === 401) {
       return res(ctx.status(401), ctx.json({ message: 'Unauthorized' }))
     } else if (statusCode === 404) {
