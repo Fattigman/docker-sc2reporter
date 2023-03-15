@@ -10,6 +10,10 @@ import { Button, Result } from 'antd'
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 const { REACT_APP_PREFIX_URL } = process.env
 
+if (process.env.REACT_APP_MOCK_API) {
+  require('./mocks/browser')
+}
+
 root.render(
   <React.StrictMode>
     <BrowserRouter basename={REACT_APP_PREFIX_URL}>
