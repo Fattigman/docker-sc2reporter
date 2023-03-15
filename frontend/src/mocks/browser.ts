@@ -1,6 +1,6 @@
 import { setupWorker, rest } from 'msw'
 
-export const { REACT_APP_BACKEND_URL } = process.env
+const { REACT_APP_BACKEND_URL } = process.env
 
 const getEndpoints = {
   doNotInterrupt: 'doNotInterrupt',
