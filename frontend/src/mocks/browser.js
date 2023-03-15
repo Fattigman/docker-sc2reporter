@@ -7,7 +7,7 @@ const worker = setupWorker(
         {
           username: 'mock',
           email: 'mock@email.se',
-          fullname: 'Mock Mockson',
+          fullname: 'Mock Mock',
           disabled: false,
           scope: 'admin',
         },
