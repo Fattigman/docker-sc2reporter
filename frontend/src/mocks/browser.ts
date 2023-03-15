@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 import { setupWorker, rest } from 'msw'
 
 export const { REACT_APP_BACKEND_URL } = process.env
@@ -17,7 +18,7 @@ const endpoints = {
 
 const worker = setupWorker(
   rest.get(`${REACT_APP_BACKEND_URL}/${endpoints.phyllogeny}`, (req, res, ctx) => {
-    const statusCode = 500
+    const statusCode: number = 401
     if (statusCode === 401) {
       return res(ctx.status(401), ctx.json({ message: 'Unauthorized' }))
     } else if (statusCode === 404) {
