@@ -22,7 +22,6 @@ const { Header, Content } = Layout
 export const App = () => {
   const [user, setUser] = useState<any>()
   const [isAdmin, setIsAdmin] = useState<boolean>(false)
-  const [samples, setSamples] = useState<any>()
   const [token, setToken] = useState<any>(null)
   const tokenCookieName = 'sc2reporterToken'
   const findCookiePattern = new RegExp(`(?<=${tokenCookieName}=)(.*)(?=;)`, 'g')
@@ -66,7 +65,6 @@ export const App = () => {
     getToken(formInput).then((response) => {
       setToken(response.access_token)
       getUserInfo(response.access_token).then((response) => setUser(response))
-      getSamples(response.access_token).then((samples) => setSamples(samples))
       document.cookie = `${tokenCookieName}=${response.access_token}; Max-Age=${
         cookieAge * 60 * 60
       };`
@@ -138,17 +136,7 @@ export const App = () => {
             />
             <Route
               path="/samples/:id"
-              element={
-                token ? (
-                  samples ? (
-                    <SamplePage token={token} />
-                  ) : (
-                    <LoadingPage />
-                  )
-                ) : (
-                  <LoginPage login={login} />
-                )
-              }
+              element={token ? <SamplePage token={token} /> : <LoginPage login={login} />}
             />
             <Route
               path="/users"
