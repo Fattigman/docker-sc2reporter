@@ -9,7 +9,7 @@ const getEndpoints = {
   samplesPango: `samples/pango/?pangolin=testPangolin`,
   variants: `variants/?variant=testVariant`,
   dashboard: `dashboard/?testSelectionCriterion`,
-  samplesById: `samples/sc2-1001`,
+  sample: `samples/sc2-1001`,
   users: 'users/',
   getUserInfo: 'users/me/',
   usersDelete: `users/delete/?user=testUsername`,
@@ -29,12 +29,14 @@ const deleteEndpoints = {
 }
 
 const worker = setupWorker(
-  rest.get(`${REACT_APP_BACKEND_URL}/${getEndpoints.users}`, (req, res, ctx) => {
-    const statusCode = 500 as number
+  rest.get(`${REACT_APP_BACKEND_URL}/${getEndpoints.sample}`, (req, res, ctx) => {
+    const statusCode = 409 as number
     if (statusCode === 401) {
       return res(ctx.status(401), ctx.json({ message: 'Unauthorized' }))
     } else if (statusCode === 404) {
       return res(ctx.status(404), ctx.json({ message: 'Not found' }))
+    } else if (statusCode === 409) {
+      return res(ctx.status(409), ctx.json({ message: "Sample can't be found in database" }))
     } else {
       return res(ctx.status(500), ctx.json({ message: 'Internal server error' }))
     }
@@ -46,6 +48,8 @@ const worker = setupWorker(
       return res(ctx.status(401), ctx.json({ message: 'Unauthorized' }))
     } else if (statusCode === 404) {
       return res(ctx.status(404), ctx.json({ message: 'Not found' }))
+    } else if (statusCode === 409) {
+      return res(ctx.status(409), ctx.json({ message: "Sample can't be found in database" }))
     } else {
       return res(ctx.status(500), ctx.json({ message: 'Internal server error' }))
     }
@@ -57,6 +61,8 @@ const worker = setupWorker(
       return res(ctx.status(401), ctx.json({ message: 'Unauthorized' }))
     } else if (statusCode === 404) {
       return res(ctx.status(404), ctx.json({ message: 'Not found' }))
+    } else if (statusCode === 409) {
+      return res(ctx.status(409), ctx.json({ message: "Sample can't be found in database" }))
     } else {
       return res(ctx.status(500), ctx.json({ message: 'Internal server error' }))
     }
