@@ -163,11 +163,11 @@ export const getUsers = async (token): Promise<any> => {
       })
       .then((response) => resolve(response.data))
       .catch((error) => {
-        handleBackendError(error)
         notification.error({
           message: 'Could not load user list',
           description: error.response?.data?.detail,
         })
+        handleBackendError(error)
       })
   })
 }

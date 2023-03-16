@@ -30,5 +30,7 @@ export function urlEncode(str) {
 
 export const handleBackendError = (error) => {
   console.log(error)
-  window.location.href = `/error/${error?.response?.status}`
+  if (error?.response?.status === 404) {
+    window.location.href = `/error`
+  }
 }

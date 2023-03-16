@@ -185,10 +185,7 @@ export const App = () => {
                 )
               }
             />
-            <Route
-              path="/error/:id"
-              element={token ? <ErrorPage /> : <LoginPage login={login} />}
-            />
+            <Route path="/error" element={token ? <ErrorPage /> : <LoginPage login={login} />} />
           </Routes>
         </Content>
         <footer data-testid="footer" className={styles.footer}>
