@@ -27,3 +27,8 @@ export function urlEncode(str) {
   encodedStr = encodedStr.replace(/%20/g, '%20') // replace spaces with %20
   return encodedStr
 }
+
+export const handleBackendError = (error) => {
+  console.log(error)
+  window.location.href = `/error/${error?.response?.status}`
+}

@@ -16,6 +16,7 @@ import jwt_decode from 'jwt-decode'
 import moment from 'moment'
 import { DashboardPage } from './pages/DashboardPage'
 import { scopes } from './services/costants'
+import { ErrorPage } from 'pages/ErrorPage'
 
 const { Header, Content } = Layout
 export const App = () => {
@@ -53,7 +54,7 @@ export const App = () => {
     if (cookieToken?.length === 1) {
       setToken(cookieToken[0])
       getUserInfo(cookieToken[0]).then((response) => setUser(response))
-      getSamples(cookieToken[0]).then((samples) => setSamples(samples))
+      /* getSamples(cookieToken[0]).then((samples) => setSamples(samples)) */
     }
   }, [])
 
@@ -183,6 +184,10 @@ export const App = () => {
                   <LoginPage login={login} />
                 )
               }
+            />
+            <Route
+              path="/error/:id"
+              element={token ? <ErrorPage /> : <LoginPage login={login} />}
             />
           </Routes>
         </Content>

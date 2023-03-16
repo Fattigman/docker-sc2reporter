@@ -1,5 +1,6 @@
 import { default as axios } from 'axios'
 import { notification } from 'antd'
+import { handleBackendError } from 'helpers'
 
 export const { REACT_APP_BACKEND_URL } = process.env
 
@@ -15,7 +16,7 @@ export const getToken = async (formInput): Promise<any> => {
       })
       .then((response) => resolve(response.data))
       .catch((error) => {
-        console.log(error)
+        handleBackendError(error)
         notification.error({
           message: 'Something went wrong',
           description: 'Try again',
@@ -33,11 +34,12 @@ export const getSamples = async (token): Promise<any> => {
       })
       .then((response) => resolve(response.data))
       .catch((error) => {
-        console.log(error)
+        handleBackendError(error)
         notification.error({
           message: 'Could not load samples',
           description: 'Something went wrong',
         })
+        throw error
       })
   })
 }
@@ -51,7 +53,7 @@ export const getNextclade = async (token, nextclade): Promise<any> => {
       })
       .then((response) => resolve(response.data))
       .catch((error) => {
-        console.log(error)
+        handleBackendError(error)
         notification.error({
           message: 'Could not load Nextclade info',
           description: 'Something went wrong',
@@ -69,7 +71,7 @@ export const getPangolin = async (token, pangolin): Promise<any> => {
       })
       .then((response) => resolve(response.data))
       .catch((error) => {
-        console.log(error)
+        handleBackendError(error)
         notification.error({
           message: 'Could not load pangolin info',
           description: 'Something went wrong',
@@ -87,7 +89,7 @@ export const getVariant = async (token, variant): Promise<any> => {
       })
       .then((response) => resolve(response.data))
       .catch((error) => {
-        console.log(error)
+        handleBackendError(error)
         notification.error({
           message: 'Could not load variant info',
           description: 'Something went wrong',
@@ -105,7 +107,7 @@ export const getDashboard = async (token, selectionCriterion): Promise<any> => {
       })
       .then((response) => resolve(response.data))
       .catch((error) => {
-        console.log(error)
+        handleBackendError(error)
         notification.error({
           message: 'Could not load dashboard info',
           description: 'Something went wrong',
@@ -123,7 +125,7 @@ export const getSample = async (token, id): Promise<any> => {
       })
       .then((response) => resolve(response.data))
       .catch((error) => {
-        console.log(error)
+        handleBackendError(error)
         notification.error({
           message: 'Could not load sample info',
           description: 'Something went wrong',
@@ -143,7 +145,7 @@ export const deleteSample = async (token, sample_ids): Promise<any> => {
       })
       .then((response) => resolve(response.data))
       .catch((error) => {
-        console.log(error)
+        handleBackendError(error)
         notification.error({
           message: 'Could not delete sample',
           description: 'Something went wrong',
@@ -161,7 +163,7 @@ export const getUsers = async (token): Promise<any> => {
       })
       .then((response) => resolve(response.data))
       .catch((error) => {
-        console.log(error)
+        handleBackendError(error)
         notification.error({
           message: 'Could not load user list',
           description: error.response?.data?.detail,
@@ -179,7 +181,7 @@ export const getUserInfo = async (token): Promise<any> => {
       })
       .then((response) => resolve(response.data))
       .catch((error) => {
-        console.log(error)
+        handleBackendError(error)
         notification.error({
           message: 'Could not load user info and scope',
           description: 'Something went wrong',
@@ -199,7 +201,7 @@ export const addUser = async (token, formInput): Promise<any> => {
       })
       .then((response) => resolve(response.data))
       .catch((error) => {
-        console.log(error)
+        handleBackendError(error)
         notification.error({
           message: 'Could not add user',
           description: 'Something went wrong',
@@ -219,7 +221,7 @@ export const deleteUser = async (token, username): Promise<any> => {
       })
       .then((response) => resolve(response.data))
       .catch((error) => {
-        console.log(error)
+        handleBackendError(error)
         notification.error({
           message: 'Could not delete user',
           description: 'Something went wrong',
@@ -237,7 +239,7 @@ export const getPhylogeny = async (token, group, samples): Promise<any> => {
       })
       .then((response) => resolve(response.data))
       .catch((error) => {
-        console.log(error)
+        handleBackendError(error)
         notification.error({
           message: 'Could not load phyllogeny info',
           description: 'Something went wrong',
