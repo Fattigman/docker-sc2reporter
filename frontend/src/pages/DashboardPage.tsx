@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { getDashboard } from 'services/api'
 import { Area } from '@ant-design/plots'
-import { Card, Descriptions, Checkbox, Space } from 'antd'
+import { Card, Descriptions, Checkbox, Space, Result } from 'antd'
 import { decodeHTMLEntities, urlEncode } from 'helpers'
 import { LoadingPage } from './LoadingPage'
 
@@ -52,7 +52,7 @@ export const DashboardPage = ({ token }) => {
 
   return isLoading ? (
     <LoadingPage />
-  ) : (
+  ) : data ? (
     <Card>
       <Descriptions bordered size="small" title={'General stats'}>
         <Descriptions.Item label="Passed qc samples">
@@ -71,5 +71,7 @@ export const DashboardPage = ({ token }) => {
         </Space>
       </Card>
     </Card>
+  ) : (
+    <Result status="error" subTitle="Sorry, something went wrong." />
   )
 }

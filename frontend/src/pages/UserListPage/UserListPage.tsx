@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { notification, Popconfirm, Table, Tag, Tooltip } from 'antd'
+import { notification, Popconfirm, Result, Table, Tag, Tooltip } from 'antd'
 import { DeleteTwoTone } from '@ant-design/icons'
 import { deleteUser, getUsers } from '../../services/api'
 import { NewUserModal } from '../../components/NewUserModal'
@@ -93,7 +93,7 @@ export const UserListPage = ({ token }) => {
         <LoadingPage />
       ) : (
         <>
-          {users && (
+          {users ? (
             <Table
               dataSource={users}
               columns={columns}
@@ -106,6 +106,8 @@ export const UserListPage = ({ token }) => {
                 </div>
               )}
             />
+          ) : (
+            <Result status="error" subTitle="Sorry, something went wrong." />
           )}
         </>
       )}
