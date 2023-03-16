@@ -29,9 +29,14 @@ export const UserListPage = ({ token }) => {
       notification['success']({
         message: `User ${username} deleted`,
       })
-      getUsers(token).then((users) => {
-        setUsers(users)
-      })
+      getUsers(token)
+        .then((users) => {
+          setUsers(users)
+          setIsLoading(false)
+        })
+        .catch(() => {
+          setIsLoading(false)
+        })
     })
   }
 

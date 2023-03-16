@@ -13,10 +13,12 @@ export const VariantPage = ({ token, isAdmin }) => {
 
   useEffect(() => {
     if (id)
-      getVariant(token, id).then((response) => {
-        setSamples(response)
-        setIsLoading(false)
-      })
+      getVariant(token, id)
+        .then((response) => {
+          setSamples(response)
+          setIsLoading(false)
+        })
+        .catch(() => setIsLoading(false))
   }, [id, refresh])
 
   const refreshSamples = () => {

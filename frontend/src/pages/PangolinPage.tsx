@@ -14,10 +14,12 @@ export const PangolinPage = ({ token, isAdmin }) => {
 
   useEffect(() => {
     if (id)
-      getPangolin(token, id).then((response) => {
-        setSamples(response.samples)
-        setIsLoading(false)
-      })
+      getPangolin(token, id)
+        .then((response) => {
+          setSamples(response.samples)
+          setIsLoading(false)
+        })
+        .catch(() => setIsLoading(false))
   }, [id, refresh])
 
   const refreshSamples = () => {

@@ -9,8 +9,12 @@ export const SamplesPage = ({ token, isAdmin }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
   useEffect(() => {
-    getSamples(token).then((samples) => setSamples(samples))
-    setIsLoading(false)
+    getSamples(token)
+      .then((samples) => {
+        setSamples(samples)
+        setIsLoading(false)
+      })
+      .catch(() => setIsLoading(false))
   }, [refresh])
 
   const refreshSamples = () => {

@@ -14,10 +14,12 @@ export const SamplePage = ({ token }) => {
 
   useEffect(() => {
     setIsLoading(true)
-    getSample(token, id).then((response) => {
-      if (response?.[0]) setSample(response[0])
-      setIsLoading(false)
-    })
+    getSample(token, id)
+      .then((response) => {
+        if (response?.[0]) setSample(response[0])
+        setIsLoading(false)
+      })
+      .catch(() => setIsLoading(false))
   }, [id])
 
   return isLoading ? (

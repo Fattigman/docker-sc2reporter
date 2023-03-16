@@ -16,12 +16,14 @@ export const DashboardPage = ({ token }) => {
   let filters = ''
 
   useEffect(() => {
-    getDashboard(token, filters).then((response) => {
-      setData(response.dashboard_data)
-      setGeneralStats(response.general_stats)
-      setSelectionCriterions(response.selection_criterions)
-      setIsLoading(false)
-    })
+    getDashboard(token, filters)
+      .then((response) => {
+        setData(response.dashboard_data)
+        setGeneralStats(response.general_stats)
+        setSelectionCriterions(response.selection_criterions)
+        setIsLoading(false)
+      })
+      .catch(() => setIsLoading(false))
   }, [])
 
   const onChange = (list) => {
@@ -29,9 +31,11 @@ export const DashboardPage = ({ token }) => {
       filters += 'selection_criterion=' + urlEncode(item) + '&'
     })
 
-    getDashboard(token, filters).then((response) => {
-      setData(response.dashboard_data)
-    })
+    getDashboard(token, filters)
+      .then((response) => {
+        setData(response.dashboard_data)
+      })
+      .catch(() => setIsLoading(false))
   }
 
   const config = {

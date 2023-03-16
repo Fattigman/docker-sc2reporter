@@ -13,10 +13,12 @@ export const NextcladePage = ({ token, isAdmin }) => {
 
   useEffect(() => {
     if (id)
-      getNextclade(token, id).then((response) => {
-        setSamples(response.samples)
-        setIsLoading(false)
-      })
+      getNextclade(token, id)
+        .then((response) => {
+          setSamples(response.samples)
+          setIsLoading(false)
+        })
+        .catch(() => setIsLoading(false))
   }, [id, refresh])
 
   const refreshSamples = () => {
