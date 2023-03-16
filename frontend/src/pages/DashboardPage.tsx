@@ -56,7 +56,7 @@ export const DashboardPage = ({ token }) => {
     label,
     value: selectionCriterions[index],
   }))
-  console.log(errorStatus)
+
   return isLoading ? (
     <LoadingPage />
   ) : data ? (
