@@ -54,7 +54,6 @@ export const App = () => {
     if (cookieToken?.length === 1) {
       setToken(cookieToken[0])
       getUserInfo(cookieToken[0]).then((response) => setUser(response))
-      /* getSamples(cookieToken[0]).then((samples) => setSamples(samples)) */
     }
   }, [])
 
