@@ -24,7 +24,7 @@ export const UserListPage = ({ token }) => {
       })
       .catch((error) => {
         setIsLoading(false)
-        setErrorStatus(error?.response?.status)
+        setErrorStatus(error?.response)
       })
   }
 
@@ -40,7 +40,7 @@ export const UserListPage = ({ token }) => {
         })
         .catch((error) => {
           setIsLoading(false)
-          setErrorStatus(error?.response?.status)
+          setErrorStatus(error?.response)
         })
     })
   }
@@ -112,7 +112,7 @@ export const UserListPage = ({ token }) => {
               )}
             />
           ) : (
-            <Result status="error" title={errorStatus} subTitle="Sorry, something went wrong." />
+            <Result status="error" title={errorStatus.status} subTitle={errorStatus.data.message} />
           )}
         </>
       )}

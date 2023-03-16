@@ -26,7 +26,7 @@ export const DashboardPage = ({ token }) => {
       })
       .catch((error) => {
         setIsLoading(false)
-        setErrorStatus(error?.response?.status)
+        setErrorStatus(error?.response)
       })
   }, [])
 
@@ -41,7 +41,7 @@ export const DashboardPage = ({ token }) => {
       })
       .catch((error) => {
         setIsLoading(false)
-        setErrorStatus(error?.response?.status)
+        setErrorStatus(error?.response)
       })
   }
 
@@ -56,7 +56,7 @@ export const DashboardPage = ({ token }) => {
     label,
     value: selectionCriterions[index],
   }))
-
+  console.log(errorStatus)
   return isLoading ? (
     <LoadingPage />
   ) : data ? (
@@ -79,6 +79,6 @@ export const DashboardPage = ({ token }) => {
       </Card>
     </Card>
   ) : (
-    <Result status="error" title={errorStatus} subTitle="Sorry, something went wrong." />
+    <Result status="error" title={errorStatus.status} subTitle={errorStatus.data.message} />
   )
 }
