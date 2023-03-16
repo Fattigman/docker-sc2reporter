@@ -9,6 +9,7 @@ import { UserStatusTag } from '../../components/UserStatusTag'
 
 export const UserListPage = ({ token }) => {
   const [users, setUsers] = useState<any[]>()
+  const [errorStatus, setErrorStatus] = useState<any>()
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
   useEffect(() => {
@@ -21,7 +22,10 @@ export const UserListPage = ({ token }) => {
         setUsers(response)
         setIsLoading(false)
       })
-      .catch(() => setIsLoading(false))
+      .catch((error) => {
+        setIsLoading(false)
+        setErrorStatus(error?.response?.status)
+      })
   }
 
   const confirmDeleteUser = (token: string, username: string) => {
@@ -34,8 +38,9 @@ export const UserListPage = ({ token }) => {
           setUsers(users)
           setIsLoading(false)
         })
-        .catch(() => {
+        .catch((error) => {
           setIsLoading(false)
+          setErrorStatus(error?.response?.status)
         })
     })
   }
@@ -107,7 +112,7 @@ export const UserListPage = ({ token }) => {
               )}
             />
           ) : (
-            <Result status="error" subTitle="Sorry, something went wrong." />
+            <Result status="error" title={errorStatus} subTitle="Sorry, something went wrong." />
           )}
         </>
       )}

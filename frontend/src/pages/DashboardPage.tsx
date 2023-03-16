@@ -11,6 +11,7 @@ export const DashboardPage = ({ token }) => {
   const [data, setData] = useState<any[]>()
   const [selectionCriterions, setSelectionCriterions] = useState<any[]>([])
   const [generalStats, setGeneralStats] = useState<any>()
+  const [errorStatus, setErrorStatus] = useState<any>()
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const filtersList = decodeHTMLEntities(selectionCriterions)
   let filters = ''
@@ -23,7 +24,10 @@ export const DashboardPage = ({ token }) => {
         setSelectionCriterions(response.selection_criterions)
         setIsLoading(false)
       })
-      .catch(() => setIsLoading(false))
+      .catch((error) => {
+        setIsLoading(false)
+        setErrorStatus(error?.response?.status)
+      })
   }, [])
 
   const onChange = (list) => {
@@ -35,7 +39,10 @@ export const DashboardPage = ({ token }) => {
       .then((response) => {
         setData(response.dashboard_data)
       })
-      .catch(() => setIsLoading(false))
+      .catch((error) => {
+        setIsLoading(false)
+        setErrorStatus(error?.response?.status)
+      })
   }
 
   const config = {
@@ -72,6 +79,6 @@ export const DashboardPage = ({ token }) => {
       </Card>
     </Card>
   ) : (
-    <Result status="error" subTitle="Sorry, something went wrong." />
+    <Result status="error" title={errorStatus} subTitle="Sorry, something went wrong." />
   )
 }

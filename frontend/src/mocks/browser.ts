@@ -29,8 +29,8 @@ const deleteEndpoints = {
 }
 
 const worker = setupWorker(
-  rest.get(`${REACT_APP_BACKEND_URL}/${getEndpoints.samplesNextclade}`, (req, res, ctx) => {
-    const statusCode = 401 as number
+  rest.get(`${REACT_APP_BACKEND_URL}/${getEndpoints.users}`, (req, res, ctx) => {
+    const statusCode = 500 as number
     if (statusCode === 401) {
       return res(ctx.status(401), ctx.json({ message: 'Unauthorized' }))
     } else if (statusCode === 404) {
