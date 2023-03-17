@@ -3,9 +3,8 @@ import styles from './App.module.css'
 import { Button, Layout, Menu } from 'antd'
 import { Link, Route, Routes, useLocation } from 'react-router-dom'
 import { LoginPage } from './pages/Login/LoginPage'
-import { getSamples, getToken, getUserInfo } from './services/api'
+import { getToken, getUserInfo } from './services/api'
 import { SamplePage } from './pages/SamplePage'
-import { LoadingPage } from './pages/LoadingPage'
 import { VariantPage } from './pages/VariantPage'
 import { NextcladePage } from './pages/NextcladePage'
 import { PangolinPage } from 'pages/PangolinPage'
@@ -16,12 +15,12 @@ import jwt_decode from 'jwt-decode'
 import moment from 'moment'
 import { DashboardPage } from './pages/DashboardPage'
 import { scopes } from './services/costants'
+import { ErrorPage } from 'pages/ErrorPage'
 
 const { Header, Content } = Layout
 export const App = () => {
   const [user, setUser] = useState<any>()
   const [isAdmin, setIsAdmin] = useState<boolean>(false)
-  const [samples, setSamples] = useState<any>()
   const [token, setToken] = useState<any>(null)
   const tokenCookieName = 'sc2reporterToken'
   const findCookiePattern = new RegExp(`(?<=${tokenCookieName}=)(.*)(?=;)`, 'g')
@@ -53,7 +52,6 @@ export const App = () => {
     if (cookieToken?.length === 1) {
       setToken(cookieToken[0])
       getUserInfo(cookieToken[0]).then((response) => setUser(response))
-      getSamples(cookieToken[0]).then((samples) => setSamples(samples))
     }
   }, [])
 
@@ -66,7 +64,6 @@ export const App = () => {
     getToken(formInput).then((response) => {
       setToken(response.access_token)
       getUserInfo(response.access_token).then((response) => setUser(response))
-      getSamples(response.access_token).then((samples) => setSamples(samples))
       document.cookie = `${tokenCookieName}=${response.access_token}; Max-Age=${
         cookieAge * 60 * 60
       };`
@@ -138,17 +135,7 @@ export const App = () => {
             />
             <Route
               path="/samples/:id"
-              element={
-                token ? (
-                  samples ? (
-                    <SamplePage token={token} />
-                  ) : (
-                    <LoadingPage />
-                  )
-                ) : (
-                  <LoginPage login={login} />
-                )
-              }
+              element={token ? <SamplePage token={token} /> : <LoginPage login={login} />}
             />
             <Route
               path="/users"
@@ -184,6 +171,7 @@ export const App = () => {
                 )
               }
             />
+            <Route path="/error" element={token ? <ErrorPage /> : <LoginPage login={login} />} />
           </Routes>
         </Content>
         <footer data-testid="footer" className={styles.footer}>

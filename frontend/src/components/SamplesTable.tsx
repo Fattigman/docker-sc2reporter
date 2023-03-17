@@ -6,7 +6,15 @@ import { CheckCircleTwoTone } from '@ant-design/icons'
 import { Link, useLocation } from 'react-router-dom'
 import { deleteSample, getPhylogeny } from 'services/api'
 
-export const SamplesTable = ({ token, samples, refreshSamples, isAdmin, title, subTitle }) => {
+export const SamplesTable = ({
+  token,
+  samples,
+  refreshSamples,
+  isAdmin,
+  title,
+  subTitle,
+  loading,
+}) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([])
   const [samplesId, setSamplesId] = useState<string>('')
   const [copiedText, setCopiedText] = useState<string>('')
@@ -192,7 +200,7 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin, title, s
           dataSource={samples}
           columns={columns}
           rowKey={'sample_id'}
-          loading={!samples}
+          loading={loading}
           bordered
           rowSelection={{
             ...rowSelection,

@@ -6,9 +6,15 @@ import { getSamples } from 'services/api'
 export const SamplesPage = ({ token, isAdmin }) => {
   const [samples, setSamples] = useState<any>()
   const [refresh, setRefresh] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
 
   useEffect(() => {
-    getSamples(token).then((samples) => setSamples(samples))
+    getSamples(token)
+      .then((samples) => {
+        setSamples(samples)
+        setIsLoading(false)
+      })
+      .catch(() => setIsLoading(false))
   }, [refresh])
 
   const refreshSamples = () => {
@@ -24,6 +30,7 @@ export const SamplesPage = ({ token, isAdmin }) => {
         isAdmin={isAdmin}
         title="Samples"
         subTitle={null}
+        loading={isLoading}
       />
     </Card>
   )

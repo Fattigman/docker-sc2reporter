@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { getDashboard } from 'services/api'
 import { Area } from '@ant-design/plots'
-import { Card, Descriptions, Checkbox, Space } from 'antd'
-import { Loading } from 'components/Loading'
+import { Card, Descriptions, Checkbox, Space, Result } from 'antd'
 import { decodeHTMLEntities, urlEncode } from 'helpers'
+import { LoadingPage } from './LoadingPage'
 
 const CheckboxGroup = Checkbox.Group
 
@@ -11,15 +11,23 @@ export const DashboardPage = ({ token }) => {
   const [data, setData] = useState<any[]>()
   const [selectionCriterions, setSelectionCriterions] = useState<any[]>([])
   const [generalStats, setGeneralStats] = useState<any>()
+  const [errorStatus, setErrorStatus] = useState<any>()
+  const [isLoading, setIsLoading] = useState<boolean>(true)
   const filtersList = decodeHTMLEntities(selectionCriterions)
   let filters = ''
 
   useEffect(() => {
-    getDashboard(token, filters).then((response) => {
-      setData(response.dashboard_data)
-      setGeneralStats(response.general_stats)
-      setSelectionCriterions(response.selection_criterions)
-    })
+    getDashboard(token, filters)
+      .then((response) => {
+        setData(response.dashboard_data)
+        setGeneralStats(response.general_stats)
+        setSelectionCriterions(response.selection_criterions)
+        setIsLoading(false)
+      })
+      .catch((error) => {
+        setIsLoading(false)
+        setErrorStatus(error?.response)
+      })
   }, [])
 
   const onChange = (list) => {
@@ -27,9 +35,14 @@ export const DashboardPage = ({ token }) => {
       filters += 'selection_criterion=' + urlEncode(item) + '&'
     })
 
-    getDashboard(token, filters).then((response) => {
-      setData(response.dashboard_data)
-    })
+    getDashboard(token, filters)
+      .then((response) => {
+        setData(response.dashboard_data)
+      })
+      .catch((error) => {
+        setIsLoading(false)
+        setErrorStatus(error?.response)
+      })
   }
 
   const config = {
@@ -44,9 +57,9 @@ export const DashboardPage = ({ token }) => {
     value: selectionCriterions[index],
   }))
 
-  return !data ? (
-    <Loading />
-  ) : (
+  return isLoading ? (
+    <LoadingPage />
+  ) : data ? (
     <Card>
       <Descriptions bordered size="small" title={'General stats'}>
         <Descriptions.Item label="Passed qc samples">
@@ -65,5 +78,7 @@ export const DashboardPage = ({ token }) => {
         </Space>
       </Card>
     </Card>
+  ) : (
+    <Result status="error" title={errorStatus.status} subTitle={errorStatus.data.message} />
   )
 }

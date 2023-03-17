@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { notification, Popconfirm, Table, Tag, Tooltip } from 'antd'
+import { notification, Popconfirm, Result, Table, Tag, Tooltip } from 'antd'
 import { DeleteTwoTone } from '@ant-design/icons'
 import { deleteUser, getUsers } from '../../services/api'
 import { NewUserModal } from '../../components/NewUserModal'
@@ -9,6 +9,7 @@ import { UserStatusTag } from '../../components/UserStatusTag'
 
 export const UserListPage = ({ token }) => {
   const [users, setUsers] = useState<any[]>()
+  const [errorStatus, setErrorStatus] = useState<any>()
   const [isLoading, setIsLoading] = useState<boolean>(true)
 
   useEffect(() => {
@@ -21,7 +22,10 @@ export const UserListPage = ({ token }) => {
         setUsers(response)
         setIsLoading(false)
       })
-      .catch(() => setIsLoading(false))
+      .catch((error) => {
+        setIsLoading(false)
+        setErrorStatus(error?.response)
+      })
   }
 
   const confirmDeleteUser = (token: string, username: string) => {
@@ -29,9 +33,15 @@ export const UserListPage = ({ token }) => {
       notification['success']({
         message: `User ${username} deleted`,
       })
-      getUsers(token).then((users) => {
-        setUsers(users)
-      })
+      getUsers(token)
+        .then((users) => {
+          setUsers(users)
+          setIsLoading(false)
+        })
+        .catch((error) => {
+          setIsLoading(false)
+          setErrorStatus(error?.response)
+        })
     })
   }
 
@@ -88,7 +98,7 @@ export const UserListPage = ({ token }) => {
         <LoadingPage />
       ) : (
         <>
-          {users && (
+          {users ? (
             <Table
               dataSource={users}
               columns={columns}
@@ -101,6 +111,8 @@ export const UserListPage = ({ token }) => {
                 </div>
               )}
             />
+          ) : (
+            <Result status="error" title={errorStatus.status} subTitle={errorStatus.data.message} />
           )}
         </>
       )}
