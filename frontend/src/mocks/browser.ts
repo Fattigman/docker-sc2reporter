@@ -29,7 +29,7 @@ const deleteEndpoints = {
 }
 
 const worker = setupWorker(
-  rest.get(`${REACT_APP_BACKEND_URL}/${getEndpoints.sample}`, (req, res, ctx) => {
+  rest.get(`${REACT_APP_BACKEND_URL}/${getEndpoints.doNotInterrupt}`, (req, res, ctx) => {
     const statusCode = 409 as number
     if (statusCode === 401) {
       return res(ctx.status(401), ctx.json({ message: 'Unauthorized' }))
