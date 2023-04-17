@@ -1,4 +1,3 @@
-from re import M
 from typing import Optional, Union
 from fastapi import Depends, HTTPException, Query
 from fastapi import APIRouter
@@ -6,7 +5,7 @@ from fastapi import APIRouter
 
 import pandas as pd 
 
-from crud import *
+from crud import samples, get_matrix, variants
 
 from models import *
 from authentication import *
@@ -80,14 +79,15 @@ async def get_samples_with_pangotype(
     return {'samples': samples_list, 'graph': graph_list}
 
 # Gets all samples with matching specified variant
-@router.get("/variant/",response_model=GroupedSamples)
+@router.get("/variant/",response_model=GroupedVariantSamples)
 async def get_samples_with_variant(
     variant:str ,
     current_user: User = Depends(get_current_active_user)
     ):
     samples_list = await samples.get_variant_samples(variant=variant)
+    variant_info = await variants.get_single(variant)
     graph_list = group_by_dict(samples_list)
-    return {'samples': samples_list, 'graph': graph_list}
+    return {'samples': samples_list, 'graph': graph_list, 'variant_info': variant_info}
 
 # Gets all samples with matching specified nextclade
 @router.get("/nextclade/", response_model=GroupedSamples)
