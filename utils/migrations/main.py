@@ -20,12 +20,16 @@ def create_matrix(db_name:str='sarscov2_standalone'):
     print ('Calculating matrix from depth collection...')
     for name in tqdm(sample_names):
         col = []
-        index = []
+        index = set()
         # Chunk the data to avoid memory issues
         for i, ele in enumerate(db.depth.find({'sample_id':name})):
             temp = [ele['A'], ele['T'], ele['C'], ele['G']]
-            col.extend([x/max(temp)  if max(temp) != 0 else np.nan for x in temp] )
-            index.extend([f'{ele["pos"]}_A', f'{ele["pos"]}_T', f'{ele["pos"]}_C', f'{ele["pos"]}_G'])
+            norm_temp = [x/max(temp)  if max(temp) != 0 else np.nan for x in temp]
+            for j, base in enumerate(['A', 'T', 'C', 'G']):
+                idx = f"{ele['pos']}_{base}"
+                if idx not in index:
+                    col.append(norm_temp[j])
+                    index.add(idx)
         df[name] = col
 
     df.index = index
@@ -40,6 +44,7 @@ def create_matrix(db_name:str='sarscov2_standalone'):
             })
         except DuplicateKeyError:
             print (f'{ele} already exists in the database')
+
 
 # creates the superuser
 def create_superuser(db_name:str='sarscov2_standalone'):
