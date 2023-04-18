@@ -75,6 +75,7 @@ async def get_samples_with_pangotype(
     current_user: User = Depends(get_current_active_user)
     ):
     samples_list = await samples.get_pangotype_samples(pangolin)
+    samples_list = [sample for sample in samples_list if 'collection_date' in sample]
     graph_list = group_by_dict(samples_list)
     return {'samples': samples_list, 'graph': graph_list}
 
@@ -85,6 +86,7 @@ async def get_samples_with_variant(
     current_user: User = Depends(get_current_active_user)
     ):
     samples_list = await samples.get_variant_samples(variant=variant)
+    samples_list = [sample for sample in samples_list if 'collection_date' in sample]
     variant_info = await variants.get_single(variant)
     graph_list = group_by_dict(samples_list)
     return {'samples': samples_list, 'graph': graph_list, 'variant_info': variant_info}
@@ -96,6 +98,7 @@ async def get_samples_with_nextclade(
     current_user: User = Depends(get_current_active_user)
     ):
     samples_list = await samples.get_nextclade_samples(nextclade=nextclade)
+    samples_list = [sample for sample in samples_list if 'collection_date' in sample]
     graph_list = group_by_dict(samples_list)
     return {'samples': samples_list, 'graph': graph_list}
 
