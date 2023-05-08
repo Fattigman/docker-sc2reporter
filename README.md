@@ -9,6 +9,5 @@ cd docker-sc2reporter
 docker-compose -f docker-compose.demo.yml up
 ```
 Once the application is running, you can access the front-end by navigating to \`localhost:3000\`, and the back-end by navigating to \`localhost:8000\`.
-## Prefix URL Configuration
-The prefix URL in this project is controlled by the environment variable \`REACT_APP_PREFIX_URL\`. By default, it is set to \`/\` to prevent any potential interference with Firebase hosting actions. When the project is run in production, the \`REACT_APP_PREFIX_URL\` variable can be configured with a different value as needed.
 
+For more information on how to set it up in production, navigate to [setup](docs/setup.md)
