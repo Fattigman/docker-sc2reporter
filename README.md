@@ -8,6 +8,14 @@ git clone https://github.com/genomic-medicine-sweden/docker-sc2reporter
 cd docker-sc2reporter
 docker-compose -f docker-compose.demo.yml up
 ```
-Once the application is running, you can access the front-end by navigating to \`localhost:3000\`, and the back-end by navigating to \`localhost:8000\`.
+Once the application is running, you can access the front-end by navigating to [localhost:3000](http://localhost:3000) and the back-end by navigating to [localhost:8000](http://localhost:8000).
 
 For more information on how to set it up in production, navigate to [setup](docs/setup.md)
+
+# Frontend
+
+For more information: see [Frontend documentation](docs/frontend.md)
+
+# Backend
+
+For more information: see [Backend documentation](docs/backend.md)
