@@ -25,7 +25,7 @@ async def read_samples(
     return sample_list
 
 # Gets single specific sample
-@router.get("/{sample_id}", response_model=list[Sample])
+@router.get("/{sample_id}")
 async def single_sample(
     sample_id: str,
     current_user: User = Depends(get_current_active_user)
@@ -44,8 +44,8 @@ async def single_sample(
     if sample_id in df.columns:
         distances = abs(df.subtract(df[sample_id], axis = 0)).sum()
         similar_samples = distances[abs(distances) < 10].index.tolist()
-        sample_info[0]['similar_samples'] = similar_samples
-    return sample_info
+    variant_info = await variants.get_multiple([x['id'] for x in sample_info[0]['variants']])
+    return {"sampleInfo":sample_info, "similarSamples": similar_samples, "variantInfo": variant_info}
 
 
 # Delete multiple samples and all associated data
@@ -88,8 +88,8 @@ async def get_samples_with_variant(
     samples_list = await samples.get_variant_samples(variant=variant)
     samples_list = [sample for sample in samples_list if 'collection_date' in sample]
     variant_info = await variants.get_single(variant)
-    plotData = group_by_dict(samples_list)
-    return {'samples': samples_list, 'graph': plotData, 'variant_info': variant_info}
+    graph_list = group_by_dict(samples_list)
+    return {'samples': samples_list, 'graph': graph_list, 'variantInfo': variant_info}
 
 # Gets all samples with matching specified nextclade
 @router.get("/nextclade/", response_model=GroupedSamples)
