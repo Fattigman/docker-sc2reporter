@@ -21,6 +21,9 @@ class CRUDSamples(CRUDBase):
 
         pipeline = [
             {
+                '$match': filter_dict
+            },
+            {
                     '$project': {
                         'sample_id': 1,
                         'nextclade': 1,
@@ -46,10 +49,6 @@ class CRUDSamples(CRUDBase):
                         }
                     }
                 }
-            },
-            {
-                #Filter out samples which field_name is not field_value
-                '$match': filter_dict
             }
             ]
         return pipeline
@@ -68,12 +67,18 @@ class CRUDSamples(CRUDBase):
         return (docs)
     # Get samples associated with a specific type
     async def get_pangotype_samples(self, pangolin:str):
-        curr =  db.sample.find({"pangolin.type": pangolin})
+        variants = await significant_variants.get()
+        variants = variants[0]['variants']
+        pipeline = self.filter_variant_pipeline(variants, {'pangolin.type': pangolin})
+        curr =  db.sample.aggregate(pipeline)
         docs = [parse_json(x) for x in await curr.to_list(None)]
         return  docs
     
     async def get_variant_samples(self, variant:str):
-        curr =  db.sample.find({"variants.id" : variant})
+        variants = await significant_variants.get()
+        variants = variants[0]['variants']
+        pipeline = self.filter_variant_pipeline(variants, {'variants.id' : variant})
+        curr =  db.sample.aggregate(pipeline)
         docs = [parse_json(x) for x in await curr.to_list(None)]
         return  docs
 
