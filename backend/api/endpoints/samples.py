@@ -5,7 +5,7 @@ from fastapi import APIRouter
 
 import pandas as pd 
 
-from crud import samples, get_matrix, variants
+from crud import samples, get_matrix, variants, depth
 
 from models import *
 from authentication import *
@@ -28,7 +28,8 @@ async def read_samples(
 @router.get("/{sample_id}")
 async def single_sample(
     sample_id: str,
-    current_user: User = Depends(get_current_active_user)
+    current_user: User = Depends(get_current_active_user),
+    genetic_distance: Optional[int] = 10,
     ):
     sample_info = await samples.get_single(sample_id, id_field='sample_id')
     if len(sample_info) == 0:
@@ -43,7 +44,14 @@ async def single_sample(
     df = pd.DataFrame(matrix[0])
     if sample_id in df.columns:
         distances = abs(df.subtract(df[sample_id], axis = 0)).sum()
-        similar_samples = distances[abs(distances) < 10].index.tolist()
+        similar_samples = distances[abs(distances) < genetic_distance].index.tolist()
+    similar_samples= [
+        {
+            'sampleId': x,
+            'geneticDistance':distances[x],
+        }
+        for i, x in enumerate(similar_samples)
+    ]
     variant_info = await variants.get_multiple([x['id'] for x in sample_info[0]['variants']])
     return {"sampleInfo":sample_info, "similarSamples": similar_samples, "variantInfo": variant_info}
 
