@@ -28,7 +28,7 @@ export const SamplesTable = ({
   const rowSelection = {
     onChange: (selectedRowKeys) => {
       setSelectedRowKeys(selectedRowKeys)
-      const selectedSamplesIds = selectedRowKeys.map((item) => `&sample_ids=${item}`).join('')
+      const selectedSamplesIds = selectedRowKeys.map((item) => `sample_id=${item}`).join('&')
       setSamplesId(selectedSamplesIds)
     },
     selectedRowKeys,
@@ -65,6 +65,7 @@ export const SamplesTable = ({
     if (selectedRowKeys.length > 2) {
       getPhylogeny(token, group, samplesId).then((response) => {
         setCopiedText(JSON.stringify(response))
+        console.log(response)
         if (response != '') {
           showModal()
           navigator.clipboard.writeText(JSON.stringify(response))

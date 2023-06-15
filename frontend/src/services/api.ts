@@ -242,7 +242,7 @@ export const deleteUser = async (token, username): Promise<any> => {
 }
 
 export const getPhylogeny = async (token, group, samples): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/phyllogeny/?group=${group}&${samples}`
+  const endPoint = `${REACT_APP_BACKEND_URL}/phylogeny/?group=${group}&${samples}`
   return new Promise((resolve, reject) => {
     axios
       .get(endPoint, {
