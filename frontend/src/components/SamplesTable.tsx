@@ -190,10 +190,10 @@ export const SamplesTable = ({
       >
         <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
           <p>
-            The Phylogeny data has been successfully copied. Please click &apos;OK&apos; to go to
-            the Grapetree site, then click on the &apos;Load files&apos; button and paste the data
-            into the designated rectangle. Finally, click on the &apos;Confirm&apos; button to
-            proceed.
+            After clicking &apos;OK&apos; the Phylogeny data will be copied. Then, the Grapetree
+            website will open automatically. Once the website loads, click on the &apos;Load
+            files&apos; button. Paste the copied data into the provided rectangle. Finally, click
+            &apos;Confirm&apos; to complete the process.
           </p>
         </Modal>
         <Table
