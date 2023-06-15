@@ -14,15 +14,13 @@ class CRUDSamples(CRUDBase):
     def __init__(self):
         super().__init__(Sample, "sample")
         
-    
-    async def get_samples(self, advanced_search:bool = False):
+        
+    def filter_variant_pipeline(self, variants:list[str], filter_dict: dict ={}) -> list[dict]:
+        if filter_dict == {}:
+            filter_dict = {'pangolin.type': {'$ne': 'None'}}
 
-        if not advanced_search:
-            variants = await significant_variants.get()
-            variants = variants[0]['variants']
-            # Filter out variants that are not in VARIANTS OF BIOLOGICAL SIGNIFICANCE
-            pipeline = [
-                {
+        pipeline = [
+            {
                     '$project': {
                         'sample_id': 1,
                         'nextclade': 1,
@@ -30,6 +28,8 @@ class CRUDSamples(CRUDBase):
                         'collection_date': 1,
                         'selection_criterion': 1,
                         'qc': 1,
+                        'sex': 1,
+                        'mlu': 1,
                         'age': 1,
                         'Ct': 1,
                         'lab': 1,
@@ -40,14 +40,27 @@ class CRUDSamples(CRUDBase):
                                 'as': 'variant',
                                 'cond': {
                                     '$in': [
-                                        '$$variant.aa', variants
+                                        f'$$variant.aa', variants
                                     ]
                                 }
                         }
                     }
                 }
+            },
+            {
+                #Filter out samples which field_name is not field_value
+                '$match': filter_dict
             }
             ]
+        return pipeline
+    async def get_samples(self, advanced_search:bool = False):
+
+        if not advanced_search:
+            variants = await significant_variants.get()
+            variants = variants[0]['variants']
+            pipeline = self.filter_variant_pipeline(variants)
+            # Filter out variants that are not in VARIANTS OF BIOLOGICAL SIGNIFICANCE
+            
             cursor =  db.sample.aggregate(pipeline)
         else:
             cursor =  db.sample.find()
