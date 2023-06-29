@@ -18,8 +18,8 @@ export const getToken = async (formInput): Promise<any> => {
       .catch((error) => {
         handleBackendError(error)
         notification.error({
-          message: 'Something went wrong',
-          description: 'Try again',
+          message: error.response.statusText,
+          description: error.response.data.message,
         })
         reject(error)
       })
