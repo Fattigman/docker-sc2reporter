@@ -58,6 +58,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
    let mut temp : [f32; 4];
    for name in &sample_names {
       let mut depths = depth_collection.find(doc! {"sample_id": name},None).await?;
+      // Fetch all depth information for a sample
+      // Calculate an array for each sample ranging from 0 to 1 based on the frequency of each nucleotide
       while let Some(depth) = depths.try_next().await? {
          let max_value = cmp::max(cmp::max(depth.A, depth.T), cmp::max(depth.G, depth.C));
          let mut temp = [depth.A as f32, depth.T as f32, depth.G as f32, depth.C as f32];
