@@ -55,21 +55,17 @@ async fn main() -> Result<(), Box<dyn Error>> {
    }
 
    let depth_collection = database.collection::<Depth>("depth");
-   let mut depth_vector = Vec::new();
    let mut temp : [f32; 4];
    for name in &sample_names {
       let mut depths = depth_collection.find(doc! {"sample_id": name},None).await?;
-      depth_vector.clear();
       while let Some(depth) = depths.try_next().await? {
          let max_value = cmp::max(cmp::max(depth.A, depth.T), cmp::max(depth.G, depth.C));
-         if max_value == 0 {
-            temp = [depth.A.into(), depth.T.into(), depth.G.into(), depth.C.into()];
-         } else {
-            temp = [(depth.A / max_value).into(), (depth.T / max_value).into(), (depth.G / max_value).into(), (depth.C / max_value).into()];
+         let mut temp = [depth.A as f32, depth.T as f32, depth.G as f32, depth.C as f32];
+         for i in 0..4 {
+            temp[i] = temp[i] / max_value as f32;
          }
-         depth_vector.push(temp);
+         println!("{:?}", temp);
       }
-      println!("{}: {:?}", name, depth_vector);
    }
    Ok(())
 }
