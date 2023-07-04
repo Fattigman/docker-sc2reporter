@@ -38,6 +38,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
         },
      ];
    // Load the MongoDB connection string from an environment variable:
+   // /(Switch to env variable later)
    let client_uri = "mongodb://localhost:27017";
 
    // A Client is needed to connect to MongoDB:
@@ -56,6 +57,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
    let depth_collection = database.collection::<Depth>("depth");
    let mut temp : [f32; 4];
+   let mut index : Vec<String> = Vec::new();
    for name in &sample_names {
       let mut depths = depth_collection.find(doc! {"sample_id": name},None).await?;
       // Fetch all depth information for a sample
@@ -66,7 +68,12 @@ async fn main() -> Result<(), Box<dyn Error>> {
          for i in 0..4 {
             temp[i] = temp[i] / max_value as f32;
          }
-         println!("{:?}", temp);
+         // Appends index vector with each position and nucleotide
+         for char in ['A', 'T', 'G', 'C'].iter() {
+            if ! index.contains(&format!("{}_{}", depth.pos, char)){
+               index.push(format!("{}_{}", depth.pos, char));
+            }
+         }
       }
    }
    Ok(())
