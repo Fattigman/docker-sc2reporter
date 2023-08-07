@@ -19,6 +19,7 @@ Welcome to the frontend documentation for Sc2reporter! This section offers an ov
 
 ### Overview
 Our frontend is the user interface of Sc2reporter, connecting users with the application's core features. It's designed for a seamless, engaging, and responsive user experience.
+
 ### Key Features
 
 - Samples Page
