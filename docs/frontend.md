@@ -42,7 +42,6 @@ Our frontend is the user interface of Sc2reporter, connecting users with the app
 
 These technologies ensure a fast, reliable, and feature-rich frontend.
 
-
 ## Getting Started
    - Prerequisites for Frontend Development
    - Setting Up the Development Environment
@@ -101,9 +100,6 @@ These technologies ensure a fast, reliable, and feature-rich frontend.
     - Links to UI/UX Guidelines
     - References for Styling and CSS-in-JS
     - Recommended Reading for Frontend Development
-
-
-
 
 # Prefix URL Configuration
 The prefix URL in this project is controlled by the environment variable \`REACT_APP_PREFIX_URL\`. By default, it is set to \`/\` to prevent any potential interference with Firebase hosting actions. When the project is run in production, the \`REACT_APP_PREFIX_URL\` variable can be configured with a different value as needed.
