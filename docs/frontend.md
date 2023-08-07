@@ -15,9 +15,28 @@
 13. [Additional Resources](#additional-resources)
 
 ## Introduction
-   - Overview of the Frontend
-   - Key Features and Functionality
-   - Technologies Used
+Welcome to the frontend documentation for Sc2reporter! This section offers an overview of our frontend, highlighting its features, functionality, and technologies.
+
+### Overview
+Our frontend is the user interface of Sc2reporter, connecting users with the application's core features. It's designed for a seamless, engaging, and responsive user experience.
+### Key Features
+
+- **Samples Table:** Explore and analyze various samples with essential details.
+- **Samples Table:** Explore and analyze various samples with essential details.
+
+
+### Technologies
+
+- **React:** Building dynamic interfaces efficiently.
+- **React Router:** Seamless navigation and URL management.
+- **TypeScript:** A typed superset of JavaScript that enhances code quality and maintainability.
+- **Axios:** A popular HTTP client for making API requests and handling responses.
+- **Ant Design (antd):** A comprehensive UI library for modern web applications.
+- **Ant Design Charts:** An extension of Ant Design providing a wide range of charts for data visualization.
+- **MSW (Mock Service Worker):** Simulating API responses for efficient frontend development and testing.
+
+These technologies ensure a fast, reliable, and feature-rich frontend.
+
 
 ## Getting Started
    - Prerequisites for Frontend Development
