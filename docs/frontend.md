@@ -49,14 +49,14 @@ To launch the application using sample data, ensure you have Docker Compose inst
 1.  **Clone the Repository:**
 
 
-    ```bash
+    ```git clone https://github.com/genomic-medicine-sweden/docker-sc2reporter
 
-git clone https://github.com/genomic-medicine-sweden/docker-sc2reporter
+
 
 2.  **Navigate to Project Directory:**
     Move into the cloned repository's directory:
 
-````cd docker-sc2reporter
+``cd docker-sc2reporter
 
 3. **Start Application:**
 Use Docker Compose to launch the application with the provided demo configuration:
