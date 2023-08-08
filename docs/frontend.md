@@ -97,12 +97,10 @@ After the application is up and running, you can access the following components
 
 - Back-end: [http://localhost:8000](http://localhost:8000)
 
-## Folder Structure
-
 
 ## Folder Structure
 
-  
+All of the frontend-related files are located under the "frontend" directory.
 
 -  **`frontend/`**: Contains the frontend react application.
 
