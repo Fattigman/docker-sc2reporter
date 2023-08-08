@@ -15,9 +15,11 @@
 13. [Additional Resources](#additional-resources)
 
 ## Introduction
+
 Welcome to the frontend documentation for Sc2reporter! This section offers an overview of our frontend, highlighting its features, functionality, and technologies.
 
 ### Overview
+
 Our frontend is the user interface of Sc2reporter, connecting users with the application's core features. It's designed for a seamless, engaging, and responsive user experience.
 
 ### Key Features
@@ -47,11 +49,9 @@ These technologies ensure a fast, reliable, and feature-rich frontend.
 To launch the application using sample data, ensure you have Docker Compose installed on your system. Follow these steps for a more advanced setup:
 
 1.  **Clone the Repository:**
-
-
+    ```
     git clone https://github.com/genomic-medicine-sweden/docker-sc2reporter
-
-
+    ```
 
 2.  **Navigate to Project Directory:**
     Move into the cloned repository's directory:
@@ -59,68 +59,79 @@ To launch the application using sample data, ensure you have Docker Compose inst
 cd docker-sc2reporter
 
 3. **Start Application:**
-Use Docker Compose to launch the application with the provided demo configuration:
-docker-compose -f docker-compose.demo.yml up
- 
+   Use Docker Compose to launch the application with the provided demo configuration:
+   docker-compose -f docker-compose.demo.yml up
+
 After the application is up and running, you can access the following components:
- - Front-end: [http://localhost:3000](http://localhost:3000)
- - Back-end: [http://localhost:8000](http://localhost:8000)
 
-
+- Front-end: [http://localhost:3000](http://localhost:3000)
+- Back-end: [http://localhost:8000](http://localhost:8000)
 
 ## Folder Structure
-   - Explanation of Each Folder
-   - Where to Find Components, Styles, Assets, etc.
+
+- Explanation of Each Folder
+- Where to Find Components, Styles, Assets, etc.
 
 ## Components and UI Elements
-   - Component Library Overview
-   - List of Reusable Components
-   - Props and Usage for Each Component
+
+- Component Library Overview
+- List of Reusable Components
+- Props and Usage for Each Component
 
 ## Styling and Theming
-   - CSS-in-JS Libraries Used
-   - Styling Approaches (e.g., Styled Components, CSS Modules)
-   - How to Apply Styles to Components
-   - Theming and Customization Options
+
+- CSS-in-JS Libraries Used
+- Styling Approaches (e.g., Styled Components, CSS Modules)
+- How to Apply Styles to Components
+- Theming and Customization Options
 
 ## State Management
-   - State Handling in the Frontend
-   - Integration with State Management Libraries (e.g., Redux, Context API)
-   - Example of Managing State in Components
+
+- State Handling in the Frontend
+- Integration with State Management Libraries (e.g., Redux, Context API)
+- Example of Managing State in Components
 
 ## Routing and Navigation
-   - Setting Up Routes
-   - Navigation Between Pages
-   - Route Guards and Redirects
+
+- Setting Up Routes
+- Navigation Between Pages
+- Route Guards and Redirects
 
 ## API Integration
-   - How Frontend Communicates with Backend APIs
-   - Handling API Requests and Responses
-   - Example Code for API Calls
+
+- How Frontend Communicates with Backend APIs
+- Handling API Requests and Responses
+- Example Code for API Calls
 
 ## User Authentication
-   - Authentication Flow and Components
-   - Handling User Login and Registration
-   - Securing Routes based on Authentication
+
+- Authentication Flow and Components
+- Handling User Login and Registration
+- Securing Routes based on Authentication
 
 ## UI/UX Considerations
+
     - Design Principles and Guidelines
     - User Interaction Patterns
     - Responsive Design and Mobile Compatibility
 
 ## Deployment
+
     - Preparing Frontend for Production Build
     - Deploying the Frontend to Hosting Platforms
     - Integration with Backend Deployment
 
 ## Troubleshooting and Debugging
+
     - Common Frontend Issues and Solutions
     - Browser Developer Tools for Debugging
 
 ## Additional Resources
+
     - Links to UI/UX Guidelines
     - References for Styling and CSS-in-JS
     - Recommended Reading for Frontend Development
 
 # Prefix URL Configuration
+
 The prefix URL in this project is controlled by the environment variable \`REACT_APP_PREFIX_URL\`. By default, it is set to \`/\` to prevent any potential interference with Firebase hosting actions. When the project is run in production, the \`REACT_APP_PREFIX_URL\` variable can be configured with a different value as needed.
