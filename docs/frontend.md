@@ -131,16 +131,11 @@ All of the frontend-related files are located under the "frontend" directory.
 
 ## Styling and Theming
 
-- CSS-in-JS Libraries Used
-- Styling Approaches (e.g., Styled Components, CSS Modules)
-- How to Apply Styles to Components
-- Theming and Customization Options
+--
 
 ## Deployment
 
-    - Preparing Frontend for Production Build
-    - Deploying the Frontend to Hosting Platforms
-    - Integration with Backend Deployment
+--
 
 ## Prefix URL Configuration
 
