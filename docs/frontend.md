@@ -37,14 +37,9 @@ Our frontend is the user interface of Sc2reporter, connecting users with the app
 
 These technologies ensure a fast, reliable, and feature-rich frontend.
 
-
 ## Getting Started
 
-  
-
 To launch the application using mock data, ensure you have Docker Compose installed on your system. Follow these steps for a more advanced setup:
-
-  
 
 1.  **Clone the Repository:**
 
@@ -53,8 +48,6 @@ To launch the application using mock data, ensure you have Docker Compose instal
 git clone https://github.com/genomic-medicine-sweden/docker-sc2reporter
 
 ```
-
-  
 
 2.  **Navigate to Project Directory:**
 
@@ -66,13 +59,9 @@ cd docker-sc2reporter
 
 ```
 
-  
-
 3.  **Start Application:**
 
 Use Docker Compose to launch the application with the provided demo configuration:
-
-  
 
 ```
 
@@ -80,119 +69,65 @@ docker-compose -f docker-compose.demo.yml up
 
 ```
 
-  
-
 After the application is up and running, you can access the following components:
-
-  
 
 - Front-end: [http://localhost:3000](http://localhost:3000)
 
 - Back-end: [http://localhost:8000](http://localhost:8000)
 
-
 ## Folder Structure
 
 All of the frontend-related files are located under the "frontend" directory.
 
--  **`frontend/`**: Contains the frontend react application.
+- **`frontend/`**: Contains the frontend react application.
 
-  
+  - **`node_modules/`**: Stores the dependencies installed via npm or Yarn.
 
-	-  **`node_modules/`**: Stores the dependencies installed via npm or Yarn.
+  - **`public/`**: This directory contains assets that will be publicly accessible.
 
-	  
+  - **`src/`**: This directory contains the source code of the React application.
 
-	-  **`public/`**: This directory contains assets that will be publicly accessible.
+    - **`components/`**: Contains reusable UI components used throughout the app.
 
-	  
+    - **`mocks/`**: Stores mock data.
 
-	-  **`src/`**: This directory contains the source code of the React application.
+    - **`pages/`**: Contains top-level components that represent individual pages of the app.
 
-	  
+    - **`services/`**: Handles API requests and data fetching.
 
-		-  **`components/`**: Contains reusable UI components used throughout the app.
+    - **`App.module.css`**: Styles specific to the App component.
 
-		  
+    - **`App.tsx`**: Main entry point for the React application.
 
-		-  **`mocks/`**: Stores mock data.
+    - **`helpers.ts`**: Utility functions or helper modules used across the app.
 
-		  
+    - **`index.css`**: Global CSS styles.
 
-		-  **`pages/`**: Contains top-level components that represent individual pages of the app.
+    - **`index.tsx`**: Entry point for rendering the React app.
 
-		  
+  - **`.dockerignore`**: Specifies files and directories to be ignored by Docker during image building.
 
-		-  **`services/`**: Handles API requests and data fetching.
+  - **`.eslintignore`**: Specifies files and directories to be ignored by ESLint during linting.
 
-		  
+  - **`.eslintrc.json`**: Configuration file for ESLint, specifying linting rules and options.
 
-		-  **`App.module.css`**: Styles specific to the App component.
+  - **`.gitignore`**: Specifies files and directories to be ignored by Git.
 
-		  
+  - **`.prettierrc.json`**: Configuration file for Prettier, specifying code formatting rules and options.
 
-		-  **`App.tsx`**: Main entry point for the React application.
+  - **`.stylelintrc.json`**: Configuration file for Stylelint, specifying CSS linting rules and options.
 
-		  
+  - **`Dockerfile`**: Configuration file for building a Docker image of the application.
 
-		-  **`helpers.ts`**: Utility functions or helper modules used across the app.
+  - **`firebase.json`**: Configuration file for Firebase hosting and pull requests deployment.
 
-		  
+  - **`package.json`**: Contains metadata about the project and its dependencies.
 
-		-  **`index.css`**: Global CSS styles.
+  - **`README.md`**: The main documentation file that provides an overview of the project.
 
-		  
+  - **`tsconfig.json`**: Configuration file for TypeScript, specifying compiler options and settings.
 
-		-  **`index.tsx`**: Entry point for rendering the React app.
-
-		  
-
-	-  **`.dockerignore`**: Specifies files and directories to be ignored by Docker during image building.
-
-	  
-
-	-  **`.eslintignore`**: Specifies files and directories to be ignored by ESLint during linting.
-
-	  
-
-	-  **`.eslintrc.json`**: Configuration file for ESLint, specifying linting rules and options.
-
-	  
-
-	-  **`.gitignore`**: Specifies files and directories to be ignored by Git.
-
-	  
-
-	-  **`.prettierrc.json`**: Configuration file for Prettier, specifying code formatting rules and options.
-
-	  
-
-	-  **`.stylelintrc.json`**: Configuration file for Stylelint, specifying CSS linting rules and options.
-
-	  
-
-	-  **`Dockerfile`**: Configuration file for building a Docker image of the application.
-
-	  
-
-	-  **`firebase.json`**: Configuration file for Firebase hosting and pull requests deployment.
-
-	  
-
-	-  **`package.json`**: Contains metadata about the project and its dependencies.
-
-	  
-
-	-  **`README.md`**: The main documentation file that provides an overview of the project.
-
-	  
-
-	-  **`tsconfig.json`**: Configuration file for TypeScript, specifying compiler options and settings.
-
-	  
-
-	-  **`yarn.lock`**: Lock file generated by Yarn to ensure consistent dependencies across environments.
-
+  - **`yarn.lock`**: Lock file generated by Yarn to ensure consistent dependencies across environments.
 
 ## Styling and Theming
 
@@ -206,7 +141,6 @@ All of the frontend-related files are located under the "frontend" directory.
     - Preparing Frontend for Production Build
     - Deploying the Frontend to Hosting Platforms
     - Integration with Backend Deployment
-
 
 ## Prefix URL Configuration
 
