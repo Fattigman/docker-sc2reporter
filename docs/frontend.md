@@ -49,7 +49,7 @@ These technologies ensure a fast, reliable, and feature-rich frontend.
 
   
 
-To launch the application using sample data, ensure you have Docker Compose installed on your system. Follow these steps for a more advanced setup:
+To launch the application using mock data, ensure you have Docker Compose installed on your system. Follow these steps for a more advanced setup:
 
   
 
