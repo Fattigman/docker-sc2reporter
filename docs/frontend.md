@@ -49,23 +49,23 @@ To launch the application using sample data, ensure you have Docker Compose inst
 1.  **Clone the Repository:**
 
 
-    ```git clone https://github.com/genomic-medicine-sweden/docker-sc2reporter
+    git clone https://github.com/genomic-medicine-sweden/docker-sc2reporter
 
 
 
 2.  **Navigate to Project Directory:**
     Move into the cloned repository's directory:
 
-``cd docker-sc2reporter
+cd docker-sc2reporter
 
 3. **Start Application:**
 Use Docker Compose to launch the application with the provided demo configuration:
-```docker-compose -f docker-compose.demo.yml up
- ```
+docker-compose -f docker-compose.demo.yml up
+ 
 After the application is up and running, you can access the following components:
  - Front-end: [http://localhost:3000](http://localhost:3000)
  - Back-end: [http://localhost:8000](http://localhost:8000)
-````
+
 
 
 ## Folder Structure
