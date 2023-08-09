@@ -176,7 +176,13 @@ export const App = () => {
             />
             <Route
               path="/variants/:id"
-              element={token ? <VariantPage token={token} /> : <LoginPage login={login} />}
+              element={
+                token ? (
+                  <VariantPage token={token} isAdmin={isAdmin} />
+                ) : (
+                  <LoginPage login={login} />
+                )
+              }
             />
           </Routes>
         </Content>

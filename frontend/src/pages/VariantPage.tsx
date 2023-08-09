@@ -5,24 +5,30 @@ import { Line } from '@ant-design/plots'
 import { getVariant } from '../services/api'
 import { PageHeader } from '@ant-design/pro-layout'
 import { Loading } from 'components/Loading'
+import { SamplesTable } from 'components/SamplesTable'
 
-export const VariantPage = ({ token }) => {
+export const VariantPage = ({ token, isAdmin }) => {
   const [variant, setVariant] = useState<any>()
   const [data, setData] = useState<any>()
+  const [samples, setSamples] = useState<any>()
+  const [refresh, setRefresh] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const { id } = useParams()
   const title = `Variant ${id}`
 
-  console.log(data)
+  const refreshSamples = () => {
+    setRefresh((prevRefresh) => !prevRefresh)
+  }
 
   useEffect(() => {
     if (id)
       getVariant(token, id).then((response) => {
         setVariant(response.variant_info[0].csq)
         setData(response.graph)
+        setSamples(response.samples)
         setIsLoading(false)
       })
-  }, [id])
+  }, [id, refresh])
 
   const config = {
     data,
@@ -56,6 +62,14 @@ export const VariantPage = ({ token }) => {
           </Descriptions>
           <Card title={'Variant frequency over time'}>
             <Line {...config} />
+          </Card>
+          <Card>
+            <SamplesTable
+              token={token}
+              samples={samples}
+              refreshSamples={refreshSamples}
+              isAdmin={isAdmin}
+            />
           </Card>
         </PageHeader>
       </Card>
