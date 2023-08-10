@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Card, Descriptions } from 'antd'
+import { Card, Descriptions, Space } from 'antd'
 import { Line } from '@ant-design/plots'
 import { getVariant } from '../services/api'
 import { PageHeader } from '@ant-design/pro-layout'
@@ -52,25 +52,27 @@ export const VariantPage = ({ token, isAdmin }) => {
     <>
       <Card>
         <PageHeader onBack={() => history.back()} title={title}>
-          <Descriptions bordered size="small" style={{ marginBottom: '40px' }}>
-            <Descriptions.Item label="Gene">{variant.Gene}</Descriptions.Item>
-            <Descriptions.Item label="cDNA change">{'----'}</Descriptions.Item>
-            <Descriptions.Item label="Protein change">{'----'}</Descriptions.Item>
-            <Descriptions.Item label="Codon change">{'----'}</Descriptions.Item>
-            <Descriptions.Item label="Consequence">{variant.Consequence}</Descriptions.Item>
-            <Descriptions.Item label="External link: CoVariants">{'----'}</Descriptions.Item>
-          </Descriptions>
-          <Card title={'Variant frequency over time'}>
-            <Line {...config} />
-          </Card>
-          <Card>
-            <SamplesTable
-              token={token}
-              samples={samples}
-              refreshSamples={refreshSamples}
-              isAdmin={isAdmin}
-            />
-          </Card>
+          <Space direction="vertical" size="large" style={{ display: 'flex' }}>
+            <Descriptions bordered size="small">
+              <Descriptions.Item label="Gene">{variant.Gene}</Descriptions.Item>
+              <Descriptions.Item label="cDNA change">{'----'}</Descriptions.Item>
+              <Descriptions.Item label="Protein change">{'----'}</Descriptions.Item>
+              <Descriptions.Item label="Codon change">{'----'}</Descriptions.Item>
+              <Descriptions.Item label="Consequence">{variant.Consequence}</Descriptions.Item>
+              <Descriptions.Item label="External link: CoVariants">{'----'}</Descriptions.Item>
+            </Descriptions>
+            <Card title={'Variant frequency over time'}>
+              <Line {...config} />
+            </Card>
+            <Card>
+              <SamplesTable
+                token={token}
+                samples={samples}
+                refreshSamples={refreshSamples}
+                isAdmin={isAdmin}
+              />
+            </Card>
+          </Space>
         </PageHeader>
       </Card>
     </>
