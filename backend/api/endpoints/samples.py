@@ -80,7 +80,7 @@ async def get_samples_with_pangotype(
     return {'samples': samples_list, 'graph': graph_list}
 
 # Gets all samples with matching specified variant
-@router.get("/variant/",response_model=GroupedVariantSamples)
+@router.get("/variant/", response_model=GroupedVariantSamples)
 async def get_samples_with_variant(
     variant:str ,
     current_user: User = Depends(get_current_active_user)
@@ -88,8 +88,8 @@ async def get_samples_with_variant(
     samples_list = await samples.get_variant_samples(variant=variant)
     samples_list = [sample for sample in samples_list if 'collection_date' in sample]
     variant_info = await variants.get_single(variant)
-    graph_list = group_by_dict(samples_list)
-    return {'samples': samples_list, 'graph': graph_list, 'variant_info': variant_info}
+    plotData = group_by_dict(samples_list)
+    return {'samples': samples_list, 'graph': plotData, 'variant_info': variant_info}
 
 # Gets all samples with matching specified nextclade
 @router.get("/nextclade/", response_model=GroupedSamples)
@@ -106,7 +106,10 @@ def group_by_dict(samples:dict):
     # group by key
     graph_list = {}
     for sample in samples:
-        sample_time = (time.strftime('%Y-%m-%w', time.localtime(sample['collection_date']['$date']/1000))) # convert epoch to datetime
+        # sample_time = (time.strftime('%Y-%m-%w', time.localtime(sample['collection_date']['$date']/1000))) # convert epoch to datetime
+        sample_time = datetime.fromtimestamp(sample['collection_date']['$date']/1000)
+        sample_time = sample_time.strftime('%Y-%m')+f'-{sample_time.day//7+1}'
+
         if sample_time in graph_list:
             graph_list[sample_time] += 1
         else:
