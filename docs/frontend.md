@@ -135,7 +135,7 @@ All of the frontend-related files are located under the "frontend" directory.
 
 ## Deployment
 
-In Sc2reporter, we use of the Firebase Hosting GitHub Action. This tool automates the testing of our latest changes. When we push updates to our GitHub repository, the action is triggered. It builds the project and deploys it to Firebase Hosting. This allows us to quickly see how our changes work in a live environment. The action streamlines our workflow, making testing more efficient and reducing the chance of errors during manual deployment, the link to access the new deployment can be found directly within the pull request. This link leads you to the unique preview environment where the changes made in the pull request are deployed and active.
+In Sc2reporter, We use a GitHub Action called [Firebase Hosting GitHub Action](https://medium.com/firebase-developers/the-comprehensive-guide-to-github-actions-and-firebase-hosting-818502d86c31) to deploy our code to Firebase Hosting.. This tool automates the testing of our latest changes. When we push updates to our GitHub repository, the action is triggered. It builds the project and deploys it to Firebase Hosting. This allows us to quickly see how our changes work in a live environment. The action streamlines our workflow, making testing more efficient and reducing the chance of errors during manual deployment, the link to access the new deployment can be found directly within the pull request. This link leads you to the unique preview environment where the changes made in the pull request are deployed and active.
 
 ## Prefix URL Configuration
 
