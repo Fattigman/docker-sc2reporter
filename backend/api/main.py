@@ -5,10 +5,11 @@ from models import *
 
 from api.config import settings
 
-from api.endpoints import samples, users, login, variants, dashboard, phyllogeny, consensus, depth
+from api.endpoints import samples, users, login, variants, dashboard, phylogeny, consensus, depth, significant_variants
 
-from fastapi import Depends, FastAPI, status
+from fastapi import Depends, FastAPI, status, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
 
 app = FastAPI(
@@ -25,6 +26,18 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.exception_handler(HTTPException)
+async def http_exception_handler(request, exc):
+    if exc.status_code == 500:
+        return JSONResponse(
+            status_code=500,
+            content={"message": "You encountered an internal server error. Please contact the administrator."},
+        )
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={"message": exc.detail},
+    )
 
 @app.get('/')
 def root():
@@ -64,6 +77,12 @@ app.include_router(
     tags=["Login"],
     responses={status.HTTP_404_NOT_FOUND: {"description": "Not found"}},
 )
+app.include_router(
+    significant_variants.router,
+    prefix="/significant_variants",
+    tags=["Significant Variants"],
+    responses={status.HTTP_404_NOT_FOUND: {"description": "Not found"}},
+)
 
 app.include_router(
     variants.router,
@@ -80,8 +99,12 @@ app.include_router(
 )
 
 app.include_router(
-    phyllogeny.router,
-    prefix="/phyllogeny",
-    tags=["Phyllogeny"],
+    phylogeny.router,
+    prefix="/phylogeny",
+    tags=["Phylogeny"],
     responses={status.HTTP_404_NOT_FOUND: {"description": "Not found"}},
 )
+
+@app.on_event("startup")
+async def startup_event():
+    await startup_db()

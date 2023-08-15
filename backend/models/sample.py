@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Union, Literal
+from typing import Union, Literal, List
 
 from .graph import SimpleGraphElement
 
@@ -63,6 +63,9 @@ class Sample(BaseModel):
 class GroupedSamples(BaseModel):
     samples: list[Sample]
     graph: list[SimpleGraphElement]
+
+class GroupedVariantSamples(GroupedSamples):
+    variant_info: Union[List, None]
 
 class Consensus(BaseModel):
     _id : str

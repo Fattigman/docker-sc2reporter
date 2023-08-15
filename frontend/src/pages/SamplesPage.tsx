@@ -9,7 +9,9 @@ export const SamplesPage = ({ token, isAdmin }) => {
   const [refresh, setRefresh] = useState<boolean>(false)
 
   useEffect(() => {
-    getSamples(token).then((samples) => setSamples(samples))
+    getSamples(token).then((samples) => {
+      setSamples(samples)
+    })
   }, [refresh])
 
   const refreshSamples = () => {

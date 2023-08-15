@@ -8,7 +8,6 @@ import { deleteSample, getPhylogeny } from 'services/api'
 export const SamplesTable = ({ token, samples, refreshSamples, isAdmin }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([])
   const [samplesIds, setSamplesIds] = useState<string>('')
-  const [sampleList, setSampleList] = useState<string>('')
   const [filteredSamples, setFilteredSamples] = useState<any>('')
   const [copiedText, setCopiedText] = useState<string>('')
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
@@ -34,10 +33,8 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin }) => {
   const rowSelection = {
     onChange: (selectedRowKeys) => {
       setSelectedRowKeys(selectedRowKeys)
-      const selectedSamplesIds = selectedRowKeys.map((item) => `&sample_ids=${item}`).join('')
-      const selectedSampleList = selectedRowKeys.map((item) => `&sample_list=${item}`).join('')
+      const selectedSamplesIds = selectedRowKeys.map((item) => `sample_id=${item}`).join('&')
       setSamplesIds(selectedSamplesIds)
-      setSampleList(selectedSampleList)
     },
     selectedRowKeys,
   }
@@ -63,6 +60,7 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin }) => {
   }
 
   const handleOk = () => {
+    console.log(copiedText)
     navigator.clipboard.writeText(copiedText)
     setIsModalOpen(false)
     window.open('https://34.125.84.98/grapetree/')
@@ -71,7 +69,7 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin }) => {
 
   const fetchPhylogenyData = async () => {
     if (selectedRowKeys.length > 2) {
-      getPhylogeny(token, group, sampleList).then((response) => {
+      getPhylogeny(token, group, samplesIds).then((response) => {
         setCopiedText(JSON.stringify(response))
         if (response != '') {
           showModal()

@@ -1,18 +1,15 @@
-from re import M
 from typing import Optional, Union
 from fastapi import Depends, HTTPException, Query
-from starlette.responses import JSONResponse
 from fastapi import APIRouter
 
 
 import pandas as pd 
 
-from crud import *
+from crud import samples, get_matrix, variants
 
 from models import *
 from authentication import *
 
-from pprint import pprint
 router = APIRouter()
 
 import time
@@ -54,22 +51,22 @@ async def single_sample(
 # Delete multiple samples and all associated data
 @router.delete("/", response_model=list[Sample])
 async def delete_samples(
-    sample_ids: list[str] | None = Query(default=None),
+    sample_id: list[str] | None = Query(default=None),
     current_user: User = Depends(get_current_active_user)
     ):
     if current_user['scope'] == 'user':
         raise HTTPException(status_code=403, detail="Not allowed")
-    samples_to_delete = await samples.get_multiple(sample_ids, id_field='sample_id')
-    await samples.delete_samples(sample_ids)
+    samples_to_delete = await samples.get_multiple(sample_id, id_field='sample_id')
+    await samples.delete_samples(sample_id)
     return samples_to_delete
 
 # Gets multiple specified samples
 @router.get("/multiple/", response_model=list[Sample])
 async def multiple_samples(
-    sample_ids:list[str] | None = Query(default=None),
+    sample_id:list[str] | None = Query(default=None),
     current_user: User = Depends(get_current_active_user)
     ):
-    return await samples.get_multiple(sample_ids, id_field='sample_id')
+    return await samples.get_multiple(sample_id, id_field='sample_id')
 
 # Gets all samples with matching specified pango type
 @router.get("/pango/", response_model=GroupedSamples)
@@ -78,18 +75,21 @@ async def get_samples_with_pangotype(
     current_user: User = Depends(get_current_active_user)
     ):
     samples_list = await samples.get_pangotype_samples(pangolin)
+    samples_list = [sample for sample in samples_list if 'collection_date' in sample]
     graph_list = group_by_dict(samples_list)
     return {'samples': samples_list, 'graph': graph_list}
 
 # Gets all samples with matching specified variant
-@router.get("/variant/",response_model=GroupedSamples)
+@router.get("/variant/", response_model=GroupedVariantSamples)
 async def get_samples_with_variant(
     variant:str ,
     current_user: User = Depends(get_current_active_user)
     ):
     samples_list = await samples.get_variant_samples(variant=variant)
-    graph_list = group_by_dict(samples_list)
-    return {'samples': samples_list, 'graph': graph_list}
+    samples_list = [sample for sample in samples_list if 'collection_date' in sample]
+    variant_info = await variants.get_single(variant)
+    plotData = group_by_dict(samples_list)
+    return {'samples': samples_list, 'graph': plotData, 'variant_info': variant_info}
 
 # Gets all samples with matching specified nextclade
 @router.get("/nextclade/", response_model=GroupedSamples)
@@ -98,6 +98,7 @@ async def get_samples_with_nextclade(
     current_user: User = Depends(get_current_active_user)
     ):
     samples_list = await samples.get_nextclade_samples(nextclade=nextclade)
+    samples_list = [sample for sample in samples_list if 'collection_date' in sample]
     graph_list = group_by_dict(samples_list)
     return {'samples': samples_list, 'graph': graph_list}
 
@@ -105,7 +106,10 @@ def group_by_dict(samples:dict):
     # group by key
     graph_list = {}
     for sample in samples:
-        sample_time = (time.strftime('%Y-%m-%w', time.localtime(sample['collection_date']['$date']/1000))) # convert epoch to datetime
+        # sample_time = (time.strftime('%Y-%m-%w', time.localtime(sample['collection_date']['$date']/1000))) # convert epoch to datetime
+        sample_time = datetime.fromtimestamp(sample['collection_date']['$date']/1000)
+        sample_time = sample_time.strftime('%Y-%m')+f'-{sample_time.day//7+1}'
+
         if sample_time in graph_list:
             graph_list[sample_time] += 1
         else:

@@ -10,19 +10,25 @@ import { LoadingPage } from './LoadingPage'
 export const SamplePage = ({ token }) => {
   const { id } = useParams()
   const [sample, setSample] = useState<any>()
+  const [errorStatus, setErrorStatus] = useState<any>()
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     setIsLoading(true)
-    getSample(token, id).then((response) => {
-      if (response?.[0]) setSample(response[0])
-      setIsLoading(false)
-    })
+    getSample(token, id)
+      .then((response) => {
+        if (response?.[0]) setSample(response[0])
+        setIsLoading(false)
+      })
+      .catch((error) => {
+        setIsLoading(false)
+        setErrorStatus(error?.response)
+      })
   }, [id])
 
   return isLoading ? (
     <LoadingPage />
-  ) : sample.sample_id ? (
+  ) : sample?.sample_id ? (
     <Card>
       <PageHeader onBack={() => history.back()} title={sample.sample_id}>
         <Descriptions bordered size="small">
@@ -84,6 +90,6 @@ export const SamplePage = ({ token }) => {
       </PageHeader>
     </Card>
   ) : (
-    <Result status="404" title="404" subTitle="Sorry, the page you visited does not exist." />
+    <Result status="error" title={errorStatus.status} subTitle={errorStatus.data.message} />
   )
 }

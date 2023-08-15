@@ -4,7 +4,7 @@ import { Card, Descriptions, Space } from 'antd'
 import { Line } from '@ant-design/plots'
 import { getVariant } from '../services/api'
 import { PageHeader } from '@ant-design/pro-layout'
-import { Loading } from 'components/Loading'
+import { LoadingPage } from './LoadingPage'
 import { SamplesTable } from 'components/SamplesTable'
 
 export const VariantPage = ({ token, isAdmin }) => {
@@ -47,7 +47,7 @@ export const VariantPage = ({ token, isAdmin }) => {
   }
 
   return isLoading ? (
-    <Loading />
+    <LoadingPage />
   ) : (
     <>
       <Card>
