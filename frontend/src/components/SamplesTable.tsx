@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Button, Card, Modal, notification, Popconfirm, Space, Table, Tag } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { Button, Card, Modal, notification, Popconfirm, Space, Table, Tag, Input } from 'antd'
 import { formatDate, sortDate } from '../helpers'
 import { CheckCircleTwoTone } from '@ant-design/icons'
 import { Link, useLocation } from 'react-router-dom'
@@ -9,6 +9,7 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([])
   const [samplesIds, setSamplesIds] = useState<string>('')
   const [sampleList, setSampleList] = useState<string>('')
+  const [filteredSamples, setFilteredSamples] = useState<any>('')
   const [copiedText, setCopiedText] = useState<string>('')
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const location = useLocation()
@@ -17,6 +18,18 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin }) => {
   const variants = 'variants'
   const group = 'samples'
   const hasSelected = selectedRowKeys.length > 0
+  const { Search } = Input
+
+  useEffect(() => {
+    setFilteredSamples(samples)
+  }, [samples])
+
+  const onSearch = (value) => {
+    const filtered = samples.filter((sample) =>
+      sample.sample_id.toLowerCase().includes(value.toLowerCase())
+    )
+    setFilteredSamples(filtered)
+  }
 
   const rowSelection = {
     onChange: (selectedRowKeys) => {
@@ -185,9 +198,18 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin }) => {
           the designated rectangle. Finally, click on the &apos;Confirm&apos; button to proceed.
         </p>
       </Modal>
+      <div style={{ float: 'right' }}>
+        <Search
+          placeholder="Search by sample ID"
+          onSearch={onSearch}
+          enterButton
+          allowClear
+          style={{ width: '300px' }}
+        />
+      </div>
       <Table
         pagination={false}
-        dataSource={samples}
+        dataSource={filteredSamples}
         columns={columns}
         rowKey={'sample_id'}
         loading={!samples}
