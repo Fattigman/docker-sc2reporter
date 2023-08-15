@@ -60,7 +60,6 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin }) => {
   }
 
   const handleOk = () => {
-    console.log(copiedText)
     navigator.clipboard.writeText(copiedText)
     setIsModalOpen(false)
     window.open('https://34.125.84.98/grapetree/')
