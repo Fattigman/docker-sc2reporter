@@ -84,7 +84,7 @@ export const getPangolin = async (token, pangolin): Promise<any> => {
 }
 
 export const getVariant = async (token, variant): Promise<any> => {
-  const endPoint = `${REACT_APP_BACKEND_URL}/variants/?variant=${variant}`
+  const endPoint = `${REACT_APP_BACKEND_URL}/samples/variant/?variant=${variant}`
   return new Promise((resolve, reject) => {
     axios
       .get(endPoint, {

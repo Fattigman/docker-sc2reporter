@@ -1,41 +1,46 @@
-import React, { useState } from 'react'
-import { Button, Modal, notification, Popconfirm, Table, Tag } from 'antd'
-import { PageHeader } from '@ant-design/pro-layout'
+import React, { useEffect, useState } from 'react'
+import { Button, Card, Modal, notification, Popconfirm, Space, Table, Tag, Input } from 'antd'
 import { formatDate, sortDate } from '../helpers'
 import { CheckCircleTwoTone } from '@ant-design/icons'
 import { Link, useLocation } from 'react-router-dom'
 import { deleteSample, getPhylogeny } from 'services/api'
 
-export const SamplesTable = ({
-  token,
-  samples,
-  refreshSamples,
-  isAdmin,
-  title,
-  subTitle,
-  loading,
-}) => {
+export const SamplesTable = ({ token, samples, refreshSamples, isAdmin }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([])
-  const [samplesId, setSamplesId] = useState<string>('')
+  const [sampleIds, setSampleIds] = useState<string>('')
+  const [filteredSamples, setFilteredSamples] = useState<any>('')
   const [copiedText, setCopiedText] = useState<string>('')
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const location = useLocation()
   const nextclade = 'nextclade'
   const pangolin = 'pangolin'
+  const variants = 'variants'
   const group = 'samples'
   const hasSelected = selectedRowKeys.length > 0
+  const { Search } = Input
+
+  useEffect(() => {
+    setFilteredSamples(samples)
+  }, [samples])
+
+  const onSearch = (value) => {
+    const filtered = samples.filter((sample) =>
+      sample.sample_id.toLowerCase().includes(value.toLowerCase())
+    )
+    setFilteredSamples(filtered)
+  }
 
   const rowSelection = {
     onChange: (selectedRowKeys) => {
       setSelectedRowKeys(selectedRowKeys)
       const selectedSamplesIds = selectedRowKeys.map((item) => `sample_id=${item}`).join('&')
-      setSamplesId(selectedSamplesIds)
+      setSampleIds(selectedSamplesIds)
     },
     selectedRowKeys,
   }
 
   const confirmDelete = () => {
-    deleteSample(token, samplesId).then(() => {
+    deleteSample(token, sampleIds).then(() => {
       notification['success']({
         message:
           selectedRowKeys.length > 1
@@ -63,9 +68,8 @@ export const SamplesTable = ({
 
   const fetchPhylogenyData = async () => {
     if (selectedRowKeys.length > 2) {
-      getPhylogeny(token, group, samplesId).then((response) => {
+      getPhylogeny(token, group, sampleIds).then((response) => {
         setCopiedText(JSON.stringify(response))
-        console.log(response)
         if (response != '') {
           showModal()
           navigator.clipboard.writeText(JSON.stringify(response))
@@ -150,6 +154,7 @@ export const SamplesTable = ({
           </Link>
         )),
       ellipsis: true,
+      hidden: location?.pathname?.includes(variants),
     },
     {
       title: 'Collection date',
@@ -166,49 +171,51 @@ export const SamplesTable = ({
   ].filter((column) => !column.hidden)
 
   return (
-    <>
-      <PageHeader
-        onBack={title !== 'Samples' ? () => history.back() : undefined}
-        title={title}
-        subTitle={subTitle}
-        extra={[
-          <Button key="1" onClick={fetchPhylogenyData} type="primary">
-            Fetch Phylogeny Data
-          </Button>,
-          isAdmin && (
-            <Popconfirm
-              title="Are you sure you want to delete?"
-              disabled={!hasSelected}
-              onConfirm={confirmDelete}
-            >
-              <Button disabled={!hasSelected} type="primary">
-                Delete
-              </Button>
-            </Popconfirm>
-          ),
-        ]}
-      >
-        <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-          <p>
-            After clicking &apos;OK&apos; the Phylogeny data will be copied. Then, the Grapetree
-            website will open automatically. Once the website loads, click on the &apos;Load
-            files&apos; button. Paste the copied data into the provided rectangle. Finally, click
-            &apos;Confirm&apos; to complete the process.
-          </p>
-        </Modal>
-        <Table
-          pagination={false}
-          dataSource={samples}
-          columns={columns}
-          rowKey={'sample_id'}
-          loading={loading}
-          bordered
-          rowSelection={{
-            ...rowSelection,
-          }}
-          style={{ marginTop: '30px' }}
+    <Card>
+      <Space direction="horizontal">
+        <Button onClick={fetchPhylogenyData} type="primary">
+          Fetch Phylogeny Data
+        </Button>
+        {isAdmin && (
+          <Popconfirm
+            title="Are you sure you want to delete?"
+            disabled={!hasSelected}
+            onConfirm={confirmDelete}
+          >
+            <Button disabled={!hasSelected} type="primary">
+              Delete
+            </Button>
+          </Popconfirm>
+        )}
+      </Space>
+      <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+        <p>
+          The Phylogeny data has been successfully copied. Please click &apos;OK&apos; to go to the
+          Grapetree site, then click on the &apos;Load files&apos; button and paste the data into
+          the designated rectangle. Finally, click on the &apos;Confirm&apos; button to proceed.
+        </p>
+      </Modal>
+      <div style={{ float: 'right' }}>
+        <Search
+          placeholder="Search by sample ID"
+          onSearch={onSearch}
+          enterButton
+          allowClear
+          style={{ width: '300px' }}
         />
-      </PageHeader>
-    </>
+      </div>
+      <Table
+        pagination={false}
+        dataSource={filteredSamples}
+        columns={columns}
+        rowKey={'sample_id'}
+        loading={!samples}
+        bordered
+        rowSelection={{
+          ...rowSelection,
+        }}
+        style={{ marginTop: '30px' }}
+      />
+    </Card>
   )
 }
