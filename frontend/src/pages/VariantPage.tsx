@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Card, Descriptions, Space } from 'antd'
-import { Line } from '@ant-design/plots'
 import { getVariant } from '../services/api'
 import { PageHeader } from '@ant-design/pro-layout'
 import { LoadingPage } from './LoadingPage'
 import { SamplesTable } from 'components/SamplesTable'
+import { LineGraphComponent } from 'components/LineGraphComponent'
 
 export const VariantPage = ({ token, isAdmin }) => {
   const [variant, setVariant] = useState<any>()
@@ -30,22 +30,6 @@ export const VariantPage = ({ token, isAdmin }) => {
       })
   }, [id, refresh])
 
-  const config = {
-    data,
-    xField: 'date',
-    yField: 'count',
-    label: {},
-    point: {
-      size: 2,
-      shape: 'circle',
-      style: {
-        fill: 'white',
-        stroke: '#5B8FF9',
-        lineWidth: 2,
-      },
-    },
-  }
-
   return isLoading ? (
     <LoadingPage />
   ) : (
@@ -62,7 +46,7 @@ export const VariantPage = ({ token, isAdmin }) => {
               <Descriptions.Item label="External link: CoVariants">{'----'}</Descriptions.Item>
             </Descriptions>
             <Card title={'Variant frequency over time'}>
-              <Line {...config} />
+              <LineGraphComponent data={data} />
             </Card>
             <Card>
               <SamplesTable

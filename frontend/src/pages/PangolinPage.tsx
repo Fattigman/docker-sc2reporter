@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Card, Space } from 'antd'
-import { Line } from '@ant-design/plots'
 import { SamplesTable } from 'components/SamplesTable'
 import { useParams } from 'react-router-dom'
 import { getPangolin } from 'services/api'
 import { PageHeader } from '@ant-design/pro-layout'
 import { LoadingPage } from './LoadingPage'
+import { LineGraphComponent } from 'components/LineGraphComponent'
 
 export const PangolinPage = ({ token, isAdmin }) => {
   const [samples, setSamples] = useState<any>()
@@ -29,22 +29,6 @@ export const PangolinPage = ({ token, isAdmin }) => {
       })
   }, [id, refresh])
 
-  const config = {
-    data,
-    xField: 'date',
-    yField: 'count',
-    label: {},
-    point: {
-      size: 2,
-      shape: 'circle',
-      style: {
-        fill: 'white',
-        stroke: '#5B8FF9',
-        lineWidth: 2,
-      },
-    },
-  }
-
   return isLoading ? (
     <LoadingPage />
   ) : (
@@ -57,7 +41,7 @@ export const PangolinPage = ({ token, isAdmin }) => {
         >
           <Space direction="vertical" size="large" style={{ display: 'flex' }}>
             <Card title={'Pango type over time'}>
-              <Line {...config} />
+              <LineGraphComponent data={data} />
             </Card>
             <Card>
               <SamplesTable
