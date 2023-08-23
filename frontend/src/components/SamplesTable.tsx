@@ -11,6 +11,7 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin }) => {
   const [filteredSamples, setFilteredSamples] = useState<any>('')
   const [copiedText, setCopiedText] = useState<string>('')
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
   const location = useLocation()
   const nextclade = 'nextclade'
   const pangolin = 'pangolin'
@@ -20,6 +21,9 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin }) => {
 
   useEffect(() => {
     setFilteredSamples(samples)
+    if (samples) {
+      setIsLoading(false)
+    }
   }, [samples])
 
   const onSearch = (value) => {
@@ -40,7 +44,9 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin }) => {
 
   const confirmDelete = () => {
     if (selectedRowKeys.length > 0) {
+      setIsLoading(true)
       deleteSample(token, sampleIds).then(() => {
+        setIsLoading(false)
         notification['success']({
           message:
             selectedRowKeys.length > 1
@@ -87,9 +93,11 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin }) => {
 
   const compareSamples = async () => {
     if (selectedRowKeys.length > 1) {
+      setIsLoading(true)
       setSelectedRowKeys([])
       getSamplesCompare(token, sampleIds).then((response) => {
         setFilteredSamples(response)
+        setIsLoading(false)
       })
     } else {
       notification['info']({
@@ -100,8 +108,12 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin }) => {
   }
 
   const reloadSamples = () => {
+    setIsLoading(true)
     setSelectedRowKeys([])
     setFilteredSamples(samples)
+    setTimeout(() => {
+      setIsLoading(false)
+    }, 500)
   }
 
   const columns = [
@@ -236,7 +248,7 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin }) => {
         dataSource={filteredSamples}
         columns={columns}
         rowKey={'sample_id'}
-        loading={!samples}
+        loading={isLoading}
         bordered
         rowSelection={{
           ...rowSelection,
