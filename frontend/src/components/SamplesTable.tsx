@@ -16,7 +16,6 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin }) => {
   const pangolin = 'pangolin'
   const variants = 'variants'
   const group = 'samples'
-  const hasSelected = selectedRowKeys.length > 0
   const { Search } = Input
 
   useEffect(() => {
@@ -40,15 +39,17 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin }) => {
   }
 
   const confirmDelete = () => {
-    deleteSample(token, sampleIds).then(() => {
-      notification['success']({
-        message:
-          selectedRowKeys.length > 1
-            ? `Samples (${selectedRowKeys}) have been successfully deleted.`
-            : `Sample (${selectedRowKeys}) has been successfully deleted.`,
+    if (selectedRowKeys.length > 1) {
+      deleteSample(token, sampleIds).then(() => {
+        notification['success']({
+          message:
+            selectedRowKeys.length > 1
+              ? `Samples (${selectedRowKeys}) have been successfully deleted.`
+              : `Sample (${selectedRowKeys}) has been successfully deleted.`,
+        })
+        refreshSamples()
       })
-      refreshSamples()
-    })
+    }
   }
 
   const showModal = () => {
@@ -203,13 +204,14 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin }) => {
         </Button>
         {isAdmin && (
           <Popconfirm
-            title="Are you sure you want to delete?"
-            disabled={!hasSelected}
+            title={
+              selectedRowKeys.length
+                ? 'Are you sure you want to delete?'
+                : 'Please select a sample to delete first.'
+            }
             onConfirm={confirmDelete}
           >
-            <Button disabled={!hasSelected} type="primary">
-              Delete
-            </Button>
+            <Button type="primary">Delete</Button>
           </Popconfirm>
         )}
       </Space>
