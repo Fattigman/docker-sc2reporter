@@ -3,7 +3,7 @@ import { Button, Card, Modal, notification, Popconfirm, Space, Table, Tag, Input
 import { formatDate, sortDate } from '../helpers'
 import { CheckCircleTwoTone } from '@ant-design/icons'
 import { Link, useLocation } from 'react-router-dom'
-import { deleteSample, getPhylogeny } from 'services/api'
+import { deleteSample, getPhylogeny, getSamplesCompare } from 'services/api'
 
 export const SamplesTable = ({ token, samples, refreshSamples, isAdmin }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([])
@@ -84,8 +84,23 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin }) => {
     }
   }
 
-  const samplesReport = async () => {
-    console.log(sampleIds)
+  const compareSamples = async () => {
+    if (selectedRowKeys.length > 1) {
+      setSelectedRowKeys([])
+      getSamplesCompare(token, sampleIds).then((response) => {
+        setFilteredSamples(response)
+      })
+    } else {
+      notification['info']({
+        message: 'Please select at least two samples to compare',
+        duration: 8,
+      })
+    }
+  }
+
+  const reloadSamples = () => {
+    setSelectedRowKeys([])
+    setFilteredSamples(samples)
   }
 
   const columns = [
@@ -177,11 +192,14 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin }) => {
   return (
     <Card>
       <Space direction="horizontal">
-        <Button onClick={samplesReport} type="primary">
-          Selected Samples Report
-        </Button>
         <Button onClick={fetchPhylogenyData} type="primary">
           Fetch Phylogeny Data
+        </Button>
+        <Button type="primary" onClick={reloadSamples}>
+          Reload
+        </Button>
+        <Button onClick={compareSamples} type="primary">
+          Compere
         </Button>
         {isAdmin && (
           <Popconfirm

@@ -83,6 +83,25 @@ export const getPangolin = async (token, pangolin): Promise<any> => {
   })
 }
 
+export const getSamplesCompare = async (token, samples): Promise<any> => {
+  const endPoint = `${REACT_APP_BACKEND_URL}/samples/multiple/?${samples}`
+  return new Promise((resolve, reject) => {
+    axios
+      .get(endPoint, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => resolve(response.data))
+      .catch((error) => {
+        handleBackendError(error)
+        notification.error({
+          message: 'Could not load samples report info',
+          description: 'Something went wrong',
+        })
+        reject(error)
+      })
+  })
+}
+
 export const getVariant = async (token, variant): Promise<any> => {
   const endPoint = `${REACT_APP_BACKEND_URL}/samples/variant/?variant=${variant}`
   return new Promise((resolve, reject) => {
