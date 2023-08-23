@@ -39,7 +39,7 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin }) => {
   }
 
   const confirmDelete = () => {
-    if (selectedRowKeys.length > 1) {
+    if (selectedRowKeys.length > 0) {
       deleteSample(token, sampleIds).then(() => {
         notification['success']({
           message:
