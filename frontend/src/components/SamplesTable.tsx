@@ -84,6 +84,10 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin }) => {
     }
   }
 
+  const samplesReport = async () => {
+    console.log(sampleIds)
+  }
+
   const columns = [
     {
       title: 'ID',
@@ -173,6 +177,9 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin }) => {
   return (
     <Card>
       <Space direction="horizontal">
+        <Button onClick={samplesReport} type="primary">
+          Selected Samples Report
+        </Button>
         <Button onClick={fetchPhylogenyData} type="primary">
           Fetch Phylogeny Data
         </Button>
