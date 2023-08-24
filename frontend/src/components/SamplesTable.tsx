@@ -104,6 +104,7 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin }) => {
         message: 'Please select at least two samples to compare',
         duration: 8,
       })
+      setIsLoading(false)
     }
   }
 
