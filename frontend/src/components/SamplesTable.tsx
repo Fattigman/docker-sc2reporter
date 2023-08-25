@@ -3,7 +3,7 @@ import { Button, Card, Modal, notification, Popconfirm, Space, Table, Tag, Input
 import { formatDate, sortDate } from '../helpers'
 import { CheckCircleTwoTone } from '@ant-design/icons'
 import { Link, useLocation } from 'react-router-dom'
-import { deleteSample, getPhylogeny } from 'services/api'
+import { deleteSample, getPhylogeny, getSamplesCompare } from 'services/api'
 
 export const SamplesTable = ({ token, samples, refreshSamples, isAdmin }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([])
@@ -11,16 +11,19 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin }) => {
   const [filteredSamples, setFilteredSamples] = useState<any>('')
   const [copiedText, setCopiedText] = useState<string>('')
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
   const location = useLocation()
   const nextclade = 'nextclade'
   const pangolin = 'pangolin'
   const variants = 'variants'
   const group = 'samples'
-  const hasSelected = selectedRowKeys.length > 0
   const { Search } = Input
 
   useEffect(() => {
     setFilteredSamples(samples)
+    if (samples) {
+      setIsLoading(false)
+    }
   }, [samples])
 
   const onSearch = (value) => {
@@ -40,15 +43,19 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin }) => {
   }
 
   const confirmDelete = () => {
-    deleteSample(token, sampleIds).then(() => {
-      notification['success']({
-        message:
-          selectedRowKeys.length > 1
-            ? `Samples (${selectedRowKeys}) have been successfully deleted.`
-            : `Sample (${selectedRowKeys}) has been successfully deleted.`,
+    if (selectedRowKeys.length > 0) {
+      setIsLoading(true)
+      deleteSample(token, sampleIds).then(() => {
+        setIsLoading(false)
+        notification['success']({
+          message:
+            selectedRowKeys.length > 1
+              ? `Samples (${selectedRowKeys}) have been successfully deleted.`
+              : `Sample (${selectedRowKeys}) has been successfully deleted.`,
+        })
+        refreshSamples()
       })
-      refreshSamples()
-    })
+    }
   }
 
   const showModal = () => {
@@ -82,6 +89,32 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin }) => {
         duration: 8,
       })
     }
+  }
+
+  const compareSamples = async () => {
+    if (selectedRowKeys.length > 1) {
+      setIsLoading(true)
+      setSelectedRowKeys([])
+      getSamplesCompare(token, sampleIds).then((response) => {
+        setFilteredSamples(response)
+        setIsLoading(false)
+      })
+    } else {
+      setIsLoading(false)
+      notification['info']({
+        message: 'Please select at least two samples to compare',
+        duration: 8,
+      })
+    }
+  }
+
+  const reloadSamples = () => {
+    setIsLoading(true)
+    setSelectedRowKeys([])
+    setFilteredSamples(samples)
+    setTimeout(() => {
+      setIsLoading(false)
+    }, 500)
   }
 
   const columns = [
@@ -176,15 +209,22 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin }) => {
         <Button onClick={fetchPhylogenyData} type="primary">
           Fetch Phylogeny Data
         </Button>
+        <Button type="primary" onClick={reloadSamples}>
+          Reload
+        </Button>
+        <Button onClick={compareSamples} type="primary">
+          Compere
+        </Button>
         {isAdmin && (
           <Popconfirm
-            title="Are you sure you want to delete?"
-            disabled={!hasSelected}
+            title={
+              selectedRowKeys.length
+                ? 'Are you sure you want to delete?'
+                : 'Please select a sample to delete first.'
+            }
             onConfirm={confirmDelete}
           >
-            <Button disabled={!hasSelected} type="primary">
-              Delete
-            </Button>
+            <Button type="primary">Delete</Button>
           </Popconfirm>
         )}
       </Space>
@@ -209,7 +249,7 @@ export const SamplesTable = ({ token, samples, refreshSamples, isAdmin }) => {
         dataSource={filteredSamples}
         columns={columns}
         rowKey={'sample_id'}
-        loading={!samples}
+        loading={isLoading}
         bordered
         rowSelection={{
           ...rowSelection,
