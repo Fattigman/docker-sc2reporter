@@ -85,7 +85,9 @@ class CRUDBase(Generic[CreateSchemaType, UpdateSchemaType]):
         result = await db[self.collection_name].insert_one(obj_in)
         return result
 
-    async def update(self, id: str, obj_in: BaseModel, id_field: str = "_id") -> Optional[str]:
+    async def update(
+        self, id: str, obj_in: BaseModel, id_field: str = "_id"
+    ) -> Optional[str]:
         """
         Update a document in the collection based on an ID.
 

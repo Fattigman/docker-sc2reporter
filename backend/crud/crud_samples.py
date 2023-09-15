@@ -16,6 +16,7 @@ class CRUDSamples(CRUDBase):
     """
     CRUD operations for the Samples collection.
     """
+
     def __init__(self):
         """
         Initialize CRUD operations for the Samples collection.

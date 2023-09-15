@@ -19,7 +19,7 @@ async def get_depth_endpoint(current_user: User = Depends(get_current_active_use
 
 @router.get("/{id}", response_model=List[Depth])
 async def get_single_depth_endpoint(
-    id: str = Query(..., description="The sample id of the depth sequence to get"),
+    id: str,
     current_user: User = Depends(get_current_active_user),
 ):
     data = await depth.get_single(id, "sample_id")
@@ -35,9 +35,7 @@ async def get_single_depth_endpoint(
 
 @router.get("/multiple", response_model=List[Depth])
 async def get_multiple_depth_endpoint(
-    ids: List[str] = Query(
-        ..., description="List of sample ids of the depth sequences to get"
-    ),
+    ids: List[str],
     current_user: User = Depends(get_current_active_user),
 ):
     data = await depth.get_multiple(ids, "sample_id")

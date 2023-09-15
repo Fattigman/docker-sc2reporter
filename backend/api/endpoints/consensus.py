@@ -1,4 +1,4 @@
-from fastapi import Depends, Query, Body, HTTPException, status
+from fastapi import Depends, Body, HTTPException, status
 from crud import consensus
 from models import Consensus, User
 from authentication import get_current_active_user
@@ -20,7 +20,7 @@ async def get_consensus_endpoint(current_user: User = Depends(get_current_active
 
 @router.get("/{id}", response_model=List[Consensus])
 async def get_single_consensus_endpoint(
-    id: str = Query(..., description="The sample id of the consensus sequence to get"),
+    id: str,
     current_user: User = Depends(get_current_active_user),
 ):
     data = await consensus.get_single(id, "sample_id")
@@ -36,9 +36,7 @@ async def get_single_consensus_endpoint(
 
 @router.get("/multiple", response_model=List[Consensus])
 async def get_multiple_consensus_endpoint(
-    ids: List[str] = Query(
-        ..., description="List of sample ids of the consensus sequences to get"
-    ),
+    ids: List[str],
     current_user: User = Depends(get_current_active_user),
 ):
     data = await consensus.get_multiple(ids, "sample_id")

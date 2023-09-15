@@ -20,7 +20,7 @@ async def get_Variant_endpoint(current_user: User = Depends(get_current_active_u
 
 @router.get("/{id}", response_model=List[Variant])
 async def get_single_Variant_endpoint(
-    id: str = Query(..., description="The sample id of the Variant sequence to get"),
+    id: str,
     current_user: User = Depends(get_current_active_user),
 ):
     data = await variants.get_single(id)
@@ -36,9 +36,7 @@ async def get_single_Variant_endpoint(
 
 @router.get("/multiple", response_model=List[Variant])
 async def get_multiple_Variant_endpoint(
-    ids: List[str] = Query(
-        ..., description="List of sample ids of the Variant sequences to get"
-    ),
+    ids: List[str],
     current_user: User = Depends(get_current_active_user),
 ):
     data = await variants.get_multiple(ids)

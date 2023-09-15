@@ -36,10 +36,18 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-
 @app.exception_handler(HTTPException)
 async def http_exception_handler(request, exc):
+    """
+    Handle HTTP exceptions and return appropriate JSON responses.
+
+    Args:
+    - request: The incoming request.
+    - exc (HTTPException): The exception to handle.
+
+    Returns:
+    - JSONResponse: The response containing error details.
+    """
     if exc.status_code == 500:
         return JSONResponse(
             status_code=500,
@@ -52,9 +60,14 @@ async def http_exception_handler(request, exc):
         content={"message": exc.detail},
     )
 
-
 @app.get("/")
 def root():
+    """
+    Root endpoint for the API.
+
+    Returns:
+    - dict: A welcome message and the root path.
+    """
     return {
         "message": "Hello and welcome to the SarsCov 2 API",
         "root_path": app.root_path,
@@ -126,4 +139,8 @@ app.include_router(
 
 @app.on_event("startup")
 async def startup_event():
+    """
+    Event handler for when the application starts up.
+    Initializes the database connection.
+    """
     await startup_db()
