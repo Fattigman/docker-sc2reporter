@@ -14,53 +14,67 @@ Genereic CRUD class for all models.
 This will handle all the basic CRUD operations.
 In order to create more specific models, inherit from this class.
 """
+
+
 class CRUDBase(Generic[CreateSchemaType, UpdateSchemaType]):
     def __init__(self, model: Type[BaseModel], collection_name: str):
         self.model = model
         self.collection_name = collection_name
 
     async def get(self, query: Optional[any] = None):
-        print (self.collection_name)
-        cursor =  db[self.collection_name].find(query)
+        print(self.collection_name)
+        cursor = db[self.collection_name].find(query)
         docs = [parse_json(x) for x in await cursor.to_list(None)]
-        return (docs)
+        return docs
 
-    async def get_single(self, id : str, id_field: str = "_id"):
-        curr =  db[self.collection_name].find({id_field: id})
+    async def get_single(self, id: str, id_field: str = "_id"):
+        curr = db[self.collection_name].find({id_field: id})
         docs = [parse_json(x) for x in await curr.to_list(None)]
-        return  docs
+        return docs
 
     async def get_multiple(self, ids, id_field: str = "_id"):
-        curr =  db[self.collection_name].find({id_field: {'$in': ids}})
+        curr = db[self.collection_name].find({id_field: {"$in": ids}})
         docs = [parse_json(x) for x in await curr.to_list(None)]
-        return  docs
+        return docs
 
     async def create(self, obj_in: BaseModel):
         obj_in = obj_in.dict()
         result = await db[self.collection_name].insert_one(obj_in)
         return result
-    
+
     async def update(self, id: str, obj_in: BaseModel, id_field: str = "_id"):
         # Returns None if no document was updated
         # else returns the _id of the updated document
         obj_in = obj_in.dict()
-        result = await db[self.collection_name].update_one({id_field: id}, {"$set": obj_in})
+        result = await db[self.collection_name].update_one(
+            {id_field: id}, {"$set": obj_in}
+        )
         return result.upserted_id
-    async def patch(self, id: str, obj_in: BaseModel, patch_field: str, patch_value, id_field: str = "_id"):
+
+    async def patch(
+        self,
+        id: str,
+        obj_in: BaseModel,
+        patch_field: str,
+        patch_value,
+        id_field: str = "_id",
+    ):
         # Updates only the patch_field
         # Returns None if no document was updated
         # else returns the _id of the updated document
-        result = await db[self.collection_name].update_one({id_field: id}, {"$set": {patch_field: patch_value}})
+        result = await db[self.collection_name].update_one(
+            {id_field: id}, {"$set": {patch_field: patch_value}}
+        )
         return result.upserted_id
-        
+
     async def delete(self, id: str, id_field: str = "_id"):
         result = await db[self.collection_name].delete_one({id_field: id})
         return result
-    
+
     async def delete_multiple(self, ids, id_field: str = "_id"):
-        result = await db[self.collection_name].delete_many({id_field: {'$in': ids}})
+        result = await db[self.collection_name].delete_many({id_field: {"$in": ids}})
         return result
-    
+
     async def delete_all(self):
         result = await db[self.collection_name].delete_many({})
         return result
