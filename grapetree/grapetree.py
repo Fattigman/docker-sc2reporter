@@ -29,10 +29,10 @@ from __future__ import print_function, absolute_import
 try:
     from .module import app
     from .module.MSTrees import backend, add_args
-except :
+except:
     from module import app
     from module.MSTrees import backend, add_args
-    
+
 import threading
 import webbrowser
 import traceback
@@ -41,44 +41,46 @@ import os, sys, shutil
 import multiprocessing
 
 
-__licence__ = 'GPLv3'
-__author__ = 'EnteroBase development team'
-__author_email__ = 'zhemin.zhou@warwick.ac.uk'
+__licence__ = "GPLv3"
+__author__ = "EnteroBase development team"
+__author_email__ = "zhemin.zhou@warwick.ac.uk"
 
-epi = "Licence: " + __licence__ + " by " + __author__ + \
-    " <" + __author_email__ + ">"
+epi = "Licence: " + __licence__ + " by " + __author__ + " <" + __author_email__ + ">"
 
 
 def open_browser(PORT):
     """Start a browser after waiting for half a second."""
+
     def _open_browser():
-        webbrowser.open('http://localhost:%s' % PORT)
+        webbrowser.open("http://localhost:%s" % PORT)
+
     thread = threading.Timer(0.5, _open_browser)
     thread.start()
 
 
-def main() :
-    if len(sys.argv) > 1 :
+def main():
+    if len(sys.argv) > 1:
         sys.stdout.write(backend(**add_args()))
-    else :
+    else:
         try:
-            desc = __doc__.split('\n\n')[1].strip()
+            desc = __doc__.split("\n\n")[1].strip()
             parser = argparse.ArgumentParser(description=desc, epilog=epi)
             args = parser.parse_args()
-            open_browser(app.config.get('PORT'))
-            app.run(port=app.config.get('PORT'), host=app.config.get('HOST'))
+            open_browser(app.config.get("PORT"))
+            app.run(port=app.config.get("PORT"), host=app.config.get("HOST"))
             sys.exit(0)
         except KeyboardInterrupt as e:  # Ctrl-C
             raise e
         except SystemExit as e:  # sys.exit()
             raise e
-        else :
-            sys.stdout.write( 'ERROR, UNEXPECTED EXCEPTION' )
+        else:
+            sys.stdout.write("ERROR, UNEXPECTED EXCEPTION")
             traceback.print_exc()
             os._exit(1)
 
+
 if __name__ == "__main__":
-    #from module import views
-    #views.sendToMicroReact(debug='debug')
+    # from module import views
+    # views.sendToMicroReact(debug='debug')
     multiprocessing.freeze_support()
     main()
