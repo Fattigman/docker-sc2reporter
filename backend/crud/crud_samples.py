@@ -13,12 +13,28 @@ from models import Sample
 
 
 class CRUDSamples(CRUDBase):
+    """
+    CRUD operations for the Samples collection.
+    """
     def __init__(self):
+        """
+        Initialize CRUD operations for the Samples collection.
+        """
         super().__init__(Sample, "sample")
 
     def filter_variant_pipeline(
         self, variants: list[str], filter_dict: dict = {}
     ) -> list[dict]:
+        """
+        Create a pipeline to filter variants.
+
+        Args:
+        - variants (list[str]): List of variants to filter.
+        - filter_dict (dict, default={}): Additional filters.
+
+        Returns:
+        - list[dict]: The pipeline for filtering.
+        """
         if filter_dict == {}:
             filter_dict = {"pangolin.type": {"$ne": "None"}}
 
@@ -51,6 +67,15 @@ class CRUDSamples(CRUDBase):
         return pipeline
 
     async def get_samples(self, advanced_search: bool = False):
+        """
+        Retrieve samples, optionally using advanced search.
+
+        Args:
+        - advanced_search (bool, default=False): Whether to use advanced search.
+
+        Returns:
+        - list[dict]: List of samples.
+        """
         if not advanced_search:
             variants = await significant_variants.get()
             variants = variants[0]["variants"]
@@ -65,6 +90,15 @@ class CRUDSamples(CRUDBase):
 
     # Get samples associated with a specific type
     async def get_pangotype_samples(self, pangolin: str):
+        """
+        Retrieve samples associated with a specific pangolin type.
+
+        Args:
+        - pangolin (str): The pangolin type.
+
+        Returns:
+        - list[dict]: List of samples.
+        """
         variants = await significant_variants.get()
         variants = variants[0]["variants"]
         pipeline = self.filter_variant_pipeline(variants, {"pangolin.type": pangolin})
@@ -73,6 +107,15 @@ class CRUDSamples(CRUDBase):
         return docs
 
     async def get_variant_samples(self, variant: str):
+        """
+        Retrieve samples associated with a specific variant.
+
+        Args:
+        - variant (str): The variant.
+
+        Returns:
+        - list[dict]: List of samples.
+        """
         variants = await significant_variants.get()
         variants = variants[0]["variants"]
         pipeline = self.filter_variant_pipeline(variants, {"variants.id": variant})
@@ -81,11 +124,26 @@ class CRUDSamples(CRUDBase):
         return docs
 
     async def get_nextclade_samples(self, nextclade: str):
+        """
+        Retrieve samples associated with a specific nextclade.
+
+        Args:
+        - nextclade (str): The nextclade.
+
+        Returns:
+        - list[dict]: List of samples.
+        """
         curr = db.sample.find({"nextclade": nextclade})
         docs = [parse_json(x) for x in await curr.to_list(None)]
         return docs
 
     async def get_selection_criterions(self):
+        """
+        Retrieve selection criterions.
+
+        Returns:
+        - list: List of selection criterions.
+        """
         curr = db.sample.aggregate(
             [
                 {
@@ -108,6 +166,15 @@ class CRUDSamples(CRUDBase):
         return docs
 
     async def group_by_samples(self, selection_criterion: list = []):
+        """
+        Group samples by selection criterion.
+
+        Args:
+        - selection_criterion (list, default=[]): List of selection criterions.
+
+        Returns:
+        - list[dict]: List of grouped samples.
+        """
         if selection_criterion == []:
             selection_criterion = await self.get_selection_criterions()
         curr = db.sample.aggregate(
@@ -178,6 +245,13 @@ class CRUDSamples(CRUDBase):
         return docs
 
     async def get_general_stats(self):
+        """
+        Retrieve general statistics.
+
+        Returns:
+        - dict: Dictionary containing general statistics.
+        """
+
         curr = db.sample.aggregate(
             [
                 {
@@ -217,6 +291,15 @@ class CRUDSamples(CRUDBase):
         }
 
     async def delete_samples(self, sample_names: list):
+        """
+        Delete samples based on their names.
+
+        Args:
+        - sample_names (list): List of sample names.
+
+        Returns:
+        - int: Number of deleted samples.
+        """
         curr = await db.sample.delete_many({"sample_id": {"$in": sample_names}})
         curr = await db.consensus.delete_many({"sample_id": {"$in": sample_names}})
         curr = await db.depth.delete_many({"sample_id": {"$in": sample_names}})
@@ -227,4 +310,13 @@ samples = CRUDSamples()
 
 
 def flatten(l):
+    """
+    Flatten a list of lists.
+
+    Args:
+    - l (list): List of lists.
+
+    Returns:
+    - list: Flattened list.
+    """
     return [item for sublist in l for item in sublist]
