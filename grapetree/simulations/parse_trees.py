@@ -7,7 +7,7 @@ target = sys.argv[2]
 
 tree_hash = {}
 begin = False
-file = open(trees_file, "r")
+file = open(trees_file,"r")
 for line in file:
     if "=" in line:
         begin = True
@@ -19,7 +19,6 @@ for line in file:
         tree_hash[name] = x[1].lstrip(" ")
 
 file.close()
-
 
 def parse_weird_tree(tree_string):
     s = tree_string.split("]")
@@ -35,26 +34,25 @@ def parse_weird_tree(tree_string):
         else:
             normTree += elem
     tree = Tree(normTree, format=1)
-    # tree.unroot()
+    #tree.unroot()
     for node in tree.traverse():
         if node.name in doubleTaxa:
             for elem in doubleTaxa[node.name]:
                 n = elem.rstrip("}")
                 node.add_child(name=n)
-    # strategy: remove [] first, remember all nodes that represent multiple taxa
-    # build ete2 tree
-    # add additional taxa: if leaf, add sister leaf
-    # if internal, add sister node as leaf (should be fine for def of splits)
-    a = tree.write(format=1, format_root_node=True)
+    #strategy: remove [] first, remember all nodes that represent multiple taxa
+    #build ete2 tree
+    #add additional taxa: if leaf, add sister leaf
+    #if internal, add sister node as leaf (should be fine for def of splits)
+    a = tree.write(format=1,format_root_node=True)
     return a
 
-
-# parse trees that are not in pure newick format
+#parse trees that are not in pure newick format
 for elem in tree_hash:
     if elem == target:
         if "&" in tree_hash[elem]:
             p = parse_weird_tree(tree_hash[elem])
             tree_hash[elem] = p
-        out = open(trees_file[:-6] + "_" + elem, "w")
+        out = open(trees_file[:-6]+"_"+elem,"w")
         out.write(tree_hash[elem])
         out.close()
