@@ -20,9 +20,7 @@ def test_login():
         },
         data=payload,
     )
-    print("Testing /login/token...")
     assert response.status_code == 200
-    print("OK!")
 
 
 def test_read_main():

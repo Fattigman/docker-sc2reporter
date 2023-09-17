@@ -9,17 +9,18 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 480
 
 router = APIRouter()
 
+
 @router.post("/token", response_model=Token)
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
     """
     Authenticate a user and provide an access token.
-    
+
     Args:
         form_data (OAuth2PasswordRequestForm): The form data containing the username and password.
-        
+
     Returns:
         dict: A dictionary containing the access token and its type.
-        
+
     Raises:
         HTTPException: If the username or password is incorrect.
     """

@@ -11,19 +11,21 @@ They use the functions from the crud module to interact with the database with t
 
 router = APIRouter()
 
+
 @router.get("/", response_model=List[Depth])
 async def get_depth_endpoint(current_user: User = Depends(get_current_active_user)):
     """
     Retrieve all depth sequences from the database.
-    
+
     Args:
         current_user (User): The current authenticated user.
-        
+
     Returns:
         List[Depth]: A list of depth sequences.
     """
     data = await depth.get()
     return data
+
 
 @router.get("/{id}", response_model=List[Depth])
 async def get_single_depth_endpoint(
@@ -32,11 +34,11 @@ async def get_single_depth_endpoint(
 ):
     """
     Retrieve a single depth sequence by its ID.
-    
+
     Args:
         id (str): The ID of the depth sequence to retrieve.
         current_user (User): The current authenticated user.
-        
+
     Returns:
         List[Depth]: A list containing the retrieved depth sequence.
     """
@@ -50,6 +52,7 @@ async def get_single_depth_endpoint(
         )
     return data
 
+
 @router.get("/multiple", response_model=List[Depth])
 async def get_multiple_depth_endpoint(
     ids: List[str],
@@ -57,11 +60,11 @@ async def get_multiple_depth_endpoint(
 ):
     """
     Retrieve multiple depth sequences by their IDs.
-    
+
     Args:
         ids (List[str]): A list of IDs of the depth sequences to retrieve.
         current_user (User): The current authenticated user.
-        
+
     Returns:
         List[Depth]: A list containing the retrieved depth sequences.
     """
@@ -74,18 +77,19 @@ async def get_multiple_depth_endpoint(
         )
     return data
 
+
 @router.put("/{id}")
 async def update_depth_endpoint(
     id: str, obj_in: Depth, current_user: User = Depends(get_current_active_user)
 ):
     """
     Update an existing depth sequence in the database by its ID.
-    
+
     Args:
         id (str): The ID of the depth sequence to update.
         obj_in (Depth): The updated depth object.
         current_user (User): The current authenticated user.
-        
+
     Returns:
         dict: A dictionary indicating the update status.
     """

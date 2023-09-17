@@ -12,19 +12,21 @@ They use the functions from the crud module to interact with the database with t
 
 router = APIRouter()
 
+
 @router.get("/", response_model=List[Consensus])
 async def get_consensus_endpoint(current_user: User = Depends(get_current_active_user)):
     """
     Retrieve all consensus sequences from the database.
-    
+
     Args:
         current_user (User): The current authenticated user.
-        
+
     Returns:
         List[Consensus]: A list of consensus sequences.
     """
     data = await consensus.get()
     return data
+
 
 @router.get("/{id}", response_model=List[Consensus])
 async def get_single_consensus_endpoint(
@@ -33,11 +35,11 @@ async def get_single_consensus_endpoint(
 ):
     """
     Retrieve a single consensus sequence by its ID.
-    
+
     Args:
         id (str): The ID of the consensus sequence to retrieve.
         current_user (User): The current authenticated user.
-        
+
     Returns:
         List[Consensus]: A list containing the retrieved consensus sequence.
     """
@@ -51,6 +53,7 @@ async def get_single_consensus_endpoint(
         )
     return data
 
+
 @router.get("/multiple", response_model=List[Consensus])
 async def get_multiple_consensus_endpoint(
     ids: List[str],
@@ -58,11 +61,11 @@ async def get_multiple_consensus_endpoint(
 ):
     """
     Retrieve multiple consensus sequences by their IDs.
-    
+
     Args:
         ids (List[str]): A list of IDs of the consensus sequences to retrieve.
         current_user (User): The current authenticated user.
-        
+
     Returns:
         List[Consensus]: A list containing the retrieved consensus sequences.
     """
@@ -75,6 +78,7 @@ async def get_multiple_consensus_endpoint(
         )
     return data
 
+
 @router.post("/")
 async def create_consensus_endpoint(
     obj_in: Consensus = Body(..., description="The consensus object to create"),
@@ -82,11 +86,11 @@ async def create_consensus_endpoint(
 ):
     """
     Create a new consensus sequence in the database.
-    
+
     Args:
         obj_in (Consensus): The consensus object to create.
         current_user (User): The current authenticated user.
-        
+
     Returns:
         dict: A dictionary indicating the creation status.
     """
@@ -96,18 +100,19 @@ async def create_consensus_endpoint(
     else:
         return {f"{obj_in.sample_id}": "failed to create"}
 
+
 @router.put("/{id}")
 async def update_consensus_endpoint(
     id: str, obj_in: Consensus, current_user: User = Depends(get_current_active_user)
 ):
     """
     Update an existing consensus sequence in the database by its ID.
-    
+
     Args:
         id (str): The ID of the consensus sequence to update.
         obj_in (Consensus): The updated consensus object.
         current_user (User): The current authenticated user.
-        
+
     Returns:
         dict: A dictionary indicating the update status.
     """

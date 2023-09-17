@@ -8,6 +8,7 @@ from fastapi import APIRouter
 
 router = APIRouter()
 
+
 @router.get("/", response_model=DashboardGraph)
 async def get_dashboard_data(
     selection_criterion: list = Query([]),
@@ -15,11 +16,11 @@ async def get_dashboard_data(
 ):
     """
     Retrieve dashboard data based on the provided selection criterion.
-    
+
     Args:
         selection_criterion (list): A list of criteria to filter the samples.
         current_user (User): The current authenticated user.
-        
+
     Returns:
         dict: A dictionary containing general statistics, dashboard data, and selection criterions.
     """
@@ -33,13 +34,14 @@ async def get_dashboard_data(
         "selection_criterions": selection_criterions,
     }
 
+
 def fill_graph_data(graph_list: list) -> list:
     """
     Fill the graph data with pangolins for each date. Used for plotting.
-    
+
     Args:
         graph_list (list): A list of dictionaries containing date, pangolin, and pango_count.
-        
+
     Returns:
         list: A sorted list of dictionaries with counts for pangolins.
     """

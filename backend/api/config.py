@@ -6,6 +6,7 @@ class Settings(BaseSettings):
     """
     Configuration settings for the application, sourced from environment variables or defaults.
     """
+
     # MongoDB settings
     MONGO_HOST: str = os.environ.get("MONGO_HOST", "localhost")
     MONGO_PORT: int = os.environ.get("MONGO_PORT", 27017)
