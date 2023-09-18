@@ -1,6 +1,6 @@
 from fastapi import Depends, HTTPException, Query
 
-from models import User
+from ...models import User
 
 from typing import List
 
@@ -8,14 +8,14 @@ from collections import defaultdict
 from fastapi import APIRouter
 
 import time
-from crud import samples
+from ...crud import samples
 
 import random
-from authentication import get_current_active_user
+from ...authentication import get_current_active_user
 
 from skbio import DistanceMatrix
 from skbio.tree import nj
-from db import *
+from ...db import *
 
 router = APIRouter()
 

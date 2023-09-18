@@ -1,5 +1,5 @@
-from models import *
-from crud import get_user
+from .models import *
+from .crud import get_user
 
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
@@ -8,7 +8,7 @@ from passlib.context import CryptContext
 from datetime import datetime, timedelta
 from typing import Union
 
-from api.config import settings
+from .api.config import settings
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")

@@ -4,10 +4,10 @@ from fastapi import APIRouter
 
 from fastapi.security import OAuth2PasswordRequestForm
 
-from authentication import *
-from crud import get_user, create_user, get_users, del_user
+from ...authentication import *
+from ...crud import get_user, create_user, get_users, del_user
 
-from models import User, Basic_User
+from ...models import User, Basic_User
 
 router = APIRouter()
 

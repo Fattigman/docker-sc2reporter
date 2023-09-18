@@ -1,9 +1,8 @@
 from fastapi import APIRouter, Depends, Query
-from crud import samples
-from db import *
-from models import *
-from authentication import *
-from pprint import pprint
+from ...crud import samples
+from ...db import *
+from ...models import *
+from ...authentication import *
 from fastapi import APIRouter
 
 router = APIRouter()

@@ -1,7 +1,7 @@
 from fastapi import Depends, Body, HTTPException, status
-from crud import consensus
-from models import Consensus, User
-from authentication import get_current_active_user
+from ...crud import consensus
+from ...models import Consensus, User
+from ...authentication import get_current_active_user
 from typing import List
 from fastapi import APIRouter
 

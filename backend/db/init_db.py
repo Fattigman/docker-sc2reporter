@@ -1,5 +1,5 @@
 import sys, os
-from api.config import settings
+from ..api.config import settings
 import asyncio
 import motor
 from .db import db

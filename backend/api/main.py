@@ -1,11 +1,11 @@
-from db import db, parse_json, get_collections, startup_db
+from ..db import startup_db
 
-from authentication import *
-from models import *
+from ..authentication import *
+from ..models import *
 
-from api.config import settings
+from .config import settings
 
-from api.endpoints import (
+from .endpoints import (
     samples,
     users,
     login,
