@@ -119,7 +119,7 @@ class CRUDSamples(CRUDBase):
         """
         variants = await significant_variants.get()
         variants = variants[0]["variants"]
-        pipeline = self.filter_variant_pipeline(variants, {"variants.id": variant})
+        pipeline = self.filter_variant_pipeline(variants, {"variants.aa": variant})
         curr = db.sample.aggregate(pipeline)
         docs = [parse_json(x) for x in await curr.to_list(None)]
         return docs

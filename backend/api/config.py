@@ -62,6 +62,24 @@ class Settings(BaseSettings):
         "POSITIONS", ["S:501", "S:484"]
     )
 
+    COVARIANT_DICT: dict = os.environ.get(
+        "COVARIANT_DICT",
+        {
+            "S:A222V": "20A.EU1",
+            "S:S477N": "20A.EU2",
+            "S:N501Y": "S.N501",
+            "S:E484K": "S.E484",
+            "S:H69_V70del": "S.H69-",
+            "S:N439K": "S.N439K",
+            "S:Y453F": "S.Y453F",
+            "S:S98F": "S.S98F",
+            "S:L452R": "S.L452R",
+            "S:D80Y": "S.D80Y",
+            "S:A626S": "S.A626S",
+            "S:V1122L": "S.V1122L",
+            "S:Q677H": "S.Q677",
+        },
+    )
     # Authentication settings
     SECRET_KEY = "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7"
     ALGORITHM = "HS256"

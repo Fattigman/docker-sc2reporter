@@ -72,7 +72,7 @@ class GroupedSamples(BaseModel):
 
 
 class GroupedVariantSamples(GroupedSamples):
-    variant_info: Union[List, None]
+    variantInfo: Union[List, None]
 
 
 class Consensus(BaseModel):

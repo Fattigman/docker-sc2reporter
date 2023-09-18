@@ -2,7 +2,7 @@ from typing import Optional, Union
 from fastapi import Depends, HTTPException, Query
 from fastapi import APIRouter
 
-
+from api.config import settings
 import pandas as pd
 
 from crud import samples, get_matrix, variants, depth
@@ -99,12 +99,23 @@ async def get_samples_with_pangotype(
 # Gets all samples with matching specified variant
 @router.get("/variant/", response_model=GroupedVariantSamples)
 async def get_samples_with_variant(
-    variant: str, current_user: User = Depends(get_current_active_user)
+    variant_aa: str,
+    variant_id: str,
+    current_user: User = Depends(get_current_active_user),
 ):
-    samples_list = await samples.get_variant_samples(variant=variant)
+    samples_list = await samples.get_variant_samples(variant=variant_aa)
     samples_list = [sample for sample in samples_list if "collection_date" in sample]
-    variant_info = await variants.get_single(variant)
+    variant_info = await variants.get_single(variant_id)
+    if variant_aa in settings.COVARIANT_DICT:
+        variant_info[0][
+            "External link CoVariants"
+        ] = f" https://covariants.org/variants/{settings.COVARIANT_DICT[variant_aa]}"
+    elif len(variant_info) > 0:
+        variant_info[0]["External link CoVariants"] = "Not found"
+    else:
+        variant_info = [{"Error": f"{variant_id} not found in the database"}]
     graph_list = group_by_dict(samples_list)
+    print(variant_info)
     return {"samples": samples_list, "graph": graph_list, "variantInfo": variant_info}
 
 
