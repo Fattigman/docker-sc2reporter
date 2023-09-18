@@ -1,5 +1,5 @@
-from ..db import *
-from ..api.config import settings
+from db import *
+from api.config import settings
 
 """
 This module is used to interact with the sample collection in the database.
@@ -7,7 +7,7 @@ It contains all the CRUD functions for the sample collection.
 """
 from .crud_base import CRUDBase
 from .crud_significant_variants import significant_variants
-from ..models import Sample
+from models import Sample
 
 # Handling of the variants collection
 

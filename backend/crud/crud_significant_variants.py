@@ -1,5 +1,5 @@
 from .crud_base import CRUDBase
-from ..models import SignificantVariant
+from models import SignificantVariant
 
 
 # Handling of the depth collection

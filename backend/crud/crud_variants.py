@@ -1,5 +1,5 @@
 from .crud_base import CRUDBase
-from ..models import Variant
+from models import Variant
 
 # Handling of the variants collection
 

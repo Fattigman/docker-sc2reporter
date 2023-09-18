@@ -2,7 +2,7 @@ import motor
 from bson import json_util
 import json
 import os
-from ..api.config import settings
+from api.config import settings
 
 """
 This is meant to be imported by the other crud files.

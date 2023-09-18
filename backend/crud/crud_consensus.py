@@ -1,5 +1,5 @@
 from .crud_base import CRUDBase
-from ..models import Consensus
+from models import Consensus
 
 
 class CRUDConsensus(CRUDBase):

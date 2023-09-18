@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, Query, Body, HTTPException, status
-from ...crud import variants
-from ...models import User, Variant
-from ...authentication import get_current_active_user
+from crud import variants
+from models import User, Variant
+from authentication import get_current_active_user
 from typing import List
 
 

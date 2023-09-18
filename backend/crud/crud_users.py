@@ -1,12 +1,12 @@
 from typing import List, Optional
 
-from ..models import User
+from models import User
 
 from pymongo import MongoClient
 from passlib.context import CryptContext
 from pymongo.errors import DuplicateKeyError
 
-from ..db import *
+from db import *
 
 
 def create_user(user):

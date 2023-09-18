@@ -5,12 +5,14 @@ from fastapi import APIRouter
 
 import pandas as pd
 
-from ...crud import samples, get_matrix, variants, depth
+from crud import samples, get_matrix, variants, depth
 
-from ...models import *
-from ...authentication import *
+from models import *
+from authentication import *
 
 router = APIRouter()
+
+import time
 
 
 # Gets all samples

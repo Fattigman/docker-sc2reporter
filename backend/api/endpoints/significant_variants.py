@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Depends, Body
-from ...crud import significant_variants as crud
-from ...models import *
+from crud import significant_variants as crud
+from models import *
 from typing import List
-from ...authentication import *
+from authentication import *
 
 
 router = APIRouter()
