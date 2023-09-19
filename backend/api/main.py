@@ -21,6 +21,10 @@ from fastapi import Depends, FastAPI, status, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
+def create_api(app: FastAPI):
+    @app.get(app.root_path + "/openapi.json")
+    def custom_swagger_ui_html():
+        return app.openapi()
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -28,6 +32,8 @@ app = FastAPI(
     version="development",
     root_path=settings.ROOT_PATH,
 )
+
+create_api(app)
 
 app.add_middleware(
     CORSMiddleware,
