@@ -6,6 +6,11 @@ from authentication import *
 from pprint import pprint
 from fastapi import APIRouter
 
+"""
+This module is meant to generate the object which is used for dashboard plotting on the front end.
+The dashboard is a single page, and this endpoint will generate all of the data for that page.
+"""
+
 router = APIRouter()
 
 
