@@ -5,6 +5,11 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi import APIRouter
 
+"""
+The login/token endpoint handles authentication of users. 
+Change ACCESS_TOKEN_EXPIRE_MINUTES for how long a login sessions should be valid.
+"""
+
 ACCESS_TOKEN_EXPIRE_MINUTES = 480
 
 router = APIRouter()

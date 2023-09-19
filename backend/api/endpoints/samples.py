@@ -10,9 +10,12 @@ from crud import samples, get_matrix, variants, depth
 from models import *
 from authentication import *
 
-router = APIRouter()
+"""
+This module contains all the endpoints for the sample collection in the database.
+They use the functions from the crud module to interact with the database with the Sample model.
+"""
 
-import time
+router = APIRouter()
 
 
 # Gets all samples

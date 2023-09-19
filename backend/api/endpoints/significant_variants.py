@@ -4,7 +4,10 @@ from models import *
 from typing import List
 from authentication import *
 
-
+"""
+Allows the user to change significant variants by inserting a list of desired variants.
+If collection doesn't exist during first startup, it will be created based on the config.py file.
+"""
 router = APIRouter()
 
 

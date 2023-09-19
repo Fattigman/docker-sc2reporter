@@ -9,6 +9,10 @@ from crud import get_user, create_user, get_users, del_user
 
 from models import User, Basic_User
 
+"""
+Endpoints for collecting user information. Used by admins to manage user creation and rights.
+"""
+
 router = APIRouter()
 
 

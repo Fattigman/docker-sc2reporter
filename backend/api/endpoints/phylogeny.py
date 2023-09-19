@@ -8,7 +8,6 @@ from collections import defaultdict
 from fastapi import APIRouter
 
 import time
-from crud import samples
 
 import random
 from authentication import get_current_active_user
@@ -17,8 +16,12 @@ from skbio import DistanceMatrix
 from skbio.tree import nj
 from db import *
 
-router = APIRouter()
+"""
+The phyllogeny endpoint returns and object compatible with grapetree.
+It returns newick tree annotated with meta data for each sample.
+"""
 
+router = APIRouter()
 
 @router.get("/")
 async def get_distances(
