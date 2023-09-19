@@ -42,13 +42,24 @@ async def get_dashboard_data(
 
 def fill_graph_data(graph_list: list) -> list:
     """
-    Fill the graph data with pangolins for each date. Used for plotting.
+    Fill the graph data with pangolin counts for missing dates. Used for plotting.
 
     Args:
         graph_list (list): A list of dictionaries containing date, pangolin, and pango_count.
 
     Returns:
         list: A sorted list of dictionaries with counts for pangolins.
+    
+    example:
+    graph_list = [
+        {'date': '2021-03-16', 'pango_count': 1, 'pangolin': 'B.1.474'},
+        {'date': '2021-03-17', 'pango_count': 1, 'pangolin': 'B.1.160'},
+    ]
+    print (fill_graph_data(graph_list))
+    >>{'date': '2021-03-16', 'pango_count': 1, 'pangolin': 'B.1.474'},
+    >>{'date': '2021-03-16', 'pango_count': 0, 'pangolin': 'B.1.160'}
+    >>{'date': '2021-03-16', 'pango_count': 0, 'pangolin': 'B.1.474'},
+    >>{'date': '2021-03-16', 'pango_count': 1, 'pangolin': 'B.1.160'},
     """
     dates = {}
     for graph in graph_list:
