@@ -144,6 +144,6 @@ app.include_router(
 async def startup_event():
     """
     Event handler for when the application starts up.
-    Initializes the database connection.
+    Initializes the database connection, creates admin users as well as significant variants if not already created.
     """
     await startup_db()
