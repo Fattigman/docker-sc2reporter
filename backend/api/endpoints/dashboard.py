@@ -49,16 +49,16 @@ def fill_graph_data(graph_list: list) -> list:
 
     Returns:
         list: A sorted list of dictionaries with counts for pangolins.
-    
-    example:
-    graph_list = [
-        {'date': '2021-03-16', 'pango_count': 1, 'pangolin': 'B.1.474'},
-        {'date': '2021-03-17', 'pango_count': 1, 'pangolin': 'B.1.160'},
-    ]
-    print (fill_graph_data(graph_list))
-    >>{'date': '2021-03-16', 'pango_count': 1, 'pangolin': 'B.1.474'},
-    >>{'date': '2021-03-16', 'pango_count': 0, 'pangolin': 'B.1.160'},
-    >>{'date': '2021-03-16', 'pango_count': 1, 'pangolin': 'B.1.160'},
+
+    example:\n
+    graph_list = [\n
+        {'date': '2021-03-16', 'pango_count': 1, 'pangolin': 'B.1.474'},\n
+        {'date': '2021-03-17', 'pango_count': 1, 'pangolin': 'B.1.160'},\n
+    ]\n
+    print (fill_graph_data(graph_list)) \n
+    >>{'date': '2021-03-16', 'pango_count': 1, 'pangolin': 'B.1.474'},\n
+    >>{'date': '2021-03-16', 'pango_count': 0, 'pangolin': 'B.1.160'},\n
+    >>{'date': '2021-03-16', 'pango_count': 1, 'pangolin': 'B.1.160'},\n
     >>{'date': '2021-03-16', 'pango_count': 0, 'pangolin': 'B.1.474'}
     """
     dates = {}

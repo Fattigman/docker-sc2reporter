@@ -23,6 +23,7 @@ It returns newick tree annotated with meta data for each sample.
 
 router = APIRouter()
 
+
 @router.get("/")
 async def get_distances(
     current_user: User = Depends(get_current_active_user),
