@@ -57,9 +57,9 @@ def fill_graph_data(graph_list: list) -> list:
     ]
     print (fill_graph_data(graph_list))
     >>{'date': '2021-03-16', 'pango_count': 1, 'pangolin': 'B.1.474'},
-    >>{'date': '2021-03-16', 'pango_count': 0, 'pangolin': 'B.1.160'}
-    >>{'date': '2021-03-16', 'pango_count': 0, 'pangolin': 'B.1.474'},
+    >>{'date': '2021-03-16', 'pango_count': 0, 'pangolin': 'B.1.160'},
     >>{'date': '2021-03-16', 'pango_count': 1, 'pangolin': 'B.1.160'},
+    >>{'date': '2021-03-16', 'pango_count': 0, 'pangolin': 'B.1.474'}
     """
     dates = {}
     for graph in graph_list:
