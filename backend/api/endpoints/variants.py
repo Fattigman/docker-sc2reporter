@@ -1,4 +1,3 @@
-
 from fastapi import APIRouter, Depends, Query, Body, HTTPException, status
 from crud import variants
 from models import User, Variant
@@ -12,19 +11,18 @@ They use the functions from the crud module to interact with the database with t
 """
 router = APIRouter()
 
-@router.get("/", response_model=List[Variant]
-)
-async def get_Variant_endpoint(
-    current_user: User = Depends(get_current_active_user)
-):  
+
+@router.get("/", response_model=List[Variant])
+async def get_Variant_endpoint(current_user: User = Depends(get_current_active_user)):
     data = await variants.get()
     return data
 
+
 @router.get("/{id}", response_model=List[Variant])
 async def get_single_Variant_endpoint(
-    id: str = Query(..., description="The sample id of the Variant sequence to get"),
-    current_user: User = Depends(get_current_active_user)
-):  
+    id: str,
+    current_user: User = Depends(get_current_active_user),
+):
     data = await variants.get_single(id)
 
     if len(data) == 0:
@@ -35,11 +33,12 @@ async def get_single_Variant_endpoint(
         )
     return data
 
+
 @router.get("/multiple", response_model=List[Variant])
 async def get_multiple_Variant_endpoint(
-    ids: List[str] = Query(..., description="List of sample ids of the Variant sequences to get"),
-    current_user: User = Depends(get_current_active_user)
-):  
+    ids: List[str],
+    current_user: User = Depends(get_current_active_user),
+):
     data = await variants.get_multiple(ids)
     if len(data) == 0:
         raise HTTPException(
@@ -49,22 +48,22 @@ async def get_multiple_Variant_endpoint(
         )
     return data
 
+
 @router.post("/")
 async def create_Variant_endpoint(
     obj_in: Variant = Body(..., description="The Variant object to create"),
-    current_user: User = Depends(get_current_active_user)
+    current_user: User = Depends(get_current_active_user),
 ):
     data = await variants.create(obj_in)
     if data:
-        return {f'{obj_in.sample_id}': 'created successfully'}
+        return {f"{obj_in.sample_id}": "created successfully"}
     else:
-        return {f'{obj_in.sample_id}': 'failed to create'}
+        return {f"{obj_in.sample_id}": "failed to create"}
+
 
 @router.put("/{id}")
 async def update_Variant_endpoint(
-    id: str,
-    obj_in: Variant,
-    current_user: User = Depends(get_current_active_user)
+    id: str, obj_in: Variant, current_user: User = Depends(get_current_active_user)
 ):
     data = await variants.update(id, obj_in)
     if not data:
@@ -73,4 +72,4 @@ async def update_Variant_endpoint(
             detail="Sample failed to update in the database",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    return {f'{id}': 'failed to update'}
+    return {f"{id}": "failed to update"}

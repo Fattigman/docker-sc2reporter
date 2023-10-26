@@ -8,11 +8,13 @@ Here we define the models for the samples
 and the data associated with them.
 """
 
+
 class Pangolin(BaseModel):
-    #Pangolin classification of a sample
+    # Pangolin classification of a sample
     conflict: Union[int, str]
     type: str
     pangolearn_version: str
+
 
 class SampleVariant(BaseModel):
     # Variant detection of a sample
@@ -21,10 +23,12 @@ class SampleVariant(BaseModel):
     id: str
     alt_freq: float
 
+
 class Variant(BaseModel):
     # Variant collection
     _id: str
     csq: dict
+
 
 class Depth(BaseModel):
     # Depth collection
@@ -39,11 +43,12 @@ class Depth(BaseModel):
     REFSKIP: int
     pos: int
     dp: int
-    
+
+
 class Sample(BaseModel):
     # SarsCov2 sample
     _id: dict
-    variants : Union[list[SampleVariant],None] = None
+    variants: Union[list[SampleVariant], None] = None
     qc: dict
     time_added: dict
     pangolin: Pangolin
@@ -60,15 +65,18 @@ class Sample(BaseModel):
     Ct: Union[str, None]
     similar_samples: Union[list, None]
 
+
 class GroupedSamples(BaseModel):
     samples: list[Sample]
     graph: list[SimpleGraphElement]
 
+
 class GroupedVariantSamples(GroupedSamples):
-    variant_info: Union[List, None]
+    variantInfo: Union[List, None]
+
 
 class Consensus(BaseModel):
-    _id : str
+    _id: str
     sample_oid: str
     seq: str
     qual: str
